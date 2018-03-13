@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_assets import Environment, Bundle
 from winejournal.blueprints.static_pages import staticPages
 
@@ -8,21 +8,23 @@ def create_app():
     Create the Flask application using the app factory pattern
     :return: Flask app
     """
-app = Flask(__name__, instance_relative_config=True)
-app.static_folder = 'static'
+    app = Flask(__name__, instance_relative_config=True)
+    app.static_folder = 'static'
 
-app.config.from_object('config.settings')
-app.config.from_pyfile('settings.py', silent=True)
+    app.config.from_object('config.settings')
+    app.config.from_pyfile('settings.py', silent=True)
 
-assets = Environment(app)
-css = Bundle('scss/styles.scss',
-            filters='pyscss', output='css/styles.css')
-assets.register('css_all', css)
-assets.init_app(app)
+    assets = Environment(app)
+    css = Bundle('scss/styles.scss',
+                filters='pyscss', output='css/styles.css')
+    assets.register('css_all', css)
+    assets.init_app(app)
 
-app.register_blueprint(staticPages)
+    app.register_blueprint(staticPages)
 
-if __name__ == '__main__':
-    app.debug = app.config['DEBUG']
-    app.run(host='0.0.0.0', port=5000)
+    if __name__ == '__main__':
+        app.debug = app.config['DEBUG']
+        app.run(host='0.0.0.0', port=5000)
 
+
+app = create_app()
