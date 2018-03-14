@@ -20,3 +20,5 @@ pytest-flask==0.10.0
 six==1.11.0
 webassets==0.12.1
 Werkzeug==0.14.1
+## !! Could not determine repository location
+WineJournal-CLI==1.0

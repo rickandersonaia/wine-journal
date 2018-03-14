@@ -19,7 +19,7 @@ def create_app(settings_override=None):
 
     assets = Environment(app)
     css = Bundle('scss/styles.scss',
-                filters='pyscss', output='css/styles.css')
+                 filters='pyscss', output='css/styles.css')
     assets.register('css_all', css)
     assets.init_app(app)
 
