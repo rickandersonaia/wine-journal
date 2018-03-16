@@ -25,11 +25,6 @@ def create_app(settings_override=None):
 
     app.register_blueprint(staticPages)
 
-    if __name__ == '__main__':
-        app.debug = app.config['DEBUG']
-        app.run(host='0.0.0.0', port=5000)
-
     return app
 
 
-app = create_app()
