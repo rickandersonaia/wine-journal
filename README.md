@@ -9,7 +9,11 @@ crowd sourced journal of wine and wine tastings
 
 1. Download a copy of the Vagrant file from https://github.com/udacity/fullstack-nanodegree-vm
 2. Add the following lines of code after line 30
-    `pip3 install flask-assets webassets pytest pytest-flask pytest-cov flake8 scss`
+
+    `pip3 install flask-assets webassets pytest pytest-flask pytest-cov flake8 scss
+     pip3 install psycopg2 flask-wtf wtforms-components flask-debugtoolbar flask-login
+     pip3 install `
+
 3. In the terminal window run `vagrant up --provision`
 4. In the same terminal window run `vagrant ssh`
 5. Then `cd /vagrant`
@@ -29,7 +33,7 @@ JavaScript, SCSS and images are compiled, compressed and minimized upon save. Th
 
 ## Custom CLI
 
-From the root directory `winejournal` to see the commands available
+From the root directory run `winejournal` to see the commands available
 
 ## Running unit tests
 

@@ -1,6 +1,14 @@
 from flask import Flask
 from flask_assets import Environment, Bundle
 from winejournal.blueprints.static_pages import staticPages
+# from winejournal.blueprints.user import user
+# from winejournal.blueprints.user.models import User
+from winejournal.extensions import (
+    debug_toolbar,
+    csrf,
+    db,
+    login_manager
+)
 
 
 def create_app(settings_override=None):
@@ -25,6 +33,21 @@ def create_app(settings_override=None):
 
     app.register_blueprint(staticPages)
 
+    extensions(app)
+
     return app
 
 
+def extensions(app):
+    """
+    Register 0 or more extensions (mutates the app passed in).
+
+    :param app: Flask application instance
+    :return: None
+    """
+    debug_toolbar.init_app(app)
+    csrf.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
+
+    return None
