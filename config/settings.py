@@ -24,7 +24,7 @@ SECRET_KEY = 'insecurekeyfordev'
 # CELERY_REDIS_MAX_CONNECTIONS = 5
 
 # SQLAlchemy.
-db_uri = 'postgresql+psycopg2://winejournal:devpassword@postgres:5432/winejournal'
+db_uri = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
 # username: winejournal
 # password: devpassword
 SQLALCHEMY_DATABASE_URI = db_uri
