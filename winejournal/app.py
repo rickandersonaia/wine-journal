@@ -2,6 +2,7 @@ from flask import Flask
 from flask_assets import Environment, Bundle
 from winejournal.blueprints.static_pages import staticPages
 from winejournal.data_models import models
+from winejournal.blueprints.categories import categories
 # from winejournal.blueprints.user import user
 # from winejournal.blueprints.user.models import User
 from winejournal.extensions import (
@@ -33,7 +34,7 @@ def create_app(settings_override=None):
     assets.init_app(app)
 
     app.register_blueprint(staticPages)
-    app.register_blueprint(staticPages)
+    app.register_blueprint(categories)
 
     extensions(app)
 

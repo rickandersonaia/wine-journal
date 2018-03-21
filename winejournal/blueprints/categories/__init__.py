@@ -1,0 +1,1 @@
+from winejournal.blueprints.categories.views import categories
