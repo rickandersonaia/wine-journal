@@ -4,5 +4,5 @@ from config.settings import SQLALCHEMY_DATABASE_URI
 
 Base = declarative_base()
 
-engine = create_engine(SQLALCHEMY_DATABASE_URI)
-Base.metadata.create_all(engine)
+engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
+print(Base)

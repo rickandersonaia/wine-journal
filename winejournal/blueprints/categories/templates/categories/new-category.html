@@ -1,16 +1,30 @@
 {% extends "base.html" %}
 {% block title%}Add new category{% endblock %}
 {% block meta_description%}Add a new wine category to the journal{% endblock %}
+
 {% block content %}
-<div class="mdl-layout__content">
-    <div class="container">
-        <h1 class="mdl-typography--display-3">Add new category</h1>
+    <div class="mdl-layout__content container">
+        <h1>Add a new Menu Item</h1>
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col">
-                <p>New category page content</p>
-            </div>
+        <div class="mdl-cell--4-col">
+            <form method="post" action="{{ url_for('categories.new_category') }}" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+                {{ form.name.label }}
+                {{ form.name }}
+                {{ form.description.label }}
+                {{ form.description }}
+                {{ form.parent }}
+
+
+                <button class="mdl-button mdl-js-button mdl-button--raised"
+                        type="submit">
+                    Add new Category
+                </button>
+            </form>
         </div>
     </div>
-</div>
-
+    </div>
+{% endblock %}
+{% block footer_scripts %}
+{#<script src="{{ url_for('static', filename='material.components.ext.min.js' )}}"></script>#}
 {% endblock %}

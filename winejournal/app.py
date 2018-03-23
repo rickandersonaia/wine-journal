@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_assets import Environment, Bundle
 from winejournal.blueprints.static_pages import staticPages
-from winejournal.data_models import models
+from winejournal.data_models.models import Base, engine
 from winejournal.blueprints.categories import categories
 # from winejournal.blueprints.user import user
 # from winejournal.blueprints.user.models import User
@@ -37,6 +37,8 @@ def create_app(settings_override=None):
     app.register_blueprint(categories)
 
     extensions(app)
+
+    Base.metadata.create_all(engine)
 
     return app
 

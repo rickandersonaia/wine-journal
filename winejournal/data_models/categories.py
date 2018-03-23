@@ -1,5 +1,4 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
 from winejournal.data_models.models import Base
 
 
