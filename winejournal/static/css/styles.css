@@ -1,4 +1,22 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\static\\scss\/styles\.scss}line{font-family:\000033}}
+@media -sass-debug-info {
+    filename {
+        font-family: file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\static\\scss\/styles\.scss
+    }
+
+    line {
+        font-family: \000033
+    }
+}
+
 .container {
-  max-width: 1140px;
-  margin: 0 auto; }
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.form-error {
+    color: #d50000;
+}
