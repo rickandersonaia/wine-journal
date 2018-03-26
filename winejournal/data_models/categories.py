@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Float
-from winejournal.data_models.models import Base
+from winejournal.data_models.models import Base, engine
 
 
 class Category(Base):

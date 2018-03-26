@@ -38,7 +38,7 @@
 
 {#Template for select input field#}
 
-{% macro render_select_input_field(field, list) %}
+{% macro render_select_input_field(field, list, parent_id=0) %}
     <div class="mdl-textfield mdl-js-textfield getmdl-select {% if field.errors %}is-invalid{% endif %}">
         {{ field(class_='mdl-textfield__input') }}
         <input type="hidden" value="" name="{{ field.name }}">
@@ -47,8 +47,13 @@
         <ul for="field.name"
             class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
             {% for id, name in list.items() %}
-                <li class="mdl-menu__item"
-                    data-val="{{ id }}">{{ name }}</li>
+                <li
+                        {% if id == parent_id %}
+                            class="mdl-menu__item selected"
+                        {% else: %}
+                            class="mdl-menu__item "
+                        {% endif %}
+                            data-val="{{ id }}">{{ name }}</li>
             {% endfor %}
         </ul>
     </div>

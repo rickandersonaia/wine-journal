@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_assets import Environment, Bundle
+from sqlalchemy.orm import sessionmaker
 from winejournal.blueprints.static_pages import staticPages
 from winejournal.data_models.models import Base, engine
 from winejournal.blueprints.categories import categories
+from winejournal.blueprints.regions import regions
 # from winejournal.blueprints.user import user
 # from winejournal.blueprints.user.models import User
 from winejournal.extensions import (
@@ -38,6 +40,9 @@ def create_app(settings_override=None):
 
     extensions(app)
 
+    # setup database connection & initialize session
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
     Base.metadata.create_all(engine)
 
     return app
