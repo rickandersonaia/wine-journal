@@ -10,6 +10,8 @@ class Region(Base):
     name = Column(String(80), nullable = False)
     description = Column(String(250))
     parent_id = Column(Integer)
+    country = Column(String(20), index=True)
+    state = Column(String(20), index=True)
 
     @property
     def serialize(self):
@@ -17,5 +19,7 @@ class Region(Base):
             'id': self.id,
             'name': self.name,
             'description': self.description,
-            'parent_id': self.parent_id
+            'parent_id': self.parent_id,
+            'country': self.country,
+            'state': self.state
         }

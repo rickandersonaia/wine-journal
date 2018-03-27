@@ -1,10 +1,11 @@
 {% from '_material_form_fields.html' import
         render_text_input_field,
         render_textarea_field,
-        render_select_input_field %}
+        render_select_input_field,
+        render_simple_select_input_field %}
 {% extends "base.html" %}
-{% block title %}Add new category{% endblock %}
-{% block meta_description %}Add a new wine category to the journal{% endblock %}
+{% block title %}Add new region{% endblock %}
+{% block meta_description %}Add a new wine region to the journal{% endblock %}
 {% block head_scripts %}
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/getmdl-select.min.css' ) }}">
@@ -12,19 +13,21 @@
 
 {% block content %}
     <div class="mdl-layout__content container">
-        <h1>Add a new Wine Category</h1>
+        <h1>Add a new Wine Region</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
                 <form method="post"
-                      action="{{ url_for('categories.new_category') }}"
+                      action="{{ url_for('regions.new_region') }}"
                       enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     {{ render_text_input_field(form.name) }}
                     {{ render_textarea_field(form.description) }}
-                    {{ render_select_input_field(form.parent, cat_list) }}
+                    {{ render_select_input_field(form.parent, reg_list) }}
+                    {{ render_simple_select_input_field(form.country, country_list) }}
+                    {{ render_simple_select_input_field(form.state, state_list) }}
                     <button class="mdl-button mdl-js-button mdl-button--raised"
                             type="submit">
-                        Add new Category
+                        Add new Region
                     </button>
                 </form>
             </div>

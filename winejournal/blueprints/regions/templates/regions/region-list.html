@@ -1,23 +1,23 @@
 {% extends "base.html" %}
-{% block title %}All Wine Categories{% endblock %}
-{% block meta_description %}A list of all wine categories in the
+{% block title %}All Wine Regions{% endblock %}
+{% block meta_description %}A list of all wine regions in the
     journal{% endblock %}
 
 {% block content %}
     <div class="mdl-layout__content container">
-        <h1>Wine Categories</h1>
+        <h1>Wine Regions</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
                 <a class="mdl-button mdl-js-button
                         mdl-button--raised
                         mdl-js-ripple-effect
                         mdl-button--colored"
-                   href="{{ url_for('categories.new_category') }}">
-                    New Category</a>
+                   href="{{ url_for('regions.new_region') }}">
+                    New Region</a>
                 <ul class="mdl-list">
-                    {% for id, name in category_list.items() %}
+                    {% for id, name in region_list.items() %}
                         <li class="mdl-list__item">
-                            <a href="{{ url_for('categories.category_detail', category_id=id) }}">
+                            <a href="{{ url_for('regions.region_detail', region_id=id) }}">
                                 {{ name }}
                             </a>
                         </li>

@@ -1,19 +1,22 @@
-from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 from wtforms.validators import InputRequired
 
 
-class NewCategoryForm(FlaskForm):
-    name = StringField('Category name', validators=[InputRequired()])
-    description = TextAreaField('Category description')
-    parent = StringField('Category parent')
+class NewRegionForm(FlaskForm):
+    name = StringField('Region name', validators=[InputRequired()])
+    description = TextAreaField('Region description')
+    parent = StringField('Region parent')
+    country = StringField('Country')
+    state = StringField('State')
 
 
-class EditCategoryForm(FlaskForm):
-    name = StringField('Category name', validators=[InputRequired()])
-    description = TextAreaField('Category description')
-    parent = StringField('Category parent')
+class EditRegionForm(FlaskForm):
+    name = StringField('Region name', validators=[InputRequired()])
+    description = TextAreaField('Region description')
+    parent = StringField('Region parent')
+    country = StringField('Country')
+    state = StringField('State')
 
-class DeleteCategoryForm(FlaskForm):
-    parent = StringField('Category parent')
+class DeleteRegionForm(FlaskForm):
+    parent = StringField('Region parent')

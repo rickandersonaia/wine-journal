@@ -37,6 +37,7 @@ def create_app(settings_override=None):
 
     app.register_blueprint(staticPages)
     app.register_blueprint(categories)
+    app.register_blueprint(regions)
 
     extensions(app)
 

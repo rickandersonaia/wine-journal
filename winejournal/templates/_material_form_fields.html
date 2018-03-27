@@ -36,7 +36,7 @@
 {% endmacro %}
 
 
-{#Template for select input field#}
+{#Template for category & region select input field#}
 
 {% macro render_select_input_field(field, list, parent_id=0) %}
     <div class="mdl-textfield mdl-js-textfield getmdl-select {% if field.errors %}is-invalid{% endif %}">
@@ -44,16 +44,45 @@
         <input type="hidden" value="" name="{{ field.name }}">
         <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
         {{ field.label(class_='mdl-textfield__label') }}
-        <ul for="field.name"
+        <ul for="{{ field.name }}"
             class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
             {% for id, name in list.items() %}
-                <li
+                <li class="mdl-menu__item"
                         {% if id == parent_id %}
-                            class="mdl-menu__item selected"
-                        {% else: %}
-                            class="mdl-menu__item "
+                            data-selected="true"
                         {% endif %}
                             data-val="{{ id }}">{{ name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if field.errors %}
+        <div>
+            <ul class="form-error">
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+
+{#Template for country & state select input field#}
+
+{% macro render_simple_select_input_field(field, list) %}
+    <div class="mdl-textfield mdl-js-textfield getmdl-select {% if field.errors %}is-invalid{% endif %}">
+        {{ field(class_='mdl-textfield__input', readonly="true") }}
+        <input type="hidden" value="" name="{{ field.name }}">
+        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+        {{ field.label(class_='mdl-textfield__label') }}
+        <ul for="{{ field.name }}"
+            class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+            {% for name in list %}
+                <li class="mdl-menu__item"
+                        {% if name == field.data %}
+                            data-selected="true"
+                        {% endif %}
+                            data-val="{{ name }}">{{ name }}</li>
             {% endfor %}
         </ul>
     </div>
