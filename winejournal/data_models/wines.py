@@ -8,16 +8,21 @@ class Wine(Base):
 
     id = Column(Integer, primary_key = True)
     name = Column(String(80), nullable = False)
+    maker = Column(String(80), nullable = False)
+    vintage = Column(String(80), index= True)
+    price = Column(Integer)
     description = Column(String(250))
-    region = Column(Integer(8), ForeignKey('regions.id'))
-    category = Column(Integer(8), ForeignKey('categories.id'))
+    region = Column(Integer, ForeignKey('regions.id'))
+    category = Column(Integer, ForeignKey('categories.id'))
 
     @property
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
-            'email': self.email,
+            'maker': self.maker,
+            'vintage': self.vintage,
+            'price': self.price,
             'description': self.description,
             'region': self.region,
             'category': self.category,

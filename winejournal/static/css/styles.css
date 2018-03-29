@@ -1,22 +1,43 @@
-@media -sass-debug-info {
-    filename {
-        font-family: file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\static\\scss\/styles\.scss
-    }
-
-    line {
-        font-family: \000033
-    }
-}
-
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\000033}}
 .container {
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    max-width: 1140px;
-    margin: 0 auto;
-}
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto; }
 
-.form-error {
-    color: #d50000;
-}
+  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000311}}
+  output {
+    position: absolute;
+    background-color: #3f51b5;
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 15px;
+    line-height: 30px;
+    bottom: 28px;
+    left: 0; }
+
+    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000325}}
+    output:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-top: 10px solid #3f51b5;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      margin-top: -1px; }
+
+      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000338}}
+      .range_wrapper {
+        position: relative;
+        width: 300px; }
+        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000341}}
+        .range_wrapper label {
+          display: inline-block;
+          padding-bottom: 40px; }

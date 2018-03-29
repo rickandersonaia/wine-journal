@@ -5,6 +5,7 @@ from winejournal.blueprints.static_pages import staticPages
 from winejournal.data_models.models import Base, engine
 from winejournal.blueprints.categories import categories
 from winejournal.blueprints.regions import regions
+from winejournal.blueprints.wines import wines
 # from winejournal.blueprints.user import user
 # from winejournal.blueprints.user.models import User
 from winejournal.extensions import (
@@ -38,6 +39,7 @@ def create_app(settings_override=None):
     app.register_blueprint(staticPages)
     app.register_blueprint(categories)
     app.register_blueprint(regions)
+    app.register_blueprint(wines)
 
     extensions(app)
 

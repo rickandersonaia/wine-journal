@@ -96,3 +96,16 @@
         </div>
     {% endif %}
 {% endmacro %}
+
+
+{#Template for range input field#}
+
+{% macro render_range_input_field(field) %}
+
+    <div class="range_wrapper">
+        {{ field.label() }}
+        {{ field(class_='mdl-slider mdl-js-slider', **kwargs) |safe }}
+        <output for="{{ field.name }}" onforminput="value = {{ field.value }}.valueAsNumber;"></output>
+    </div>
+
+{% endmacro %}

@@ -1,11 +1,10 @@
 {% from '_material_form_fields.html' import
         render_text_input_field,
         render_textarea_field,
-        render_select_input_field,
-        render_simple_select_input_field%}
+        render_select_input_field %}
 {% extends "base.html" %}
-{% block title %}Edit the {{ form.name.data }} region{% endblock %}
-{% block meta_description %}Edit {{ form.name.data }} region in the
+{% block title %}Edit the {{ form.name.data }} category{% endblock %}
+{% block meta_description %}Edit {{ form.name.data }} category in the
     journal{% endblock %}
 {% block head_scripts %}
     <link rel="stylesheet"
@@ -14,7 +13,7 @@
 
 {% block content %}
     <div class="mdl-layout__content container">
-        <h1>Edit the {{ form.name.data }} region</h1>
+        <h1>Edit the {{ form.name.data }} category</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
                 <form method="post"
@@ -23,10 +22,8 @@
                     {{ form.csrf_token }}
                     {{ render_text_input_field(form.name) }}
                     {{ render_textarea_field(form.description) }}
-                    {{ render_select_input_field(form.parent, reg_list,
+                    {{ render_select_input_field(form.parent, cat_list,
                         parent_id) }}
-                    {{ render_simple_select_input_field(form.country, country_list) }}
-                    {{ render_simple_select_input_field(form.state, state_list) }}
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--6-col">
                             <button class="mdl-button mdl-js-button
@@ -40,11 +37,12 @@
                             <a class="mdl-button mdl-js-button
                                       mdl-button--raised mdl-js-ripple-effect
                                       mdl-button--accent"
-                               href="{{ url_for('regions.region_delete',
-                                    region_id = region.id) }}">
+                               href="{{ url_for('categories.category_delete',
+                                    category_id = category.id) }}">
                                 Delete</a>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

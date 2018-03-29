@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from winejournal.blueprints.categories.forms import \
     NewCategoryForm, EditCategoryForm, DeleteCategoryForm
 from winejournal.blueprints.categories.sorted_list import \
-    get_toplevel_categories
+    get_sorted_categories
 from winejournal.data_models.categories import Category
 from winejournal.data_models.models import engine
 
@@ -19,14 +19,14 @@ categories = Blueprint('categories', __name__, template_folder='templates',
 
 @categories.route('/', methods=['GET'])
 def list_categories():
-    category_list = get_toplevel_categories()
+    category_list = get_sorted_categories()
     return render_template('categories/category-list.html',
                            category_list=category_list)
 
 
 @categories.route('/new', methods=['GET', 'POST'])
 def new_category():
-    cat_list = get_toplevel_categories()
+    cat_list = get_sorted_categories()
     new_category_form = NewCategoryForm()
     if new_category_form.validate_on_submit():
         parentId = 0
@@ -53,7 +53,7 @@ def new_category():
 
 @categories.route('/<int:category_id>/', methods=['GET'])
 def category_detail(category_id):
-    cat_list = get_toplevel_categories()
+    cat_list = get_sorted_categories()
     category = session.query(Category).filter_by(id=category_id).one()
     data = Prepopulated_Data(category, cat_list)
     return render_template('categories/category-detail.html', category=data)
@@ -61,7 +61,7 @@ def category_detail(category_id):
 
 @categories.route('/<int:category_id>/edit', methods=['GET', 'POST'])
 def category_edit(category_id):
-    cat_list = get_toplevel_categories()
+    cat_list = get_sorted_categories()
     category = session.query(Category).filter_by(id=category_id).one()
     parent_id = category.parent_id
     prepopulated_data = Prepopulated_Data(category, cat_list)
@@ -100,7 +100,7 @@ def category_edit(category_id):
 def category_delete(category_id):
 
     category = session.query(Category).filter_by(id=category_id).one()
-    cat_list = get_toplevel_categories()
+    cat_list = get_sorted_categories()
     data = Prepopulated_Data(category, cat_list)
     delete_category_form = DeleteCategoryForm(obj=category)
 

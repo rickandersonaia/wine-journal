@@ -1,0 +1,1 @@
+from winejournal.blueprints.wines.views import wines

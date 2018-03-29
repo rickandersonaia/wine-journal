@@ -12,7 +12,7 @@ def get_unsorted_categories():
     return session.query(Category).all()
 
 
-def get_toplevel_categories():
+def get_sorted_categories():
     top_list = {}
     cats = get_unsorted_categories()
     for cat_1 in cats:
