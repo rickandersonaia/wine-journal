@@ -1,27 +1,37 @@
 {% extends "base.html" %}
-{% block title %}All Wine Categories{% endblock %}
-{% block meta_description %}A list of all wine categories in the
+{% block title %}{{ wine.name }}{% endblock %}
+{% block meta_description %}A list of all wine wines in the
     journal{% endblock %}
 
 {% block content %}
     <div class="mdl-layout__content container">
-        <h1>Wine Category Detail</h1>
+        <h1>Wine Detail</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
                 <div class="mdl-cell mdl-cell--4-col">
                     <div class="mdl-card mdl-shadow--2dp ">
                         <div class="mdl-card__title mdl-card--border">
                             <h2 class="mdl-card__title-text">
-                                {{ category.name }}</h2>
+                                {{ wine.name }} - {{ wine.vintage }}</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-                            {% if category.description %}
-                                <p>{{ category.description }}</p>
+                            <p>{{ region.name }} - {{ region.country }}</p>
+                            {% if wine.maker %}
+                                <p>{{ wine.maker }}</p>
                             {% endif %}
-                            {% if category.parent %}
-                                <p>Parent Category: {{ category.parent }}</p>
+                             {% if category.name %}
+                                <p>Category: {{ category.name }}</p>
                             {% endif %}
-                            <p>Category ID: {{ category.category.id }}</p>
+                            {% if price %}
+                                <p>Price: {{ price }}</p>
+                            {% endif %}
+                            {% if wine.description %}
+                                <p>{{ wine.description }}</p>
+                            {% endif %}
+                            {% if wine.owner %}
+                                <p>Shared b: {{ wine.owner }}</p>
+                            {% endif %}
+                            <p>Wine ID: {{ wine.id }}</p>
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
                             <div class="mdl-grid">
@@ -29,8 +39,8 @@
                                     <a class="mdl-button mdl-js-button
                                     mdl-button--raised mdl-js-ripple-effect
                                     mdl-button--accent"
-                                       href="{{ url_for('categories.category_edit',
-                                    category_id = category.category.id) }}">
+                                       href="{{ url_for('wines.wine_edit',
+                                    wine_id = wine.id) }}">
                                         Edit</a>
                                 </div>
 
@@ -42,7 +52,7 @@
                                                 mdl-button--colored
                                                 mdl-typography--text-right"
                                        href="{{ url_for(
-                                        'categories.list_categories') }}">
+                                        'wines.list_wines') }}">
                                         Cancel</a>
                                 </div>
                             </div>

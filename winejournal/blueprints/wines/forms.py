@@ -17,11 +17,13 @@ class NewWineForm(FlaskForm):
 class EditWineForm(FlaskForm):
     name = StringField('Wine name', validators=[InputRequired()])
     maker = StringField('Wine maker', validators=[InputRequired()])
-    vintgage = IntegerField('Vintage')
+    vintage = IntegerField('Vintage')
     price = IntegerSliderField('Price Range')
     description = TextAreaField('Wine description')
     category = StringField('Wine category')
     region = StringField('Wine region')
+    owner = IntegerField('Owner')
+
 
 class DeleteWineForm(FlaskForm):
     region = StringField('Wine region')

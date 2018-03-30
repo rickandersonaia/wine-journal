@@ -9,6 +9,8 @@ from winejournal.blueprints.categories.sorted_list import \
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
 from winejournal.data_models.wines import Wine
+from winejournal.data_models.regions import Region
+from winejournal.data_models.categories import Category
 from winejournal.data_models.models import engine
 
 # setup database connection & initialize session
@@ -34,7 +36,6 @@ def new_wine():
     if new_wine_form.validate_on_submit():
         categoryId = get_category_id(new_wine_form.category.data, cat_list)
         regionId = get_region_id(new_wine_form.region.data, reg_list)
-        print(categoryId)
         wine = Wine(
             name=new_wine_form.name.data,
             maker=new_wine_form.maker.data,
@@ -42,7 +43,8 @@ def new_wine():
             price=new_wine_form.price.data,
             description=new_wine_form.description.data,
             category=categoryId,
-            region=regionId
+            region=regionId,
+            owner='1'
         )
 
         session.add(wine)
@@ -59,28 +61,39 @@ def new_wine():
 
 @wines.route('/<int:wine_id>/', methods=['GET'])
 def wine_detail(wine_id):
-    cat_list = get_sorted_categories()
     wine = session.query(Wine).filter_by(id=wine_id).one()
-    data = Prepopulated_Data(wine, cat_list)
-    return render_template('wines/wine-detail.html', wine=data)
+    region = session.query(Region).filter_by(id=wine.region).one()
+    category = session.query(Category).filter_by(id=wine.category)
+    price = get_dollar_signs(wine)
+    return render_template('wines/wine-detail.html',
+                           wine=wine,
+                           region=region,
+                           category=category,
+                           price=price)
 
 
 @wines.route('/<int:wine_id>/edit', methods=['GET', 'POST'])
 def wine_edit(wine_id):
     cat_list = get_sorted_categories()
+    reg_list = get_sorted_regions()
     wine = session.query(Wine).filter_by(id=wine_id).one()
-    parent_id = wine.parent_id
-    prepopulated_data = Prepopulated_Data(wine, cat_list)
+    prepopulated_data = Formatted_Data(wine, cat_list, reg_list)
 
     edit_wine_form = EditWineForm(obj=prepopulated_data)
 
     if request.method == 'POST':
         if edit_wine_form.validate_on_submit():
-            parentId = get_parent_id(edit_wine_form, cat_list)
+            categoryId = get_category_id(edit_wine_form.category.data, cat_list)
+            regionId = get_region_id(edit_wine_form.region.data, reg_list)
 
             wine.name = edit_wine_form.name.data
+            wine.maker = edit_wine_form.maker.data
+            wine.vintage = edit_wine_form.vintage.data
+            wine.price = edit_wine_form.price.data
             wine.description = edit_wine_form.description.data
-            wine.parent_id = parentId
+            wine.region = regionId
+            wine.category = categoryId
+            wine.owner = edit_wine_form.owner.data
 
             session.add(wine)
             session.commit()
@@ -88,26 +101,19 @@ def wine_edit(wine_id):
             flash(message)
             return redirect(url_for('wines.list_wines'))
 
-    if request.method == 'DELETE':
-        session.delete(wine)
-        session.commit()
-        message = 'You deleted the {} wine'.format(wine.name)
-        flash(message)
-        return redirect(url_for('wines.list_wines'))
-
     return render_template('wines/wine-edit.html',
                            form=edit_wine_form,
                            cat_list=cat_list,
-                           parent_id=parent_id,
+                           reg_list=reg_list,
                            wine=wine)
 
 
 @wines.route('/<int:wine_id>/delete', methods=['GET', 'POST'])
 def wine_delete(wine_id):
-
     wine = session.query(Wine).filter_by(id=wine_id).one()
-    cat_list = get_sorted_categories()
-    data = Prepopulated_Data(wine, cat_list)
+    region = session.query(Region).filter_by(id=wine.region).one()
+    category = session.query(Category).filter_by(id=wine.category)
+    price = get_dollar_signs(wine)
     delete_wine_form = DeleteWineForm(obj=wine)
 
     if request.method == 'POST':
@@ -116,41 +122,54 @@ def wine_delete(wine_id):
             session.commit()
             message = 'You deleted the {} wine'.format(wine.name)
             flash(message)
-            return redirect(url_for('wines.list_categories'))
+            return redirect(url_for('wines.list_wines'))
 
     return render_template('wines/wine-delete.html',
-                           wine=data,
-                           form=delete_wine_form)
+                           form=delete_wine_form,
+                           wine=wine,
+                           region=region,
+                           category=category,
+                           price=price)
 
 
-def get_parent_id(form, cat_list):
-    parentId = 0
-    if form.parent.data:
-        for id, name in cat_list.items():
-            if name == form.parent.data:
-                parentId = int(id)
-
-    return parentId
-
-
-class Prepopulated_Data:
-    def __init__(self, wine, cat_list):
+class Formatted_Data:
+    def __init__(self, wine, cat_list, reg_list):
 
         self.wine = wine
         self.cat_list = cat_list
+        self.reg_list = reg_list
         self.name = wine.name
+        self.maker = wine.maker
+        self.vintage = wine.vintage
+        self.price = wine.price
         self.description = wine.description
-        self.parent = self.get_parent_label()
+        self.category = self.get_category_label()
+        self.region = self.get_region_label()
+        self.owner = wine.owner
 
-    def get_parent_label(self):
-        parent_id = self.wine.parent_id
-        parentLabel = ''
-        if parent_id:
+
+    def get_category_label(self):
+        category_id = self.wine.category
+        categoryLabel = ''
+        if category_id:
             for id, name in self.cat_list.items():
-                if id == parent_id:
-                    parentLabel = name
+                if id == category_id:
+                    categoryLabel = name
 
-        return parentLabel
+        return categoryLabel
+
+
+    def get_region_label(self):
+        region_id = self.wine.region
+        regionLabel = ''
+        if region_id:
+            for id, name in self.reg_list.items():
+                if id == region_id:
+                    regionLabel = name
+
+        return regionLabel
+
+
 
 def get_category_id(category, cat_list):
     categoryId = ''
@@ -159,6 +178,7 @@ def get_category_id(category, cat_list):
             if name == category:
                 categoryId = int(id)
     return categoryId
+
 
 def get_region_id(region, reg_list):
     regionId = ''
@@ -170,3 +190,10 @@ def get_region_id(region, reg_list):
 
     # print(regionId)
     return regionId
+
+
+def get_dollar_signs(wine):
+    dollar_signs = ['Not known', '$', '$$', '$$$', '$$$$', '$$$$$']
+    priceLabel = ''
+    priceLabel = dollar_signs[wine.price]
+    return priceLabel

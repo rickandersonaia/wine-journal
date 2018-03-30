@@ -1,5 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, ForeignKey, Integer, String
 from winejournal.data_models.models import Base
 
 
@@ -14,6 +13,7 @@ class Wine(Base):
     description = Column(String(250))
     region = Column(Integer, ForeignKey('regions.id'))
     category = Column(Integer, ForeignKey('categories.id'))
+    owner = Column(Integer, server_default='1')
 
     @property
     def serialize(self):
@@ -25,5 +25,6 @@ class Wine(Base):
             'price': self.price,
             'description': self.description,
             'region': self.region,
+            'category': self.category,
             'category': self.category,
         }
