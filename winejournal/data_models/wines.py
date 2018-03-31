@@ -26,5 +26,5 @@ class Wine(Base):
             'description': self.description,
             'region': self.region,
             'category': self.category,
-            'category': self.category,
+            'owner': self.owner,
         }

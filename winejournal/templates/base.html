@@ -34,8 +34,14 @@
     </div>
 
 </div>
+
+{#body bottom#}
+
 <script src="{{ url_for('static', filename='js/material.min.js' ) }}"></script>
+
+
 {% block footer_scripts %}{% endblock %}
+
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
