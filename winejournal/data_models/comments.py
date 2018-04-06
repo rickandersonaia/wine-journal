@@ -8,6 +8,7 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(80), nullable = False)
     tasting_notes = db.Column(db.String(250))
+    image = db.Column(db.String(250))
     vintage = db.Column(db.String(15))
     rating = db.Column(db.Float(12))
     price = db.Column(db.Float(12))
@@ -21,6 +22,7 @@ class Comment(db.Model):
             'author_id': self.author_id,
             'title': self.title,
             'tasting_notes': self.tasting_notes,
+            'image': self.image,
             'vintage': self.vintage,
             'rating': self.rating,
             'price': self.price,

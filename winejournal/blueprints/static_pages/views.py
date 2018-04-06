@@ -59,13 +59,13 @@ def twitter_logged_in(blueprint, token):
 
     if account_info.ok:
         account_info_json = account_info.json()
-        usename = account_info_json['screen_name']
-        query = db.session.query(User).filter_by(usename=usename)
+        username = account_info_json['screen_name']
+        query = db.session.query(User).filter_by(username=username)
 
         try:
             user = query.one()
         except NoResultFound:
-            user = User(usename=usename)
+            user = User(username=username)
             db.session.add(user)
             db.session.commit()
 

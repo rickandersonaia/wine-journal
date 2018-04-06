@@ -93,7 +93,6 @@ def category_edit(category_id):
 
 @categories.route('/<int:category_id>/delete', methods=['GET', 'POST'])
 def category_delete(category_id):
-
     category = db.session.query(Category).filter_by(id=category_id).one()
     cat_list = get_sorted_categories()
     data = Prepopulated_Data(category, cat_list)

@@ -10,6 +10,7 @@ class Wine(db.Model):
     vintage = db.Column(db.String(80), index= True)
     price = db.Column(db.Integer)
     description = db.Column(db.String(250))
+    image = db.Column(db.String(250))
     region = db.Column(db.Integer, db.ForeignKey('regions.id'))
     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
     owner = db.Column(db.Integer, server_default='1')
@@ -23,6 +24,7 @@ class Wine(db.Model):
             'vintage': self.vintage,
             'price': self.price,
             'description': self.description,
+            'image': self.image,
             'region': self.region,
             'category': self.category,
             'owner': self.owner,

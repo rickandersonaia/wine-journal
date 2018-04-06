@@ -27,18 +27,28 @@ crowd sourced journal of wine and wine tastings
 All of the necessary dependencies should already be installed, however the requirements.txt file
 contains all of the dependencies of the project.  Running `pip3` will install them
 
-## Build
-
-JavaScript, SCSS and images are compiled, compressed and minimized upon save. The build artifacts will be stored in the `static/` directory.
-
 ## Custom CLI
 
 From the root directory run `winejournal` to see the commands available
+
+## Create and Initialize the Database
+
+From the root directory run `winejournal db` to see the commands available.  The `init` command will build a new database, setup the tables and create a default admin user.
+Run `winejournal db init` to initialize the database, including adding a default user
+Run `winejournal db reset` to delete and reinitialize the database
+Run `winejournal db seed` to add the default user to the existing database
+The `--with-testdb` flad will create a database with the data base uri appended by _test
+
+
+## Build
+
+JavaScript, SCSS and images are compiled, compressed and minimized upon save. The build artifacts will be stored in the `static/` directory.
 
 ## Running unit tests
 
 From the root directory run `winejournal test` to run the unit tests.  This library uses pytest.
 Run `winejournal cov` for the unit test coverage report
+Run `winejournal flake8` for code standards check.
 
 ## Running code quality tests
 
