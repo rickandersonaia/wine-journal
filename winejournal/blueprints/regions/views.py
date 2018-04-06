@@ -1,18 +1,13 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
-from sqlalchemy.orm import sessionmaker
-
 from winejournal.blueprints.regions.country_list import Countries
 from winejournal.blueprints.regions.forms import \
     NewRegionForm, EditRegionForm, DeleteRegionForm
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
-from winejournal.data_models.models import engine
+from winejournal.extensions import db
 from winejournal.data_models.regions import Region
 
-# setup database connection & initialize session
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 regions = Blueprint('regions', __name__, template_folder='templates',
                     url_prefix='/regions')
@@ -46,8 +41,8 @@ def new_region():
             state=new_region_form.state.data
         )
 
-        session.add(region)
-        session.commit()
+        db.session.add(region)
+        db.session.commit()
         message = 'You added the {} region'.format(region.name)
         flash(message)
         return redirect(url_for('regions.list_regions'))
@@ -62,7 +57,7 @@ def new_region():
 @regions.route('/<int:region_id>/', methods=['GET'])
 def region_detail(region_id):
     reg_list = get_sorted_regions()
-    region = session.query(Region).filter_by(id=region_id).one()
+    region = db.session.query(Region).filter_by(id=region_id).one()
     data = Prepopulated_Data(region, reg_list)
     print(data)
     return render_template('regions/region-detail.html', region=data)
@@ -73,7 +68,7 @@ def region_edit(region_id):
     reg_list = get_sorted_regions()
     country_list = Countries.country_list(region_id)
     state_list = Countries.state_list(region_id)
-    region = session.query(Region).filter_by(id=region_id).one()
+    region = db.session.query(Region).filter_by(id=region_id).one()
     parent_id = region.parent_id
     prepopulated_data = Prepopulated_Data(region, reg_list)
 
@@ -89,15 +84,15 @@ def region_edit(region_id):
             region.country = edit_region_form.country.data
             region.state = edit_region_form.state.data
 
-            session.add(region)
-            session.commit()
+            db.session.add(region)
+            db.session.commit()
             message = 'You updated the {} region'.format(region.name)
             flash(message)
             return redirect(url_for('regions.list_regions'))
 
     if request.method == 'DELETE':
-        session.delete(region)
-        session.commit()
+        db.session.delete(region)
+        db.session.commit()
         message = 'You deleted the {} region'.format(region.name)
         flash(message)
         return redirect(url_for('regions.list_regions'))
@@ -113,15 +108,15 @@ def region_edit(region_id):
 
 @regions.route('/<int:region_id>/delete', methods=['GET', 'POST'])
 def region_delete(region_id):
-    region = session.query(Region).filter_by(id=region_id).one()
+    region = db.session.query(Region).filter_by(id=region_id).one()
     reg_list = get_sorted_regions()
     data = Prepopulated_Data(region, reg_list)
     delete_region_form = DeleteRegionForm(obj=region)
 
     if request.method == 'POST':
         if delete_region_form.validate_on_submit():
-            session.delete(region)
-            session.commit()
+            db.session.delete(region)
+            db.session.commit()
             message = 'You deleted the {} region'.format(region.name)
             flash(message)
             return redirect(url_for('regions.list_regions'))

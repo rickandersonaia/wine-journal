@@ -1,15 +1,9 @@
-from sqlalchemy.orm import sessionmaker
-
+from winejournal.extensions import db
 from winejournal.data_models.categories import Category
-from winejournal.data_models.models import engine
-
-# setup database connection & initialize session
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 
 def get_unsorted_categories():
-    return session.query(Category).all()
+    return db.session.query(Category).all()
 
 
 def get_sorted_categories():

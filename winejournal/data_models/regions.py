@@ -1,17 +1,15 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
-from winejournal.data_models.models import Base
+from winejournal.extensions import db
 
 
-class Region(Base):
+class Region(db.Model):
     __tablename__ = 'regions'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String(80), nullable = False)
-    description = Column(String(250))
-    parent_id = Column(Integer)
-    country = Column(String(20), index=True)
-    state = Column(String(20), index=True)
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(80), nullable = False)
+    description = db.Column(db.String(250))
+    parent_id = db.Column(db.Integer)
+    country = db.Column(db.String(20), index=True)
+    state = db.Column(db.String(20), index=True)
 
     @property
     def serialize(self):

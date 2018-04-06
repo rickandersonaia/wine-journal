@@ -1,21 +1,21 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
-from sqlalchemy.ext.declarative import declarative_base
-from winejournal.data_models.models import Base
+from winejournal.extensions import db
+from flask_login import UserMixin
 
 
-class User(Base):
+
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key = True)
-    username = Column(String(50), default='')
-    password = Column(String(255), nullable=False, default='')
-    email = Column(String(255), nullable = False, unique=True)
-    first_name = Column(String(50), nullable=False, default='')
-    last_name = Column(String(50), nullable=False, default='')
-    display_name = Column(String(50), default='')
-    image = Column(String(255))
-    role = Column(String(10), server_default='member', index=True)
-    is_enabled = Column(Boolean(), server_default=True, index=True)
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(50), default='')
+    password = db.Column(db.String(255), default='')
+    email = db.Column(db.String(255), unique=True)
+    first_name = db.Column(db.String(50), nullable=False, default='')
+    last_name = db.Column(db.String(50), nullable=False, default='')
+    display_name = db.Column(db.String(50), default='')
+    image = db.Column(db.String(255))
+    role = db.Column(db.String(10), server_default='member', index=True)
+    is_enabled = db.Column(db.Boolean(), server_default='True')
 
     @property
     def serialize(self):

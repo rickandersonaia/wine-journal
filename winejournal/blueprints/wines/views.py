@@ -11,11 +11,8 @@ from winejournal.blueprints.regions.sorted_list import \
 from winejournal.data_models.wines import Wine
 from winejournal.data_models.regions import Region
 from winejournal.data_models.categories import Category
-from winejournal.data_models.models import engine
+from winejournal.extensions import db
 
-# setup database connection & initialize session
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 wines = Blueprint('wines', __name__, template_folder='templates',
                        url_prefix='/wine')
@@ -23,7 +20,7 @@ wines = Blueprint('wines', __name__, template_folder='templates',
 
 @wines.route('/', methods=['GET'])
 def list_wines():
-    wine_list = session.query(Wine).all()
+    wine_list = db.session.query(Wine).all()
     return render_template('wines/wine-list.html',
                            wine_list=wine_list)
 
@@ -47,8 +44,8 @@ def new_wine():
             owner='1'
         )
 
-        session.add(wine)
-        session.commit()
+        db.session.add(wine)
+        db.session.commit()
         message = 'You added {} to the journal'.format(wine.name)
         flash(message)
         return redirect(url_for('wines.list_wines'))
@@ -61,9 +58,9 @@ def new_wine():
 
 @wines.route('/<int:wine_id>/', methods=['GET'])
 def wine_detail(wine_id):
-    wine = session.query(Wine).filter_by(id=wine_id).one()
-    region = session.query(Region).filter_by(id=wine.region).one()
-    category = session.query(Category).filter_by(id=wine.category)
+    wine = db.session.query(Wine).filter_by(id=wine_id).one()
+    region = db.session.query(Region).filter_by(id=wine.region).one()
+    category = db.session.query(Category).filter_by(id=wine.category)
     price = get_dollar_signs(wine)
     return render_template('wines/wine-detail.html',
                            wine=wine,
@@ -76,7 +73,7 @@ def wine_detail(wine_id):
 def wine_edit(wine_id):
     cat_list = get_sorted_categories()
     reg_list = get_sorted_regions()
-    wine = session.query(Wine).filter_by(id=wine_id).one()
+    wine = db.session.query(Wine).filter_by(id=wine_id).one()
     prepopulated_data = Formatted_Data(wine, cat_list, reg_list)
 
     edit_wine_form = EditWineForm(obj=prepopulated_data)
@@ -95,8 +92,8 @@ def wine_edit(wine_id):
             wine.category = categoryId
             wine.owner = edit_wine_form.owner.data
 
-            session.add(wine)
-            session.commit()
+            db.session.add(wine)
+            db.session.commit()
             message = 'You updated the {} wine'.format(wine.name)
             flash(message)
             return redirect(url_for('wines.list_wines'))
@@ -110,16 +107,16 @@ def wine_edit(wine_id):
 
 @wines.route('/<int:wine_id>/delete', methods=['GET', 'POST'])
 def wine_delete(wine_id):
-    wine = session.query(Wine).filter_by(id=wine_id).one()
-    region = session.query(Region).filter_by(id=wine.region).one()
-    category = session.query(Category).filter_by(id=wine.category)
+    wine = db.session.query(Wine).filter_by(id=wine_id).one()
+    region = db.session.query(Region).filter_by(id=wine.region).one()
+    category = db.session.query(Category).filter_by(id=wine.category)
     price = get_dollar_signs(wine)
     delete_wine_form = DeleteWineForm(obj=wine)
 
     if request.method == 'POST':
         if delete_wine_form.validate_on_submit():
-            session.delete(wine)
-            session.commit()
+            db.session.delete(wine)
+            db.session.commit()
             message = 'You deleted the {} wine'.format(wine.name)
             flash(message)
             return redirect(url_for('wines.list_wines'))

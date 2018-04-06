@@ -1,15 +1,11 @@
 from sqlalchemy.orm import sessionmaker
 
 from winejournal.data_models.regions import Region
-from winejournal.data_models.models import engine
-
-# setup database connection & initialize session
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+from winejournal.extensions import db
 
 
 def get_unsorted_regions():
-    return session.query(Region).all()
+    return db.session.query(Region).all()
 
 
 def get_sorted_regions():

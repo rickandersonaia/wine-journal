@@ -1,20 +1,18 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
-from winejournal.data_models.models import Base
+from winejournal.extensions import db
 
 
-class Comment(Base):
+class Comment(db.Model):
     __tablename__ = 'comments'
 
-    id = Column(Integer, primary_key = True)
-    author_id = Column(Integer, ForeignKey('users.id'))
-    title = Column(String(80), nullable = False)
-    tasting_notes = Column(String(250))
-    vintage = Column(String(15))
-    rating = Column(Float(12))
-    price = Column(Float(12))
-    likes = Column(Integer(8))
-    dlikes = Column(Integer(8))
+    id = db.Column(db.Integer, primary_key = True)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    title = db.Column(db.String(80), nullable = False)
+    tasting_notes = db.Column(db.String(250))
+    vintage = db.Column(db.String(15))
+    rating = db.Column(db.Float(12))
+    price = db.Column(db.Float(12))
+    likes = db.Column(db.Integer(8))
+    dlikes = db.Column(db.Integer(8))
 
     @property
     def serialize(self):

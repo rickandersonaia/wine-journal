@@ -1,19 +1,18 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
-from winejournal.data_models.models import Base
+from winejournal.extensions import db
 
 
-class Wine(Base):
+class Wine(db.Model):
     __tablename__ = 'wines'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String(80), nullable = False)
-    maker = Column(String(80), nullable = False)
-    vintage = Column(String(80), index= True)
-    price = Column(Integer)
-    description = Column(String(250))
-    region = Column(Integer, ForeignKey('regions.id'))
-    category = Column(Integer, ForeignKey('categories.id'))
-    owner = Column(Integer, server_default='1')
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(80), nullable = False)
+    maker = db.Column(db.String(80), nullable = False)
+    vintage = db.Column(db.String(80), index= True)
+    price = db.Column(db.Integer)
+    description = db.Column(db.String(250))
+    region = db.Column(db.Integer, db.ForeignKey('regions.id'))
+    category = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    owner = db.Column(db.Integer, server_default='1')
 
     @property
     def serialize(self):

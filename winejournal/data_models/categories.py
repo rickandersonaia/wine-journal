@@ -1,14 +1,13 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float
-from winejournal.data_models.models import Base, engine
+from winejournal.extensions import db
 
 
-class Category(Base):
+class Category(db.Model):
     __tablename__ = 'categories'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String(80), nullable = False)
-    description = Column(String(250))
-    parent_id = Column(Integer, index=True)
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(80), nullable = False)
+    description = db.Column(db.String(250))
+    parent_id = db.Column(db.Integer, index=True)
 
     @property
     def serialize(self):

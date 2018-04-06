@@ -1,17 +1,12 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
-from sqlalchemy.orm import sessionmaker
 
 from winejournal.blueprints.categories.forms import \
     NewCategoryForm, EditCategoryForm, DeleteCategoryForm
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.data_models.categories import Category
-from winejournal.data_models.models import engine
-
-# setup database connection & initialize session
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+from winejournal.extensions import db
 
 categories = Blueprint('categories', __name__, template_folder='templates',
                        url_prefix='/categories')
@@ -40,8 +35,8 @@ def new_category():
             parent_id=parentId
         )
 
-        session.add(category)
-        session.commit()
+        db.session.add(category)
+        db.session.commit()
         message = 'You added the {} category'.format(category.name)
         flash(message)
         return redirect(url_for('categories.list_categories'))
@@ -54,7 +49,7 @@ def new_category():
 @categories.route('/<int:category_id>/', methods=['GET'])
 def category_detail(category_id):
     cat_list = get_sorted_categories()
-    category = session.query(Category).filter_by(id=category_id).one()
+    category = db.session.query(Category).filter_by(id=category_id).one()
     data = Prepopulated_Data(category, cat_list)
     return render_template('categories/category-detail.html', category=data)
 
@@ -62,7 +57,7 @@ def category_detail(category_id):
 @categories.route('/<int:category_id>/edit', methods=['GET', 'POST'])
 def category_edit(category_id):
     cat_list = get_sorted_categories()
-    category = session.query(Category).filter_by(id=category_id).one()
+    category = db.session.query(Category).filter_by(id=category_id).one()
     parent_id = category.parent_id
     prepopulated_data = Prepopulated_Data(category, cat_list)
 
@@ -76,15 +71,15 @@ def category_edit(category_id):
             category.description = edit_category_form.description.data
             category.parent_id = parentId
 
-            session.add(category)
-            session.commit()
+            db.session.add(category)
+            db.session.commit()
             message = 'You updated the {} category'.format(category.name)
             flash(message)
             return redirect(url_for('categories.list_categories'))
 
     if request.method == 'DELETE':
-        session.delete(category)
-        session.commit()
+        db.session.delete(category)
+        db.session.commit()
         message = 'You deleted the {} category'.format(category.name)
         flash(message)
         return redirect(url_for('categories.list_categories'))
@@ -99,15 +94,15 @@ def category_edit(category_id):
 @categories.route('/<int:category_id>/delete', methods=['GET', 'POST'])
 def category_delete(category_id):
 
-    category = session.query(Category).filter_by(id=category_id).one()
+    category = db.session.query(Category).filter_by(id=category_id).one()
     cat_list = get_sorted_categories()
     data = Prepopulated_Data(category, cat_list)
     delete_category_form = DeleteCategoryForm(obj=category)
 
     if request.method == 'POST':
         if delete_category_form.validate_on_submit():
-            session.delete(category)
-            session.commit()
+            db.session.delete(category)
+            db.session.commit()
             message = 'You deleted the {} category'.format(category.name)
             flash(message)
             return redirect(url_for('categories.list_categories'))
