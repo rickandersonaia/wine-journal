@@ -21,6 +21,7 @@
     {% endblock %}
 </head>
 <body>
+{% include 'login.html' %}
 <div class="mdl-layout mdl-js-layout">
     {% include 'header.html' %}
 
@@ -38,7 +39,19 @@
 {#body bottom#}
 
 <script src="{{ url_for('static', filename='js/material.min.js' ) }}"></script>
-
+<script src="{{ url_for('static', filename='js/dialog-polyfill.js' ) }}"></script>
+<script>
+    var dialog = document.querySelector('dialog');
+    dialogPolyfill.registerDialog(dialog);
+    // Now dialog acts like a native <dialog>.
+    {#dialog.showModal();#}
+    document.querySelector('#login').onclick = function () {
+        dialog.showModal();
+    };
+    document.querySelector('.modal-close').onclick = function () {
+        dialog.close();
+    };
+</script>
 
 {% block footer_scripts %}{% endblock %}
 

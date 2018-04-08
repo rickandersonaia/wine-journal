@@ -1,9 +1,9 @@
 //Desktop width
 
-.container{
-  width:100%;
-  max-width:1140px;
-  margin:0 auto;
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 // Inspired by Chris Coyier's Range Input Value Bubbles
@@ -17,11 +17,12 @@ output {
   color: white;
   border-radius: 10px;
   display: inline-block;
-  font-size:15px;
+  font-size: 15px;
   line-height: 30px;
   bottom: 28px;
   left: 0;
 }
+
 output:after {
   content: "";
   position: absolute;
@@ -35,13 +36,56 @@ output:after {
   margin-left: -5px;
   margin-top: -1px;
 }
+
 .range_wrapper {
   position: relative;
   width: 300px;
 
-  label{
-    display:inline-block;
+  label {
+    display: inline-block;
     padding-bottom: 40px;
   }
 }
 
+//Login form
+.mdl-dialog .modal-close{
+  float:right;
+}
+.mdl-dialog__actions--full-width > * {
+  box-sizing: border-box;
+}
+.mdl-button.google,
+.mdl-button.google:focus:not(:active){
+  background-color: #d34836;
+}
+
+.mdl-button.twitter,
+.mdl-button.twitter:focus:not(:active){
+  background-color:#00aced;
+}
+
+mdl-button.facebook,
+.mdl-button.facebook:focus:not(:active){
+  background-color:#3A589E;
+}
+
+.mdl-button.facebook,
+.mdl-button.twitter,
+.mdl-button.google{
+  color:#fff;
+  text-align: center;
+  margin-bottom:10px;
+  padding-top:5px;
+}
+
+.mdl-button.facebook:hover,
+.mdl-button.twitter:hover,
+.mdl-button.google:hover{
+  color:#2d2d2d;
+  background-color:#d2d2d2;
+}
+
+.mdl-button.twitter{
+  color:#fff;
+  background-color:#00aced;
+}

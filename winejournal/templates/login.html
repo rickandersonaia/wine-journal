@@ -1,0 +1,23 @@
+<dialog class="mdl-dialog">
+
+    <h4 class="mdl-dialog__title">
+        Login
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab modal-close">
+            <i class="material-icons">close</i>
+        </button>
+    </h4>
+    <div class="mdl-dialog__content">
+        <p>Sign in using your favorite social media platform</p>
+    </div>
+    <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+        <a href="{{ url_for('static_pages.twitter_login') }}"
+           class="mdl-button mdl-button--raised twitter mdl-js-button" title="Sign in with Twitter">
+            Sign in with Twitter
+        </a>
+        <a href="{{ url_for('static_pages.google_login') }}"
+           class="mdl-button mdl-js-button mdl-button--raised google" title="Sign in with Google">
+            Sign in with Google
+        </a>
+    </div>
+
+</dialog>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}All Users{% endblock %}
+{% block meta_description %}A list of all users registered in the
+    journal{% endblock %}
+
+{% block content %}
+    <div class="mdl-layout__content container">
+        <h1>Wines</h1>
+        <div class="mdl-grid">
+            <div class="mdl-cell--4-col">
+                <a class="mdl-button mdl-js-button
+                        mdl-button--raised
+                        mdl-js-ripple-effect
+                        mdl-button--colored"
+                   href="{{ url_for('users.new_user') }}">
+                    Add New User</a>
+                <ul class="mdl-list">
+                    {% for user in user_list %}
+                        <li class="mdl-list__item">
+                            {{ user.id }}, {{ user.username }} - {{ user.email }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

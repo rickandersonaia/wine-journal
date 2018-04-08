@@ -1,10 +1,14 @@
 from flask import Flask
 from flask_assets import Environment, Bundle
 from winejournal.blueprints.static_pages import staticPages
-from winejournal.blueprints.static_pages.views import twitter_blueprint
+from winejournal.blueprints.static_pages.views import \
+    twitter_blueprint, \
+    google_blueprint,\
+    facebook_blueprint
 from winejournal.blueprints.categories import categories
 from winejournal.blueprints.regions import regions
 from winejournal.blueprints.wines import wines
+from winejournal.blueprints.users import users
 from winejournal.extensions import (
     debug_toolbar,
     csrf,
@@ -37,7 +41,10 @@ def create_app(settings_override=None):
     app.register_blueprint(categories)
     app.register_blueprint(regions)
     app.register_blueprint(wines)
+    app.register_blueprint(users)
     app.register_blueprint(twitter_blueprint, url_prefix='/twitter_login')
+    app.register_blueprint(google_blueprint, url_prefix='/google_login')
+    app.register_blueprint(facebook_blueprint, url_prefix='/facebook_login')
 
     extensions(app)
 

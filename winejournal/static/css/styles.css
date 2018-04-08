@@ -19,7 +19,7 @@
     bottom: 28px;
     left: 0; }
 
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000325}}
+    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000326}}
     output:after {
       content: "";
       position: absolute;
@@ -33,11 +33,48 @@
       margin-left: -5px;
       margin-top: -1px; }
 
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000338}}
+      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000340}}
       .range_wrapper {
         position: relative;
         width: 300px; }
-        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000341}}
+        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000343}}
         .range_wrapper label {
           display: inline-block;
           padding-bottom: 40px; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000351}}
+.mdl-dialog .modal-close {
+  float: right; }
+
+  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000354}}
+  .mdl-dialog__actions--full-width > * {
+    box-sizing: border-box; }
+
+    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000358}}
+    .mdl-button.google, .mdl-button.google:focus:not(:active) {
+      background-color: #d34836; }
+
+      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000363}}
+      .mdl-button.twitter, .mdl-button.twitter:focus:not(:active) {
+        background-color: #00aced; }
+
+        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000368}}
+        mdl-button.facebook, .mdl-button.facebook:focus:not(:active) {
+          background-color: #3A589E; }
+
+          @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000374}}
+          .mdl-button.facebook, .mdl-button.twitter, .mdl-button.google {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+            padding-top: 5px; }
+
+            @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000383}}
+            .mdl-button.facebook:hover, .mdl-button.twitter:hover, .mdl-button.google:hover {
+              color: #2d2d2d;
+              background-color: #d2d2d2; }
+
+              @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000388}}
+              .mdl-button.twitter {
+                color: #fff;
+                background-color: #00aced; }

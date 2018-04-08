@@ -11,8 +11,8 @@ crowd sourced journal of wine and wine tastings
 2. Add the following lines of code after line 30
 
     `pip3 install flask-assets webassets pytest pytest-flask pytest-cov flake8 scss
-     pip3 install psycopg2 flask-wtf wtforms-components flask-debugtoolbar flask-login
-     pip3 install `
+     pip3 install psycopg2 flask-debugtoolbar flask-login
+     pip3 install WTForms-Alchemy flask-wtf wtforms-components`
 
 3. In the terminal window run `vagrant up --provision`
 4. In the same terminal window run `vagrant ssh`

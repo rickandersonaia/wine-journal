@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
-from sqlalchemy.orm import sessionmaker
 
 from winejournal.blueprints.wines.forms import \
     NewWineForm, EditWineForm, DeleteWineForm
