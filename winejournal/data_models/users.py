@@ -1,5 +1,7 @@
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
+from flask import redirect, url_for, flash
 from werkzeug.security import generate_password_hash
+from functools import wraps
 
 from winejournal.extensions import db
 
@@ -36,6 +38,18 @@ class User(db.Model, UserMixin):
     def is_active(self):
         return self.is_enabled
 
+    def is_admin(self):
+        if self.role =="admin":
+            return True
+        else:
+            return False
+
+    def is_owner(self, owner_id):
+        if self.id == owner_id:
+            return True
+        else:
+            return False
+
     @classmethod
     def find_by_identity(cls, identity):
         """
@@ -65,3 +79,49 @@ class User(db.Model, UserMixin):
             return generate_password_hash(plaintext_password)
 
         return None
+
+
+def role_list():
+    roles = [
+        ('member', 'regular member'),
+        ('admin', 'administrator')
+    ]
+    return roles
+
+
+def admin_required(f):
+    """
+    Ensure a user is admin, if not redirect them to the home page.
+
+    :return: Function
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_admin():
+            flash('You must be an admin to view that page')
+            return redirect(url_for('wines.list_wines'))
+
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+def owner_required(f):
+    """
+    Ensure a user is admin, if not redirect them to the home page.
+
+    :return: Function
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_admin():
+            return f(*args, **kwargs)
+        else:
+            user_id = kwargs['user_id']
+            if current_user.id != user_id:
+                flash('You must be the owner to access that page')
+                return redirect(url_for('wines.list_wines'))
+
+            return f(*args, **kwargs)
+
+    return decorated_function
+

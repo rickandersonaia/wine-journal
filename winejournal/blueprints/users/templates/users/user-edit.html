@@ -1,0 +1,57 @@
+{% from '_material_form_fields.html' import
+        render_text_input_field,
+        render_radio_button_field,
+        render_checkbox_field%}
+{% extends "base.html" %}
+{% block title %}Edit {{ display_name }}'s profile{% endblock %}
+{% block meta_description %}Edit {{ display_name }} profile in the
+    journal{% endblock %}
+
+{% block content %}
+    <div class="mdl-layout__content container">
+        <h1>Edit the {{ display_name }}'s profile</h1>
+        <div class="mdl-grid">
+            <div class="mdl-cell--4-col">
+                <form method="post"
+                      action=""
+                      enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    {{ render_text_input_field(form.username) }}
+                    {{ render_text_input_field(form.email) }}
+                    {{ render_text_input_field(form.email2) }}
+                    {{ render_text_input_field(form.password) }}
+                    {{ render_text_input_field(form.password2) }}
+                    {{ render_text_input_field(form.first_name) }}
+                    {{ render_text_input_field(form.last_name) }}
+                    {{ render_text_input_field(form.display_name) }}
+                    {{ render_text_input_field(form.image) }}
+                    {{ render_radio_button_field(form.role) }}
+                    {{ render_checkbox_field(form.is_enabled) }}
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--6-col">
+                            <button class="mdl-button mdl-js-button
+                                           mdl-button--raised"
+                                    type="submit">
+                                Save Edits
+                            </button>
+                        </div>
+                        <div class="mdl-cell mdl-cell--6-col
+                                    mdl-typography--text-right">
+                            <a class="mdl-button mdl-js-button
+                                      mdl-button--raised mdl-js-ripple-effect
+                                      mdl-button--accent"
+                               href="{{ url_for('users.user_delete',
+                                    user_id = user.id) }}">
+                                Delete</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer_scripts %}
+    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='js/input-bubbles.js' ) }}"></script>
+{% endblock %}

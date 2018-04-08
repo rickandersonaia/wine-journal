@@ -64,7 +64,6 @@ def show_login():
 
 
 @staticPages.route('/logout')
-@login_required
 def logout():
     logout_user()
     flash('You are now logged out')

@@ -10,6 +10,7 @@ from winejournal.blueprints.regions.sorted_list import \
 from winejournal.data_models.wines import Wine
 from winejournal.data_models.regions import Region
 from winejournal.data_models.categories import Category
+from winejournal.data_models.users import admin_required
 from winejournal.extensions import db
 
 
@@ -25,6 +26,7 @@ def list_wines():
 
 
 @wines.route('/new', methods=['GET', 'POST'])
+@admin_required
 def new_wine():
     cat_list = get_sorted_categories()
     reg_list = get_sorted_regions()
@@ -193,3 +195,24 @@ def get_dollar_signs(wine):
     priceLabel = ''
     priceLabel = dollar_signs[wine.price]
     return priceLabel
+
+
+def wine_author_required(f):
+    """
+    Ensure a user is admin, if not redirect them to the home page.
+
+    :return: Function
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_admin():
+            return f(*args, **kwargs)
+        else:
+            user_id = kwargs['user_id']
+            if current_user.id != user_id:
+                flash('You must be the owner to access that page')
+                return redirect(url_for('wines.list_wines'))
+
+            return f(*args, **kwargs)
+
+    return decorated_function

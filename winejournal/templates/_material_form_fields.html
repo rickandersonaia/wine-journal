@@ -49,9 +49,9 @@
             {% for id, name in list.items() %}
                 <li class="mdl-menu__item"
                         {% if id == parent_id %}
-                            data-selected="true"
+                    data-selected="true"
                         {% endif %}
-                            data-val="{{ id }}">{{ name }}</li>
+                    data-val="{{ id }}">{{ name }}</li>
             {% endfor %}
         </ul>
     </div>
@@ -70,9 +70,9 @@
             {% for id, name in list.items() %}
                 <li class="mdl-menu__item"
                         {% if name == field.data %}
-                            data-selected="true"
+                    data-selected="true"
                         {% endif %}
-                            data-val="{{ id }}">{{ name }}</li>
+                    data-val="{{ id }}">{{ name }}</li>
             {% endfor %}
         </ul>
     </div>
@@ -92,9 +92,9 @@
             {% for name in list %}
                 <li class="mdl-menu__item"
                         {% if name == field.data %}
-                            data-selected="true"
+                    data-selected="true"
                         {% endif %}
-                            data-val="{{ name }}">{{ name }}</li>
+                    data-val="{{ name }}">{{ name }}</li>
             {% endfor %}
         </ul>
     </div>
@@ -117,7 +117,35 @@
     <div class="range_wrapper">
         {{ field.label() }}
         {{ field(class_='mdl-slider mdl-js-slider', **kwargs) |safe }}
-        <output for="{{ field.name }}" onforminput="value = {{ field.value }}.valueAsNumber;"></output>
+        <output for="{{ field.name }}"
+                onforminput="value = {{ field.value }}.valueAsNumber;"></output>
     </div>
 
+{% endmacro %}
+
+{#Template for Radio Button field#}
+
+{% macro render_radio_button_field(field) %}
+    <div class="mdl-textfield">
+    {% for subfield in field %}
+
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
+               for="{{ subfield.id }}">
+            {{ subfield(class_='mdl-radio__button', **kwargs) |safe }}
+            <span class="mdl-radio__label">{{ subfield.label }}</span>
+        </label>
+    {% endfor %}
+    </div>
+{% endmacro %}
+
+{#Template for Checkbox field#}
+
+{% macro render_checkbox_field(field) %}
+    <div class="mdl-textfield">
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+               for="{{ field.id }}">
+            {{ field(class_='mdl-checkbox__input', **kwargs) |safe }}
+            <span class="mdl-checkbox__label">{{ field.label }}</span>
+        </label>
+    </div>
 {% endmacro %}

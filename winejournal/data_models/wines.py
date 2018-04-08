@@ -13,7 +13,7 @@ class Wine(db.Model):
     image = db.Column(db.String(250))
     region = db.Column(db.Integer, db.ForeignKey('regions.id'))
     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
-    owner = db.Column(db.Integer, server_default='1')
+    owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     @property
     def serialize(self):
