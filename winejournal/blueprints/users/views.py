@@ -98,19 +98,21 @@ def user_edit(user_id):
 @login_required
 def user_delete(user_id):
     user = db.session.query(User).filter_by(id=user_id).one()
+    display_name = choose_display_name(user_id)
     delete_user_form = DeleteUserForm(obj=user)
 
     if request.method == 'POST':
         if delete_user_form.validate_on_submit():
             db.session.delete(user)
             db.session.commit()
-            message = 'You deleted the {} user'.format(user.name)
+            message = 'You deleted the {} user'.format(display_name)
             flash(message)
             return redirect(url_for('users.list_users'))
 
     return render_template('users/user-delete.html',
                            form=delete_user_form,
-                           user=user)
+                           user=user,
+                           display_name=display_name)
 
 
 def choose_display_name(user_id):
