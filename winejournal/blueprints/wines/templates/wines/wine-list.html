@@ -8,12 +8,14 @@
         <h1>Wines</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
+            {% if current_user.is_authenticated %}
                 <a class="mdl-button mdl-js-button
                         mdl-button--raised
                         mdl-js-ripple-effect
                         mdl-button--colored"
                    href="{{ url_for('wines.new_wine') }}">
                     Add New Wine</a>
+            {% endif %}
                 <ul class="mdl-list">
                     {% for wine in wine_list %}
                         <li class="mdl-list__item">

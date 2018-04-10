@@ -1,15 +1,17 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
 
+from flask_login import current_user, login_required
+
 from winejournal.blueprints.wines.forms import \
     NewWineForm, EditWineForm, DeleteWineForm
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
-from winejournal.data_models.wines import Wine
+from winejournal.data_models.wines import Wine, wine_owner_required
 from winejournal.data_models.regions import Region
-from winejournal.data_models.categories import Category
+from winejournal.data_models.categories import Category, category_owner_required
 from winejournal.data_models.users import admin_required
 from winejournal.extensions import db
 
@@ -26,7 +28,7 @@ def list_wines():
 
 
 @wines.route('/new', methods=['GET', 'POST'])
-@admin_required
+@login_required
 def new_wine():
     cat_list = get_sorted_categories()
     reg_list = get_sorted_regions()
@@ -42,7 +44,7 @@ def new_wine():
             description=new_wine_form.description.data,
             category=categoryId,
             region=regionId,
-            owner='1'
+            owner=current_user.id
         )
 
         db.session.add(wine)
@@ -59,22 +61,32 @@ def new_wine():
 
 @wines.route('/<int:wine_id>/', methods=['GET'])
 def wine_detail(wine_id):
-    wine = db.session.query(Wine).filter_by(id=wine_id).one()
-    region = db.session.query(Region).filter_by(id=wine.region).one()
-    category = db.session.query(Category).filter_by(id=wine.category)
+    display_name = current_user.displayName()
+    avatar = current_user.avatar()
+    is_admin = current_user.is_admin()
+    is_owner = get_is_owner(wine_id)
+    wine = db.session.query(Wine).get(wine_id)
+    region = db.session.query(Region).get(wine.region)
+    category = db.session.query(Category).get(wine.category)
     price = get_dollar_signs(wine)
     return render_template('wines/wine-detail.html',
                            wine=wine,
                            region=region,
                            category=category,
-                           price=price)
+                           price=price,
+                           is_admin=is_admin,
+                           is_owner=is_owner,
+                           display_name=display_name,
+                           avatar=avatar)
 
 
 @wines.route('/<int:wine_id>/edit', methods=['GET', 'POST'])
+@wine_owner_required
 def wine_edit(wine_id):
+    is_admin = current_user.is_admin()
     cat_list = get_sorted_categories()
     reg_list = get_sorted_regions()
-    wine = db.session.query(Wine).filter_by(id=wine_id).one()
+    wine = db.session.query(Wine).get(wine_id)
     prepopulated_data = Formatted_Data(wine, cat_list, reg_list)
 
     edit_wine_form = EditWineForm(obj=prepopulated_data)
@@ -103,10 +115,12 @@ def wine_edit(wine_id):
                            form=edit_wine_form,
                            cat_list=cat_list,
                            reg_list=reg_list,
-                           wine=wine)
+                           wine=wine,
+                           is_admin=is_admin)
 
 
 @wines.route('/<int:wine_id>/delete', methods=['GET', 'POST'])
+@admin_required
 def wine_delete(wine_id):
     wine = db.session.query(Wine).filter_by(id=wine_id).one()
     region = db.session.query(Region).filter_by(id=wine.region).one()
@@ -197,22 +211,10 @@ def get_dollar_signs(wine):
     return priceLabel
 
 
-def wine_author_required(f):
-    """
-    Ensure a user is admin, if not redirect them to the home page.
+def get_is_owner(wine_id):
+    wine = db.session.query(Wine).get(wine_id)
+    if wine.owner == current_user.id:
+        return True
+    else:
+        return False
 
-    :return: Function
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if current_user.is_admin():
-            return f(*args, **kwargs)
-        else:
-            user_id = kwargs['user_id']
-            if current_user.id != user_id:
-                flash('You must be the owner to access that page')
-                return redirect(url_for('wines.list_wines'))
-
-            return f(*args, **kwargs)
-
-    return decorated_function

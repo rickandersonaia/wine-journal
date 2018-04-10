@@ -26,13 +26,14 @@
                         {{ form.csrf_token }}
                             <div class="mdl-grid">
                             <div class="mdl-cell mdl-cell--6-col">
+                            {% if is_admin %}
                             <button class="mdl-button mdl-js-button
                                 mdl-button--raised mdl-js-ripple-effect
                                 mdl-button--accent"
                                 type="submit">
                                 Delete</button>
                                 </div>
-
+                            {% endif %}
                             <div class="mdl-cell mdl-cell--6-col mdl-typography--text-right">
                             <a class="mdl-button mdl-js-button
                                 mdl-button--raised mdl-js-ripple-effect

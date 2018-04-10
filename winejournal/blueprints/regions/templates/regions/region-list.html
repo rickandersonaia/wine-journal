@@ -8,12 +8,14 @@
         <h1>Wine Regions</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
+            {% if current_user.is_authenticated %}
                 <a class="mdl-button mdl-js-button
                         mdl-button--raised
                         mdl-js-ripple-effect
                         mdl-button--colored"
                    href="{{ url_for('regions.new_region') }}">
                     New Region</a>
+            {% endif %}
                 <ul class="mdl-list">
                     {% for id, name in region_list.items() %}
                         <li class="mdl-list__item">

@@ -1,8 +1,10 @@
-from flask_login import UserMixin, current_user
-from flask import redirect, url_for, flash
-from werkzeug.security import generate_password_hash
 from functools import wraps
 
+from flask import redirect, url_for, flash
+from flask_login import UserMixin, current_user
+from werkzeug.security import generate_password_hash
+
+from config.settings import INITIAL_ADMIN_SETUP
 from winejournal.extensions import db
 
 
@@ -39,16 +41,25 @@ class User(db.Model, UserMixin):
         return self.is_enabled
 
     def is_admin(self):
-        if self.role =="admin":
+        if self.role == "admin" or INITIAL_ADMIN_SETUP == False:
             return True
         else:
             return False
 
-    def is_owner(self, owner_id):
-        if self.id == owner_id:
-            return True
+    def displayName(self):
+        if self.display_name:
+            return self.display_name
+        elif self.username:
+            return self.username
+        elif self.email:
+            return self.email
+        return None
+
+    def avatar(self):
+        if self.image:
+            return self.image
         else:
-            return False
+            return None
 
     @classmethod
     def find_by_identity(cls, identity):
@@ -95,22 +106,26 @@ def admin_required(f):
 
     :return: Function
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not current_user.is_admin():
             flash('You must be an admin to view that page')
-            return redirect(url_for('wines.list_wines'))
+            return redirect(url_for('users.list_users'))
 
         return f(*args, **kwargs)
 
     return decorated_function
 
+
 def owner_required(f):
     """
-    Ensure a user is admin, if not redirect them to the home page.
+    Ensure a user is admin or the actual user,
+    if not redirect them to the user list page.
 
     :return: Function
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if current_user.is_admin():
@@ -119,9 +134,8 @@ def owner_required(f):
             user_id = kwargs['user_id']
             if current_user.id != user_id:
                 flash('You must be the owner to access that page')
-                return redirect(url_for('wines.list_wines'))
+                return redirect(url_for('users.list_users'))
 
             return f(*args, **kwargs)
 
     return decorated_function
-

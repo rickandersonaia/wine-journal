@@ -1,13 +1,15 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
+from flask_login import current_user, login_required
+
 from winejournal.blueprints.regions.country_list import Countries
 from winejournal.blueprints.regions.forms import \
     NewRegionForm, EditRegionForm, DeleteRegionForm
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
+from winejournal.data_models.regions import Region, region_owner_required
+from winejournal.data_models.users import admin_required
 from winejournal.extensions import db
-from winejournal.data_models.regions import Region
-
 
 regions = Blueprint('regions', __name__, template_folder='templates',
                     url_prefix='/regions')
@@ -21,6 +23,7 @@ def list_regions():
 
 
 @regions.route('/new', methods=['GET', 'POST'])
+@login_required
 def new_region():
     reg_list = get_sorted_regions()
     country_list = Countries.country_list('')
@@ -38,7 +41,8 @@ def new_region():
             description=new_region_form.description.data,
             parent_id=parentId,
             country=new_region_form.country.data,
-            state=new_region_form.state.data
+            state=new_region_form.state.data,
+            owner=current_user.id
         )
 
         db.session.add(region)
@@ -56,15 +60,22 @@ def new_region():
 
 @regions.route('/<int:region_id>/', methods=['GET'])
 def region_detail(region_id):
+    is_admin = current_user.is_admin()
+    is_owner = get_is_owner(region_id)
     reg_list = get_sorted_regions()
     region = db.session.query(Region).filter_by(id=region_id).one()
     data = Prepopulated_Data(region, reg_list)
     print(data)
-    return render_template('regions/region-detail.html', region=data)
+    return render_template('regions/region-detail.html',
+                           region=data,
+                           is_admin=is_admin,
+                           is_owner=is_owner)
 
 
 @regions.route('/<int:region_id>/edit', methods=['GET', 'POST'])
+@region_owner_required
 def region_edit(region_id):
+    is_admin = current_user.is_admin()
     reg_list = get_sorted_regions()
     country_list = Countries.country_list(region_id)
     state_list = Countries.state_list(region_id)
@@ -90,23 +101,18 @@ def region_edit(region_id):
             flash(message)
             return redirect(url_for('regions.list_regions'))
 
-    if request.method == 'DELETE':
-        db.session.delete(region)
-        db.session.commit()
-        message = 'You deleted the {} region'.format(region.name)
-        flash(message)
-        return redirect(url_for('regions.list_regions'))
-
     return render_template('regions/region-edit.html',
                            form=edit_region_form,
                            reg_list=reg_list,
                            parent_id=parent_id,
                            region=region,
                            country_list=country_list,
-                           state_list=state_list)
+                           state_list=state_list,
+                           is_admin=is_admin)
 
 
 @regions.route('/<int:region_id>/delete', methods=['GET', 'POST'])
+@admin_required
 def region_delete(region_id):
     region = db.session.query(Region).filter_by(id=region_id).one()
     reg_list = get_sorted_regions()
@@ -156,3 +162,11 @@ class Prepopulated_Data:
                     parentLabel = name
 
         return parentLabel
+
+
+def get_is_owner(region_id):
+    reg = db.session.query(Region).get(region_id)
+    if reg.owner == current_user.id:
+        return True
+    else:
+        return False

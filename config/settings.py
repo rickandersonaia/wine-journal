@@ -10,6 +10,8 @@ GOOGLE_CLIENT_SECRETS = ''
 TWITTER_API_KEY = ''
 TWITTER_API_SECRET = ''
 
+INITIAL_ADMIN_SETUP = True
+
 # Flask-Mail.
 # MAIL_DEFAULT_SENDER = 'contact@local.host'
 # MAIL_SERVER = 'smtp.gmail.com'

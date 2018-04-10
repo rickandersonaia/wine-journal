@@ -1,4 +1,8 @@
 from winejournal.extensions import db
+from functools import wraps
+from flask_login import current_user
+from flask import redirect, url_for, flash
+
 
 
 class Wine(db.Model):
@@ -29,3 +33,27 @@ class Wine(db.Model):
             'category': self.category,
             'owner': self.owner,
         }
+
+
+def wine_owner_required(f):
+    """
+    Ensure a user is either an admin or the owner of the wine,
+    if not redirect them to the wine list page.
+
+    :return: Function
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_admin():
+            return f(*args, **kwargs)
+        else:
+            wine_id = kwargs['wine_id']
+            wine = db.session.query(Wine).get(wine_id)
+            owner_id = wine.owner
+            if current_user.id != owner_id:
+                flash('You must be the owner to access that page')
+                return redirect(url_for('wines.list_wines'))
+
+            return f(*args, **kwargs)
+
+    return decorated_function

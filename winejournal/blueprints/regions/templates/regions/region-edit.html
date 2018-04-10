@@ -2,7 +2,7 @@
         render_text_input_field,
         render_textarea_field,
         render_select_input_field,
-        render_simple_select_input_field%}
+        render_simple_select_input_field %}
 {% extends "base.html" %}
 {% block title %}Edit the {{ form.name.data }} region{% endblock %}
 {% block meta_description %}Edit {{ form.name.data }} region in the
@@ -37,12 +37,14 @@
                         </div>
                         <div class="mdl-cell mdl-cell--6-col
                                     mdl-typography--text-right">
-                            <a class="mdl-button mdl-js-button
+                            {% if is_admin %}
+                                <a class="mdl-button mdl-js-button
                                       mdl-button--raised mdl-js-ripple-effect
                                       mdl-button--accent"
-                               href="{{ url_for('regions.region_delete',
+                                   href="{{ url_for('regions.region_delete',
                                     region_id = region.id) }}">
-                                Delete</a>
+                                    Delete</a>
+                            {% endif %}
                         </div>
                     </div>
                 </form>

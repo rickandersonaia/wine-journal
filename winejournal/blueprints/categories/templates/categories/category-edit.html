@@ -34,12 +34,14 @@
                         </div>
                         <div class="mdl-cell mdl-cell--6-col
                                     mdl-typography--text-right">
+                            {% if is_admin %}
                             <a class="mdl-button mdl-js-button
                                       mdl-button--raised mdl-js-ripple-effect
                                       mdl-button--accent"
                                href="{{ url_for('categories.category_delete',
                                     category_id = category.id) }}">
                                 Delete</a>
+                            {% endif %}
                         </div>
                     </div>
 

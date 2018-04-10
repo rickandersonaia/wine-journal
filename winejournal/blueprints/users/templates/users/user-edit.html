@@ -1,7 +1,7 @@
 {% from '_material_form_fields.html' import
         render_text_input_field,
         render_radio_button_field,
-        render_checkbox_field%}
+        render_checkbox_field %}
 {% extends "base.html" %}
 {% block title %}Edit {{ display_name }}'s profile{% endblock %}
 {% block meta_description %}Edit {{ display_name }} profile in the
@@ -25,8 +25,10 @@
                     {{ render_text_input_field(form.last_name) }}
                     {{ render_text_input_field(form.display_name) }}
                     {{ render_text_input_field(form.image) }}
-                    {{ render_radio_button_field(form.role) }}
-                    {{ render_checkbox_field(form.is_enabled) }}
+                    {% if is_admin %}
+                        {{ render_radio_button_field(form.role) }}
+                        {{ render_checkbox_field(form.is_enabled) }}
+                    {% endif %}
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--6-col">
                             <button class="mdl-button mdl-js-button
@@ -37,12 +39,14 @@
                         </div>
                         <div class="mdl-cell mdl-cell--6-col
                                     mdl-typography--text-right">
-                            <a class="mdl-button mdl-js-button
+                            {% if is_admin %}
+                                <a class="mdl-button mdl-js-button
                                       mdl-button--raised mdl-js-ripple-effect
                                       mdl-button--accent"
-                               href="{{ url_for('users.user_delete',
+                                   href="{{ url_for('users.user_delete',
                                     user_id = user.id) }}">
-                                Delete</a>
+                                    Delete</a>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -50,8 +54,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block footer_scripts %}
-    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}"></script>
-    <script src="{{ url_for('static', filename='js/input-bubbles.js' ) }}"></script>
 {% endblock %}

@@ -19,7 +19,7 @@
                             {% if wine.maker %}
                                 <p>{{ wine.maker }}</p>
                             {% endif %}
-                             {% if category.name %}
+                             {% if category %}
                                 <p>Category: {{ category.name }}</p>
                             {% endif %}
                             {% if price %}
@@ -29,19 +29,24 @@
                                 <p>{{ wine.description }}</p>
                             {% endif %}
                             {% if wine.owner %}
-                                <p>Shared b: {{ wine.owner }}</p>
+                                <p><img src="{{ avatar }}" height="50px"
+                                        width="50px"
+                                        alt="{{ display_name }} avatar">
+                                    Shared by: {{ display_name }}</p>
                             {% endif %}
                             <p>Wine ID: {{ wine.id }}</p>
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--6-col">
+                                    {% if is_admin or is_owner %}
                                     <a class="mdl-button mdl-js-button
                                     mdl-button--raised mdl-js-ripple-effect
                                     mdl-button--accent"
                                        href="{{ url_for('wines.wine_edit',
                                     wine_id = wine.id) }}">
                                         Edit</a>
+                                    {% endif %}
                                 </div>
 
                                 <div class="mdl-cell mdl-cell--6-col

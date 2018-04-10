@@ -30,12 +30,14 @@
                         <div class="mdl-card__actions mdl-card--border">
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--6-col">
+                                    {% if is_owner or is_admin %}
                                     <a class="mdl-button mdl-js-button
                                     mdl-button--raised mdl-js-ripple-effect
                                     mdl-button--accent"
                                        href="{{ url_for('users.user_edit',
                                     user_id = user.id) }}">
                                         Edit</a>
+                                    {% endif %}
                                 </div>
 
                                 <div class="mdl-cell mdl-cell--6-col

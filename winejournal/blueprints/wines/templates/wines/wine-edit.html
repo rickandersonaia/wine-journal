@@ -24,7 +24,7 @@
                     {{ render_text_input_field(form.name) }}
                     {{ render_text_input_field(form.maker) }}
                     {{ render_text_input_field(form.vintage) }}
-                    {{ render_range_input_field(form.price, min="0", max="5", value="2", step="1")}}
+                    {{ render_range_input_field(form.price, min="0", max="5", value="2", step="1") }}
                     {{ render_textarea_field(form.description) }}
                     {{ render_select_input_field_wine(form.category, cat_list) }}
                     {{ render_select_input_field_wine(form.region, reg_list) }}
@@ -39,12 +39,14 @@
                         </div>
                         <div class="mdl-cell mdl-cell--6-col
                                     mdl-typography--text-right">
-                            <a class="mdl-button mdl-js-button
+                            {% if is_admin %}
+                                <a class="mdl-button mdl-js-button
                                       mdl-button--raised mdl-js-ripple-effect
                                       mdl-button--accent"
-                               href="{{ url_for('wines.wine_delete',
+                                   href="{{ url_for('wines.wine_delete',
                                     wine_id = wine.id) }}">
-                                Delete</a>
+                                    Delete</a>
+                            {% endif %}
                         </div>
                     </div>
 

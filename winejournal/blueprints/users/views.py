@@ -1,24 +1,25 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
 from flask_login import current_user, login_required
-from functools import wraps
 
 from winejournal.blueprints.users.forms import \
     NewUserForm, EditUserForm, DeleteUserForm
-from winejournal.data_models.users import User, owner_required
+from winejournal.data_models.users import User, owner_required, admin_required
 from winejournal.extensions import db
 
 users = Blueprint('users', __name__, template_folder='templates',
                   url_prefix='/users')
 
 
+
 @users.route('/', methods=['GET'])
 @login_required
 def list_users():
-    current_user
+    is_admin = current_user.is_admin()
     user_list = db.session.query(User).all()
     return render_template('users/user-list.html',
-                           user_list=user_list)
+                           user_list=user_list,
+                           is_admin=is_admin)
 
 
 @users.route('/new', methods=['GET', 'POST'])
@@ -51,17 +52,22 @@ def new_user():
 @users.route('/<int:user_id>/', methods=['GET'])
 @login_required
 def user_detail(user_id):
+    is_admin = current_user.is_admin()
+    is_owner = get_is_owner(user_id)
     user = db.session.query(User).filter_by(id=user_id).one()
     display_name = choose_display_name(user_id)
     return render_template('users/user-detail.html',
                            user=user,
-                           display_name=display_name)
+                           display_name=display_name,
+                           is_admin=is_admin,
+                           is_owner=is_owner)
 
 
 @users.route('/<int:user_id>/edit', methods=['GET', 'POST'])
 @login_required
 @owner_required
 def user_edit(user_id):
+    is_admin = current_user.is_admin()
     user = db.session.query(User).filter_by(id=user_id).one()
     user.email2 = user.email
     user.password2 = user.password
@@ -91,11 +97,12 @@ def user_edit(user_id):
     return render_template('users/user-edit.html',
                            form=edit_user_form,
                            display_name=display_name,
-                           user=user)
+                           user=user,
+                           is_admin=is_admin)
 
 
 @users.route('/<int:user_id>/delete', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def user_delete(user_id):
     user = db.session.query(User).filter_by(id=user_id).one()
     display_name = choose_display_name(user_id)
@@ -125,4 +132,10 @@ def choose_display_name(user_id):
         return user.email
     return None
 
+
+def get_is_owner(user_id):
+    if current_user.id == user_id:
+        return True
+    else:
+        return False
 
