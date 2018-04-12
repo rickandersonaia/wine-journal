@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField
+from wtforms import StringField, TextAreaField, IntegerField, FileField
 from wtforms_components import IntegerSliderField
 from wtforms.validators import InputRequired
 
@@ -12,6 +12,7 @@ class NewWineForm(FlaskForm):
     description = TextAreaField('Wine description')
     category = StringField('Wine category')
     region = StringField('Wine region')
+    image = FileField('Upload an Image')
 
 
 class EditWineForm(FlaskForm):
@@ -23,6 +24,7 @@ class EditWineForm(FlaskForm):
     category = StringField('Wine category')
     region = StringField('Wine region')
     owner = IntegerField('Owner')
+    image = FileField('Upload an Image')
 
 
 class DeleteWineForm(FlaskForm):

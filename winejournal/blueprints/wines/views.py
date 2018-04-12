@@ -1,23 +1,24 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
-
 from flask_login import current_user, login_required
 
-from winejournal.blueprints.wines.forms import \
-    NewWineForm, EditWineForm, DeleteWineForm
+from config.settings import AWS_DEST_BUCKET, AWS_ENDPOINT, \
+    AWS_CLIENT_SECRET_KEY, AWS_CLIENT_ACCESS_KEY, AWS_HOST, DEBUG
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
-from winejournal.data_models.wines import Wine, wine_owner_required
+from winejournal.blueprints.wines.forms import \
+    NewWineForm, EditWineForm, DeleteWineForm
+from winejournal.data_models.categories import Category
 from winejournal.data_models.regions import Region
-from winejournal.data_models.categories import Category, category_owner_required
 from winejournal.data_models.users import admin_required
+from winejournal.data_models.wines import Wine, wine_owner_required
 from winejournal.extensions import db
-
+from winejournal.extensions import csrf
 
 wines = Blueprint('wines', __name__, template_folder='templates',
-                       url_prefix='/wine')
+                  url_prefix='/wine')
 
 
 @wines.route('/', methods=['GET'])
@@ -88,7 +89,6 @@ def wine_edit(wine_id):
     reg_list = get_sorted_regions()
     wine = db.session.query(Wine).get(wine_id)
     prepopulated_data = Formatted_Data(wine, cat_list, reg_list)
-
     edit_wine_form = EditWineForm(obj=prepopulated_data)
 
     if request.method == 'POST':
@@ -104,6 +104,7 @@ def wine_edit(wine_id):
             wine.region = regionId
             wine.category = categoryId
             wine.owner = edit_wine_form.owner.data
+            wine.image = ''
 
             db.session.add(wine)
             db.session.commit()
@@ -116,7 +117,13 @@ def wine_edit(wine_id):
                            cat_list=cat_list,
                            reg_list=reg_list,
                            wine=wine,
-                           is_admin=is_admin)
+                           is_admin=is_admin,
+                           AWS_DEST_BUCKET=AWS_DEST_BUCKET,
+                           AWS_ENDPOINT=AWS_ENDPOINT,
+                           AWS_CLIENT_SECRET_KEY=AWS_CLIENT_SECRET_KEY,
+                           AWS_CLIENT_ACCESS_KEY=AWS_CLIENT_ACCESS_KEY,
+                           AWS_HOST=AWS_HOST,
+                           DEBUG=DEBUG)
 
 
 @wines.route('/<int:wine_id>/delete', methods=['GET', 'POST'])
@@ -159,7 +166,6 @@ class Formatted_Data:
         self.region = self.get_region_label()
         self.owner = wine.owner
 
-
     def get_category_label(self):
         category_id = self.wine.category
         categoryLabel = ''
@@ -170,7 +176,6 @@ class Formatted_Data:
 
         return categoryLabel
 
-
     def get_region_label(self):
         region_id = self.wine.region
         regionLabel = ''
@@ -180,7 +185,6 @@ class Formatted_Data:
                     regionLabel = name
 
         return regionLabel
-
 
 
 def get_category_id(category, cat_list):
@@ -217,4 +221,3 @@ def get_is_owner(wine_id):
         return True
     else:
         return False
-

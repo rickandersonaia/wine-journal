@@ -10,7 +10,7 @@ class Region(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(80), nullable = False)
     description = db.Column(db.String(250))
-    image = db.Column(db.String(250))
+    image = db.Column(db.Integer, db.ForeignKey('media'))
     parent_id = db.Column(db.Integer)
     country = db.Column(db.String(20), index=True)
     state = db.Column(db.String(20), index=True)

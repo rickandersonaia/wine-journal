@@ -1,0 +1,1 @@
+from winejournal.blueprints.s3.views import s3

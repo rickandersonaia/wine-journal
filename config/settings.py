@@ -10,7 +10,11 @@ GOOGLE_CLIENT_SECRETS = ''
 TWITTER_API_KEY = ''
 TWITTER_API_SECRET = ''
 
+#set this flag to true when an initial user has been created and is given the
+# admin role.  This should be false on startup
 INITIAL_ADMIN_SETUP = True
+
+
 
 # Flask-Mail.
 # MAIL_DEFAULT_SENDER = 'contact@local.host'
@@ -36,3 +40,18 @@ REMEMBER_COOKIE_DURATION = timedelta(days=90)
 
 OAUTHLIB_INSECURE_TRANSPORT=1
 OAUTHLIB_RELAX_TOKEN_SCOPE=1
+
+
+# s3 variables
+AWS_CLIENT_ACCESS_KEY='AKIAJ4INPQYMJJH5MQFA'
+AWS_CLIENT_SECRET_KEY='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'
+AWS_DEST_BUCKET='winejournal'
+AWS_ENDPOINT='https://s3-us-west-2.amazonaws.com/winejournal'
+AWS_HOST = 's3-us-west-2.amazonaws.com'
+
+### TO TEST SIMULATED accept/reject signing based on 'expected' data
+# the uuid in these = client_conf.js -> request.params.dataset
+#dd bs=1024 count=1 < /dev/zero > 1kb.txt
+#export P3S3F_EXAMPLE_ALLOW_SMALL=somebucket/731db507-1240-44ab-a616-de95f02aeaa4/1kb.txt
+#dd bs=1024 count=20000 < /dev/zero > 20mb.txt
+#export P3S3F_EXAMPLE_ALLOW_LARGE=somebucket/731db507-1240-44ab-a616-de95f02aeaa4/20mb.txt

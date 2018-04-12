@@ -127,14 +127,14 @@
 
 {% macro render_radio_button_field(field) %}
     <div class="mdl-textfield">
-    {% for subfield in field %}
+        {% for subfield in field %}
 
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
-               for="{{ subfield.id }}">
-            {{ subfield(class_='mdl-radio__button', **kwargs) |safe }}
-            <span class="mdl-radio__label">{{ subfield.label }}</span>
-        </label>
-    {% endfor %}
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
+                   for="{{ subfield.id }}">
+                {{ subfield(class_='mdl-radio__button', **kwargs) |safe }}
+                <span class="mdl-radio__label">{{ subfield.label }}</span>
+            </label>
+        {% endfor %}
     </div>
 {% endmacro %}
 
@@ -148,4 +148,36 @@
             <span class="mdl-checkbox__label">{{ field.label }}</span>
         </label>
     </div>
+{% endmacro %}
+
+{#Template for file field#}
+
+{% macro render_file_field(field, img_url) %}
+    {% if img_url %}
+         <div class="mdl-card-image mdl-card mdl-shadow--2dp" ,
+             style="margin-bottom: 30px;">
+                <img class="mdl-card-image" src="{{ img_url }}" width="330px" height="auto">
+        </div>
+    {% else %}
+        <div class="mdl-textfield">
+            <label>No image selected</label>
+        </div>
+    {% endif %}
+
+    <div class="mdl-form-field mdl-grid">
+        <div class="mdl-cell mdl-cell--8-col">
+            <label class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                   for="{{ field.id }}">
+                {{ field(style="display:none", **kwargs) |safe }}
+                <span class="mdl-checkbox__label">{{ field.label }}</span>
+            </label>
+        </div>
+
+        <div class="mdl-cell mdl-cell--4-col  mdl-typography--text-right">
+            <button class="mdl-button mdl-button--colored mdl-js-button
+                 mdl-button--raised mdl-js-ripple-effect">Delete
+            </button>
+        </div>
+    </div>
+
 {% endmacro %}

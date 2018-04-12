@@ -2,7 +2,8 @@
         render_text_input_field,
         render_textarea_field,
         render_select_input_field_wine,
-        render_range_input_field %}
+        render_range_input_field ,
+        render_file_field %}
 {% extends "base.html" %}
 {% block title %}Edit the {{ form.name.data }} wine{% endblock %}
 {% block meta_description %}Edit {{ form.name.data }} wine in the
@@ -10,6 +11,9 @@
 {% block head_scripts %}
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/getmdl-select.min.css' ) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/fine-uploader-new.min.css') }}">
+    <script src="{{ url_for('static', filename='js/s3.fine-uploader.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -19,7 +23,7 @@
             <div class="mdl-cell--4-col">
                 <form method="post"
                       action=""
-                      enctype="multipart/form-data">
+                      enctype="multipart/form-data" id="qq-form">
                     {{ form.csrf_token }}
                     {{ render_text_input_field(form.name) }}
                     {{ render_text_input_field(form.maker) }}
@@ -28,7 +32,10 @@
                     {{ render_textarea_field(form.description) }}
                     {{ render_select_input_field_wine(form.category, cat_list) }}
                     {{ render_select_input_field_wine(form.region, reg_list) }}
-                    {{ render_text_input_field(form.owner) }}
+                    {% include 'simple-thumbnails.html' %}
+                    {% if is_admin %}
+                        {{ render_text_input_field(form.owner) }}
+                    {% endif %}
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--6-col">
                             <button class="mdl-button mdl-js-button
