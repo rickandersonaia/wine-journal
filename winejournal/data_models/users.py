@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash
 
 from config.settings import INITIAL_ADMIN_SETUP
 from winejournal.extensions import db
+from winejournal.data_models.comments import Comment
+from winejournal.data_models.tastingnotes import TastingNote
 
 
 class User(db.Model, UserMixin):
@@ -21,6 +23,17 @@ class User(db.Model, UserMixin):
     image = db.Column(db.String(255))
     role = db.Column(db.String(10), server_default='member', index=True)
     is_enabled = db.Column(db.Boolean(), server_default='True')
+
+    regions = db.relationship('Region',
+                               backref=db.backref('user', lazy=True))
+    categories = db.relationship('Category',
+                              backref=db.backref('user', lazy=True))
+    wines = db.relationship('Wine',
+                              backref=db.backref('user', lazy=True))
+    tasting_notes = db.relationship('TastingNote',
+                              backref=db.backref('user', lazy=True))
+    comments = db.relationship('Comment',
+                              backref=db.backref('user', lazy=True))
 
     @property
     def serialize(self):

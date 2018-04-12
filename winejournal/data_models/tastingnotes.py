@@ -4,14 +4,22 @@ from flask_login import current_user
 from flask import redirect, url_for, flash
 
 
-class Comment(db.Model):
-    __tablename__ = 'comments'
+class TastingNote(db.Model):
+    __tablename__ = 'tasting_notes'
 
     id = db.Column(db.Integer, primary_key = True)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    text = db.Column(db.Text)
+    title = db.Column(db.String(80), nullable = False)
+    tasting_notes = db.Column(db.Text)
     image = db.Column(db.Integer, db.ForeignKey('media.id'))
-    tnote_id = db.Column(db.Integer, db.ForeignKey('tasting_notes.id'))
+    vintage = db.Column(db.String(15))
+    rating = db.Column(db.Float(12))
+    price = db.Column(db.Float(12))
+    likes = db.Column(db.Integer)
+    dlikes = db.Column(db.Integer)
+
+    comments = db.relationship('Comment',
+                              backref=db.backref('tasting_note', lazy=True))
 
     @property
     def serialize(self):
@@ -29,9 +37,9 @@ class Comment(db.Model):
         }
 
 
-def comment_owner_required(f):
+def tnote_owner_required(f):
     """
-    Ensure a user is admin or the comment owner,
+    Ensure a user is admin or the tasting note owner,
     if not redirect them to the wine list page page.
 
     :return: Function
@@ -41,8 +49,8 @@ def comment_owner_required(f):
         if current_user.is_admin():
             return f(*args, **kwargs)
         else:
-            comment_id = kwargs['comment_id']
-            cat = db.session.query(Comment).get(comment_id)
+            tnote_id = kwargs['tnote_id']
+            cat = db.session.query(TastingNote).get(tnote_id)
             owner_id = cat.author_id
             if current_user.id != owner_id:
                 flash('You must be the owner to access that page')
