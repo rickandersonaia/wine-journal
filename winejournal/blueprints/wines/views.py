@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
 from flask_login import current_user, login_required
 
-from config.settings import AWS_DEST_BUCKET, AWS_ENDPOINT, \
+from instance.settings import AWS_DEST_BUCKET, AWS_ENDPOINT, \
     AWS_CLIENT_SECRET_KEY, AWS_CLIENT_ACCESS_KEY, AWS_HOST, DEBUG
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
@@ -14,8 +14,8 @@ from winejournal.data_models.categories import Category
 from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine, wine_owner_required
+from winejournal.data_models.media import Media
 from winejournal.extensions import db
-from winejournal.extensions import csrf
 
 wines = Blueprint('wines', __name__, template_folder='templates',
                   url_prefix='/wine')

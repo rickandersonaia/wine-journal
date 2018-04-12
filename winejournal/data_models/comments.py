@@ -11,7 +11,7 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(80), nullable = False)
     tasting_notes = db.Column(db.String(250))
-    image = db.Column(db.Integer, db.ForeignKey('media'))
+    image = db.Column(db.Integer, db.ForeignKey('media.id'))
     vintage = db.Column(db.String(15))
     rating = db.Column(db.Float(12))
     price = db.Column(db.Float(12))

@@ -43,15 +43,10 @@ OAUTHLIB_RELAX_TOKEN_SCOPE=1
 
 
 # s3 variables
-AWS_CLIENT_ACCESS_KEY='AKIAJ4INPQYMJJH5MQFA'
-AWS_CLIENT_SECRET_KEY='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'
+AWS_CLIENT_ACCESS_KEY=''
+AWS_CLIENT_SECRET_KEY=''
 AWS_DEST_BUCKET='winejournal'
 AWS_ENDPOINT='https://s3-us-west-2.amazonaws.com/winejournal'
 AWS_HOST = 's3-us-west-2.amazonaws.com'
 
-### TO TEST SIMULATED accept/reject signing based on 'expected' data
-# the uuid in these = client_conf.js -> request.params.dataset
-#dd bs=1024 count=1 < /dev/zero > 1kb.txt
-#export P3S3F_EXAMPLE_ALLOW_SMALL=somebucket/731db507-1240-44ab-a616-de95f02aeaa4/1kb.txt
-#dd bs=1024 count=20000 < /dev/zero > 20mb.txt
-#export P3S3F_EXAMPLE_ALLOW_LARGE=somebucket/731db507-1240-44ab-a616-de95f02aeaa4/20mb.txt
+
