@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, \
 from flask_login import current_user, login_required
 
 from instance.settings import AWS_DEST_BUCKET, AWS_ENDPOINT, \
-    AWS_CLIENT_SECRET_KEY, AWS_CLIENT_ACCESS_KEY, AWS_HOST, DEBUG
+    AWS_CLIENT_ACCESS_KEY, AWS_HOST, JSDEBUG
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.blueprints.regions.sorted_list import \
@@ -62,10 +62,17 @@ def new_wine():
 
 @wines.route('/<int:wine_id>/', methods=['GET'])
 def wine_detail(wine_id):
-    display_name = current_user.displayName()
-    avatar = current_user.avatar()
-    is_admin = current_user.is_admin()
-    is_owner = get_is_owner(wine_id)
+    if current_user.is_authenticated:
+        display_name = current_user.displayName()
+        avatar = current_user.avatar()
+        is_admin = current_user.is_admin()
+        is_owner = get_is_owner(wine_id)
+    else:
+        display_name = None
+        avatar = None
+        is_admin = False
+        is_owner = False
+
     wine = db.session.query(Wine).get(wine_id)
     region = db.session.query(Region).get(wine.region)
     category = db.session.query(Category).get(wine.category)
@@ -120,10 +127,9 @@ def wine_edit(wine_id):
                            is_admin=is_admin,
                            AWS_DEST_BUCKET=AWS_DEST_BUCKET,
                            AWS_ENDPOINT=AWS_ENDPOINT,
-                           AWS_CLIENT_SECRET_KEY=AWS_CLIENT_SECRET_KEY,
                            AWS_CLIENT_ACCESS_KEY=AWS_CLIENT_ACCESS_KEY,
                            AWS_HOST=AWS_HOST,
-                           DEBUG=DEBUG)
+                           JSDEBUG=JSDEBUG)
 
 
 @wines.route('/<int:wine_id>/delete', methods=['GET', 'POST'])
@@ -211,7 +217,10 @@ def get_region_id(region, reg_list):
 def get_dollar_signs(wine):
     dollar_signs = ['Not known', '$', '$$', '$$$', '$$$$', '$$$$$']
     priceLabel = ''
-    priceLabel = dollar_signs[wine.price]
+    if wine.price:
+        priceLabel = dollar_signs[wine.price]
+    else:
+        priceLabel = 'Not known'
     return priceLabel
 
 

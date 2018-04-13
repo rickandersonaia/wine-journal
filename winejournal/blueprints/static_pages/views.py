@@ -10,7 +10,7 @@ from winejournal.data_models.users import User
 from winejournal.data_models.oauth import Oauth
 from winejournal.extensions import db
 from winejournal.extensions import csrf, login_manager
-
+import boto3
 import random, string
 import httplib2
 import json
@@ -19,6 +19,8 @@ from instance.settings import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETS
 from instance.settings import TWITTER_API_KEY, TWITTER_API_SECRET
 from instance.settings import FACEBOOK_OAUTH_CLIENT_ID, \
     FACEBOOK_OAUTH_CLIENT_SECRET
+from instance.settings import AWS_CLIENT_ACCESS_KEY, AWS_CLIENT_SECRET_KEY
+from winejournal import app
 
 staticPages = Blueprint('static_pages', __name__, template_folder='templates')
 
@@ -51,10 +53,17 @@ facebook_blueprint.backend = SQLAlchemyBackend(
     user=current_user,
     user_required=False)
 
-
+client = boto3.client('s3',
+                      aws_access_key_id = AWS_CLIENT_ACCESS_KEY,
+                      aws_secret_access_key = AWS_CLIENT_SECRET_KEY)
 
 @staticPages.route('/')
 def home():
+    static_file_directory = app.static_file_directory(app)
+    s3 = boto3.resource('s3')
+    for bucket in s3.buckets.all():
+        print(bucket.name)
+    # s3.meta.client.upload_file(static_file_directory + '/img/agility-nude-logo5.jpg', 'winejournal', 'logo.jpg')
     return render_template('static_pages/home.html')
 
 

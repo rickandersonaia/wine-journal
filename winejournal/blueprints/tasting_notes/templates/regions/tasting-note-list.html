@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}All Tasting Notes{% endblock %}
+{% block meta_description %}A list of all tasting notes in the
+    journal{% endblock %}
+
+{% block content %}
+    <div class="mdl-layout__content container">
+        <h1>Wine Regions</h1>
+        <div class="mdl-grid">
+            <div class="mdl-cell--4-col">
+            {% if current_user.is_authenticated %}
+                <a class="mdl-button mdl-js-button
+                        mdl-button--raised
+                        mdl-js-ripple-effect
+                        mdl-button--colored"
+                   href="{{ url_for('tasting_notes.new_tasting_note') }}">
+                    New Tasting Note</a>
+            {% endif %}
+                <ul class="mdl-list">
+                    {% for id, title in tasting_notes.items() %}
+                        <li class="mdl-list__item">
+                            <a href="{{ url_for('tasting_notes.tasting_notes_detail', tnote_id=id) }}">
+                                {{ title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

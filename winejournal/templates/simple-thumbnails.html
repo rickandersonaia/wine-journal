@@ -88,9 +88,10 @@
 <div id="uploader"></div>
 <script>
     var uploader = new qq.s3.FineUploader({
-        debug: true,
+        debug: {{ JSDEBUG }},
         element: document.getElementById('uploader'),
         item_Limit: 1,
+        allow_empty: true,
         cors: {
             expected: true
         },
@@ -101,7 +102,7 @@
         request: {
             endpoint: '{{ AWS_ENDPOINT }}',
             accessKey: '{{ AWS_CLIENT_ACCESS_KEY }}',
-        params: { dataset: '731db507-1240-44ab-a616-de95f02aeaa4' }
+            params: { dataset: '731db507-1240-44ab-a616-de95f02aeaa4' }
         },
         signature: {
             endpoint: "/s3/sign"

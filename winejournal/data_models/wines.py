@@ -19,6 +19,9 @@ class Wine(db.Model):
     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    tasting_notes = db.relationship('TastingNote',
+                              backref=db.backref('tasting_notes', lazy=True))
+
     @property
     def serialize(self):
         return {

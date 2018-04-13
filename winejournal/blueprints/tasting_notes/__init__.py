@@ -1,0 +1,1 @@
+from winejournal.blueprints.tasting_notes.views import tastingNote

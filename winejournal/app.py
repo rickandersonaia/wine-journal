@@ -10,12 +10,14 @@ from winejournal.blueprints.regions import regions
 from winejournal.blueprints.wines import wines
 from winejournal.blueprints.users import users
 from winejournal.blueprints.s3 import s3
+from winejournal.blueprints.tasting_notes import tastingNote
 from winejournal.extensions import (
     debug_toolbar,
     csrf,
     db,
     login_manager
 )
+import os
 
 
 def create_app(settings_override=None):
@@ -44,6 +46,7 @@ def create_app(settings_override=None):
     app.register_blueprint(wines)
     app.register_blueprint(users)
     app.register_blueprint(s3)
+    app.register_blueprint(tastingNote)
     app.register_blueprint(twitter_blueprint, url_prefix='/twitter_login')
     app.register_blueprint(google_blueprint, url_prefix='/google_login')
     app.register_blueprint(facebook_blueprint, url_prefix='/facebook_login')
@@ -66,3 +69,7 @@ def extensions(app):
     login_manager.init_app(app)
 
     return None
+
+
+def static_file_directory(app):
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static')

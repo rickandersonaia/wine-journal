@@ -1,24 +1,20 @@
 {% from '_material_form_fields.html' import
         render_text_input_field,
         render_textarea_field,
-        render_select_input_field_wine,
-        render_range_input_field ,
-        render_file_field %}
+        render_select_input_field,
+        render_simple_select_input_field %}
 {% extends "base.html" %}
-{% block title %}Edit the {{ form.name.data }} wine{% endblock %}
-{% block meta_description %}Edit {{ form.name.data }} wine in the
+{% block title %}Edit the {{ form.title.data }} tasting note{% endblock %}
+{% block meta_description %}Edit {{ form.name.data }} region in the
     journal{% endblock %}
 {% block head_scripts %}
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/getmdl-select.min.css' ) }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/fine-uploader-new.min.css') }}">
-    <script src="{{ url_for('static', filename='js/s3.fine-uploader.js') }}"></script>
 {% endblock %}
 
 {% block content %}
     <div class="mdl-layout__content container">
-        <h1>Edit the {{ form.name.data }} wine</h1>
+        <h1>Edit the {{ form.name.data }} region</h1>
         <div class="mdl-grid">
             <div class="mdl-cell--4-col">
                 <form method="post"
@@ -26,16 +22,11 @@
                       enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     {{ render_text_input_field(form.name) }}
-                    {{ render_text_input_field(form.maker) }}
-                    {{ render_text_input_field(form.vintage) }}
-                    {{ render_range_input_field(form.price, min="0", max="5", value="2", step="1") }}
                     {{ render_textarea_field(form.description) }}
-                    {{ render_select_input_field_wine(form.category, cat_list) }}
-                    {{ render_select_input_field_wine(form.region, reg_list) }}
-                    {% include 'simple-thumbnails.html' %}
-                    {% if is_admin %}
-                        {{ render_text_input_field(form.owner) }}
-                    {% endif %}
+                    {{ render_select_input_field(form.parent, reg_list,
+                        parent_id) }}
+                    {{ render_simple_select_input_field(form.country, country_list) }}
+                    {{ render_simple_select_input_field(form.state, state_list) }}
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--6-col">
                             <button class="mdl-button mdl-js-button
@@ -50,19 +41,19 @@
                                 <a class="mdl-button mdl-js-button
                                       mdl-button--raised mdl-js-ripple-effect
                                       mdl-button--accent"
-                                   href="{{ url_for('wines.wine_delete',
-                                    wine_id = wine.id) }}">
+                                   href="{{ url_for('regions.region_delete',
+                                    region_id = region.id) }}">
                                     Delete</a>
                             {% endif %}
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 {% endblock %}
 {% block footer_scripts %}
-    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}"></script>
-    <script src="{{ url_for('static', filename='js/input-bubbles.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}">
+
+    </script>
 {% endblock %}

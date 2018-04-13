@@ -2,6 +2,7 @@ from winejournal.extensions import db
 from functools import wraps
 from flask_login import current_user
 from flask import redirect, url_for, flash
+from winejournal.data_models.wines import Wine
 
 
 class TastingNote(db.Model):
@@ -10,13 +11,14 @@ class TastingNote(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(80), nullable = False)
-    tasting_notes = db.Column(db.Text)
+    text = db.Column(db.Text)
     image = db.Column(db.Integer, db.ForeignKey('media.id'))
     vintage = db.Column(db.String(15))
     rating = db.Column(db.Float(12))
     price = db.Column(db.Float(12))
     likes = db.Column(db.Integer)
     dlikes = db.Column(db.Integer)
+    wine_id = db.Column(db.Integer, db.ForeignKey('wines.id'))
 
     comments = db.relationship('Comment',
                               backref=db.backref('tasting_note', lazy=True))
@@ -27,7 +29,7 @@ class TastingNote(db.Model):
             'id': self.id,
             'author_id': self.author_id,
             'title': self.title,
-            'tasting_notes': self.tasting_notes,
+            'text': self.text,
             'image': self.image,
             'vintage': self.vintage,
             'rating': self.rating,

@@ -49,18 +49,16 @@ def sign_policy(policy):
         'signature': signature.decode("utf-8")
     }
 
-
 def sign_headers(headers):
     """ Sign and return the headers for a chunked upload. """
     encoded_key = str(AWS_CLIENT_SECRET_KEY).encode()
     hmac_v = hmac.new(encoded_key,
-                      bytearray(headers, 'utf-8'),  # hmac doesn't want unicode
+                      bytearray(headers, 'utf-8'), # hmac doesn't want unicode
                       hashlib.sha1)
     signature = base64.b64encode(hmac_v.digest())
     return {
         'signature': signature.decode("utf-8")
     }
-
 
 def challenge_from_headers(headers):
     print(">>>>" + headers)
@@ -71,14 +69,12 @@ def challenge_from_headers(headers):
 
     # now figure out bucket key and uuid from request
     url_data = headers.split('\n')[-1].strip()
-    (bucket, uuid, ext) = re.match(r'/([^/]+)/([^.]+)\.([^?]+)\?uploads',
-                                   url_data).groups()
+    (bucket, uuid, ext) = re.match(r'/([^/]+)/([^.]+)\.([^?]+)\?uploads', url_data).groups()
     for_challenge['bucket'] = bucket
     for_challenge['uuid'] = uuid
     for_challenge['key'] = uuid + '.' + ext
 
     return for_challenge
-
 
 def challenge_from_conditions(conditions):
     for_challenge = {}
@@ -86,7 +82,6 @@ def challenge_from_conditions(conditions):
         for key, value in item.items():
             for_challenge[key] = value
     return for_challenge
-
 
 def challenge_is_good(to_challenge):
     """
@@ -108,12 +103,12 @@ def challenge_is_good(to_challenge):
     # REMOVE/REPLACE BLOCK IN PRODUCTION CODE
     # if os.getenv('P3S3F_EXAMPLE_ALLOW_SMALL') is not None:
     #     if (transfer_req_for == os.getenv('P3S3F_EXAMPLE_ALLOW_SMALL') or
-    #             transfer_req_for == os.getenv('P3S3F_EXAMPLE_ALLOW_LARGE')):
-    #         return True
+    #         transfer_req_for == os.getenv('P3S3F_EXAMPLE_ALLOW_LARGE')):
+    #        return True
     #     return False
 
-    return True
 
+    return True
 
 def challenge_request(request):
     request_payload = request.get_json()
@@ -121,18 +116,15 @@ def challenge_request(request):
     challenge_data = None
     if request_payload.get('headers'):
         # this if is where you'd do some checking against the back end to check allowed to upload
-        # signifies first element of chunked data
-        if request_payload['headers'].startswith('POST') and 'uploadId' not in \
-                request_payload['headers']:
+         # signifies first element of chunked data
+        if request_payload['headers'].startswith('POST') and 'uploadId' not in request_payload['headers']:
             print("\t**** Chunked signing request ****", file=sys.stderr)
             challenge_data = challenge_from_headers(request_payload['headers'])
-            print(challenge_data)
         response_data = sign_headers(request_payload['headers'])
     else:
         # this if is where you'd do some checking against the back end to check allowed to upload
         print("\t**** Un-Chunked signing request ****", file=sys.stderr)
-        challenge_data = challenge_from_conditions(
-            request_payload['conditions'])
+        challenge_data = challenge_from_conditions(request_payload['conditions'])
         response_data = sign_policy(request.data)
 
     # although we've already done the signing, now do the actual challenge
@@ -142,6 +134,7 @@ def challenge_request(request):
             return None
 
     return response_data
+
 
 
 @s3.route("/sign", methods=['POST'])

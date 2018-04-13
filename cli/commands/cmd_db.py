@@ -5,6 +5,9 @@ from sqlalchemy_utils import database_exists, create_database
 from winejournal.app import create_app
 from winejournal.extensions import db
 from winejournal.data_models.users import User
+from winejournal.data_models.categories import Category
+from winejournal.data_models.regions import Region
+from winejournal.data_models.wines import Wine
 
 # Create an app context for the database connection.
 app = create_app()
@@ -54,8 +57,30 @@ def seed():
         email = app.config['SEED_ADMIN_EMAIL'],
         password = app.config['SEED_ADMIN_PASSWORD']
     )
+    category = Category(
+        name='Red Blend',
+        owner='1'
+    )
+    region = Region(
+        name='Columbia Valley',
+        owner='1'
+    )
+    wine = Wine(
+        name='Test Wine',
+        maker='Test Maker',
+        vintage='2000',
+        category='1',
+        region='1',
+        owner='1'
+    )
 
     db.session.add(user)
+    db.session.commit()
+    db.session.add(category)
+    db.session.commit()
+    db.session.add(region)
+    db.session.commit()
+    db.session.add(wine)
     db.session.commit()
 
     return user

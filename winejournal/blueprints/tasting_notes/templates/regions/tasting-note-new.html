@@ -1,0 +1,35 @@
+{% from '_material_form_fields.html' import
+        render_text_input_field,
+        render_textarea_field %}
+{% extends "base.html" %}
+{% block title %}Add new tasting note for {{ wine.name }}{% endblock %}
+{% block meta_description %}Add a new tasting note about {{ wine.name }} to the journal{% endblock %}
+
+
+{% block content %}
+    <div class="mdl-layout__content container">
+        <h1>Add a new Wine Region</h1>
+        <div class="mdl-grid">
+            <div class="mdl-cell--4-col">
+                <form method="post"
+                      action="{{ url_for('regions.new_region') }}"
+                      enctype="multipart/form-data">
+                    {{ form.csrf_token }}
+                    {{ render_text_input_field(form.title) }}
+                    {{ render_textarea_field(form.text) }}
+                    {{ render_text_input_field(form.vintage) }}
+                    {{ render_text_input_field(form.rating) }}
+                    {{ render_text_input_field(form.price) }}
+                    {% include 'simple-thumbnails.html' %}
+                    <button class="mdl-button mdl-js-button mdl-button--raised"
+                            type="submit">
+                        Add new Tasting Note
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer_scripts %}
+    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}"></script>
+{% endblock %}

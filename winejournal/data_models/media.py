@@ -8,7 +8,6 @@ class Media(db.Model):
     name = db.Column(db.String(80), nullable=False)
     uuid = db.Column(db.String(80), nullable=False)
     s3key = db.Column(db.String(80), nullable=False)
-    s3bucket = db.Column(db.String(80), nullable=False)
 
     categories = db.relationship('Category',
                               backref=db.backref('media', lazy=True))
