@@ -10,7 +10,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     text = db.Column(db.Text)
-    image = db.Column(db.Integer, db.ForeignKey('media.id'))
+    image = db.Column(db.String(250))
     tnote_id = db.Column(db.Integer, db.ForeignKey('tasting_notes.id'))
 
     @property

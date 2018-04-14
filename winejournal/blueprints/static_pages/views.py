@@ -61,6 +61,8 @@ client = boto3.client('s3',
 def home():
     static_file_directory = app.static_file_directory(app)
     s3 = boto3.resource('s3')
+    result = client.get_bucket_acl(Bucket='diywptv.winejournal')
+    print(result)
     for bucket in s3.buckets.all():
         print(bucket.name)
     # s3.meta.client.upload_file(static_file_directory + '/img/agility-nude-logo5.jpg', 'winejournal', 'logo.jpg')

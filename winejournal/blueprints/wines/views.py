@@ -14,7 +14,6 @@ from winejournal.data_models.categories import Category
 from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine, wine_owner_required
-from winejournal.data_models.media import Media
 from winejournal.extensions import db
 
 wines = Blueprint('wines', __name__, template_folder='templates',

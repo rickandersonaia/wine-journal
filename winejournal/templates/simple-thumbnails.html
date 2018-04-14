@@ -90,14 +90,15 @@
     var uploader = new qq.s3.FineUploader({
         debug: {{ JSDEBUG }},
         element: document.getElementById('uploader'),
-        item_Limit: 1,
-        allow_empty: true,
+        {#item_Limit: 1,#}
+        {#allow_empty: true,#}
         cors: {
             expected: true
         },
         objectProperties: {
             bucket: '{{ AWS_DEST_BUCKET }}',
-            host: '{{ AWS_HOST }}'
+            host: '{{ AWS_HOST }}',
+            acl: 'public-read'
         },
         request: {
             endpoint: '{{ AWS_ENDPOINT }}',
