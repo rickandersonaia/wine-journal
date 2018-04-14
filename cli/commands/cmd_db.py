@@ -59,19 +59,25 @@ def seed():
     )
     category = Category(
         name='Red Blend',
-        owner='1'
+        description='',
+        parent_id=0,
+        owner=1
     )
     region = Region(
         name='Columbia Valley',
-        owner='1'
+        description='',
+        parent_id=0,
+        country='United States',
+        state='Washington',
+        owner=1
     )
     wine = Wine(
         name='Test Wine',
         maker='Test Maker',
         vintage='2000',
-        category='1',
-        region='1',
-        owner='1'
+        category=1,
+        region=1,
+        owner=1
     )
 
     db.session.add(user)
