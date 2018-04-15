@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_assets import Environment, Bundle
+from flask_uploads import configure_uploads, UploadSet, IMAGES
 from winejournal.blueprints.static_pages import staticPages
 from winejournal.blueprints.static_pages.views import \
     twitter_blueprint, \
@@ -18,6 +19,8 @@ from winejournal.extensions import (
     login_manager
 )
 import os
+
+photos = UploadSet('photos', IMAGES)
 
 
 def create_app(settings_override=None):
@@ -39,6 +42,10 @@ def create_app(settings_override=None):
                  filters='pyscss', output='css/styles.css')
     assets.register('css_all', css)
     assets.init_app(app)
+
+
+    app.config['UPLOADED_PHOTOS_DEST'] = 'winejournal/static/img'
+    configure_uploads(app, photos)
 
     app.register_blueprint(staticPages)
     app.register_blueprint(categories)
@@ -71,5 +78,5 @@ def extensions(app):
     return None
 
 
-def static_file_directory(app):
+def static_file_directory():
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static')

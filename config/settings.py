@@ -14,8 +14,8 @@ TWITTER_API_SECRET = ''
 # admin role.  This should be false on startup
 INITIAL_ADMIN_SETUP = True
 
-
-
+UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
+UPLOADED_PHOTOS_URL = '/static/img/'
 # Flask-Mail.
 # MAIL_DEFAULT_SENDER = 'contact@local.host'
 # MAIL_SERVER = 'smtp.gmail.com'

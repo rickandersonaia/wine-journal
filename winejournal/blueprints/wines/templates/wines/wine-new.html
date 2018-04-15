@@ -2,7 +2,8 @@
         render_text_input_field,
         render_textarea_field,
         render_select_input_field,
-        render_range_input_field%}
+        render_range_input_field,
+        render_file_field %}
 {% extends "base.html" %}
 {% block title %}Add new wine{% endblock %}
 {% block meta_description %}Add a new wine to the journal{% endblock %}
@@ -18,15 +19,17 @@
             <div class="mdl-cell--4-col">
                 <form method="post"
                       action="{{ url_for('wines.new_wine') }}"
-                      enctype="multipart/form-data">
+                      enctype="multipart/form-data"
+                      id="upload-form">
                     {{ form.csrf_token }}
                     {{ render_text_input_field(form.name) }}
                     {{ render_text_input_field(form.maker) }}
                     {{ render_text_input_field(form.vintage) }}
-                    {{ render_range_input_field(form.price, min="0", max="5", value="2", step="1")}}
+                    {{ render_range_input_field(form.price, min="0", max="5", value="2", step="1") }}
                     {{ render_textarea_field(form.description) }}
                     {{ render_select_input_field(form.category, cat_list) }}
                     {{ render_select_input_field(form.region, reg_list) }}
+                    {{ render_file_field(form.image, img_url) }}
                     <button class="mdl-button mdl-js-button mdl-button--raised"
                             type="submit">
                         Add new Wine

@@ -45,12 +45,16 @@
     dialogPolyfill.registerDialog(dialog);
     // Now dialog acts like a native <dialog>.
     {#dialog.showModal();#}
-    document.querySelector('#login').onclick = function () {
-        dialog.showModal();
-    };
-    document.querySelector('.modal-close').onclick = function () {
-        dialog.close();
-    };
+    var login = document.querySelector('#login');
+    if (login) {
+        document.querySelector('#login').onclick = function () {
+            dialog.showModal();
+        };
+        document.querySelector('.modal-close').onclick = function () {
+            dialog.close();
+        };
+    }
+
 </script>
 
 {% block footer_scripts %}{% endblock %}

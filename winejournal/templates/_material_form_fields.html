@@ -153,31 +153,94 @@
 {#Template for file field#}
 
 {% macro render_file_field(field, img_url) %}
-    {% if img_url %}
-         <div class="mdl-card-image mdl-card mdl-shadow--2dp" ,
-             style="margin-bottom: 30px;">
-                <img class="mdl-card-image" src="{{ img_url }}" width="330px" height="auto">
-        </div>
-    {% else %}
-        <div class="mdl-textfield">
-            <label>No image selected</label>
-        </div>
-    {% endif %}
+
+    <div
+            {% if img_url %}
+                class="mdl-card-image mdl-card mdl-shadow--2dp"
+            {% endif %} }} ,
+                style="margin-bottom: 30px;" id="thumbnail">
+        {% if img_url %}
+            <img class="mdl-card-image" src="{{ img_url }}" width="330px"
+                 height="auto">
+        {% endif %}
+    </div>
 
     <div class="mdl-form-field mdl-grid">
         <div class="mdl-cell mdl-cell--8-col">
-            <label class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-                   for="{{ field.id }}">
-                {{ field(style="display:none", **kwargs) |safe }}
-                <span class="mdl-checkbox__label">{{ field.label }}</span>
-            </label>
+            <label for="{{ field.id }}">{{ field.label }} </label>
+            {{ field(onchange="fileSelected();", **kwargs) |safe }}
+            <div id="fileName"></div>
+            <div id="fileSize"></div>
+            <div id="fileType"></div>
         </div>
 
         <div class="mdl-cell mdl-cell--4-col  mdl-typography--text-right">
-            <button class="mdl-button mdl-button--colored mdl-js-button
-                 mdl-button--raised mdl-js-ripple-effect">Delete
-            </button>
+            <div class="mdl-button mdl-button--colored mdl-js-button
+                 mdl-button--raised mdl-js-ripple-effect"
+                    onclick="removeImage();">Delete
+            </div>
         </div>
     </div>
+    <script>
+
+        function fileSelected() {
+            var file = document.getElementById('image').files[0];
+            if (file) {
+                var fileSize = 0;
+                if (file.size > 1024 * 1024)
+                    fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+                else
+                    fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+                document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+                document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+                document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+                showFile();
+            }
+        }
+
+        function showFile() {
+            var fileInput = document.getElementById('image');
+            var fileDisplayArea = document.getElementById('thumbnail');
+            console.log(fileInput)
+
+            console.log('it changed')
+            var file = fileInput.files[0];
+            var imageType = /image.*/;
+
+            if (file.type.match(imageType)) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    fileDisplayArea.innerHTML = "";
+
+                    // Create a new image.
+                    var img = new Image();
+                    // Set the img src property using the data URL.
+                    img.src = reader.result;
+                    img.setAttribute("width", "100%");
+                    img.setAttribute("height", "auto%");
+
+                    // Add the image to the page.
+                    fileDisplayArea.appendChild(img);
+                }
+
+                reader.readAsDataURL(file);
+            } else {
+                fileDisplayArea.innerHTML = "File not supported!";
+            }
+
+        }
+
+        function removeImage() {
+            const file = document.getElementById('image');
+            const hidden = document.getElementById('delete_image');
+            const fileDisplayArea = document.getElementById('thumbnail');
+            file.value = '';
+            hidden.value = "true"
+            fileDisplayArea.innerHTML = "";
+            fileDisplayArea.style.display ='none';
+        }
+    </script>
 
 {% endmacro %}

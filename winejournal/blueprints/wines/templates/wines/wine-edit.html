@@ -11,9 +11,6 @@
 {% block head_scripts %}
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/getmdl-select.min.css' ) }}">
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/fine-uploader-new.min.css') }}">
-    <script src="{{ url_for('static', filename='js/s3.fine-uploader.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -23,7 +20,8 @@
             <div class="mdl-cell--4-col">
                 <form method="post"
                       action=""
-                      enctype="multipart/form-data">
+                      enctype="multipart/form-data" ,
+                      id="upload-form">
                     {{ form.csrf_token }}
                     {{ render_text_input_field(form.name) }}
                     {{ render_text_input_field(form.maker) }}
@@ -32,10 +30,11 @@
                     {{ render_textarea_field(form.description) }}
                     {{ render_select_input_field_wine(form.category, cat_list) }}
                     {{ render_select_input_field_wine(form.region, reg_list) }}
-                    {% include 'simple-thumbnails.html' %}
                     {% if is_admin %}
                         {{ render_text_input_field(form.owner) }}
                     {% endif %}
+                    {{ render_file_field(form.image, wine.image) }}
+                    {{ form.delete_image }}
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--6-col">
                             <button class="mdl-button mdl-js-button

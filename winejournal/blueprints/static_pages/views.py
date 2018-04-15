@@ -20,7 +20,7 @@ from instance.settings import TWITTER_API_KEY, TWITTER_API_SECRET
 from instance.settings import FACEBOOK_OAUTH_CLIENT_ID, \
     FACEBOOK_OAUTH_CLIENT_SECRET
 from instance.settings import AWS_CLIENT_ACCESS_KEY, AWS_CLIENT_SECRET_KEY
-from winejournal import app
+from instance.settings import STATIC_IMAGE_PATH
 
 staticPages = Blueprint('static_pages', __name__, template_folder='templates')
 
@@ -59,7 +59,7 @@ client = boto3.client('s3',
 
 @staticPages.route('/')
 def home():
-    static_file_directory = app.static_file_directory(app)
+    print(STATIC_IMAGE_PATH)
     return render_template('static_pages/home.html')
 
 

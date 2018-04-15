@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
 from flask_login import current_user, login_required
+from flask_uploads import UploadSet, IMAGES
+from werkzeug.utils import secure_filename
 
 from instance.settings import AWS_DEST_BUCKET, AWS_ENDPOINT, \
     AWS_CLIENT_ACCESS_KEY, AWS_HOST, JSDEBUG
@@ -8,6 +10,7 @@ from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
+from winejournal.blueprints.s3.views import get_filename, upload_image
 from winejournal.blueprints.wines.forms import \
     NewWineForm, EditWineForm, DeleteWineForm
 from winejournal.data_models.categories import Category
@@ -15,10 +18,13 @@ from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine, wine_owner_required
 from winejournal.extensions import db
+from winejournal import app
+
 
 wines = Blueprint('wines', __name__, template_folder='templates',
                   url_prefix='/wine')
 
+photos = UploadSet('photos', IMAGES)
 
 @wines.route('/', methods=['GET'])
 def list_wines():
@@ -33,30 +39,40 @@ def new_wine():
     cat_list = get_sorted_categories()
     reg_list = get_sorted_regions()
     new_wine_form = NewWineForm()
-    if new_wine_form.validate_on_submit():
-        categoryId = get_category_id(new_wine_form.category.data, cat_list)
-        regionId = get_region_id(new_wine_form.region.data, reg_list)
-        wine = Wine(
-            name=new_wine_form.name.data,
-            maker=new_wine_form.maker.data,
-            vintage=new_wine_form.vintage.data,
-            price=new_wine_form.price.data,
-            description=new_wine_form.description.data,
-            category=categoryId,
-            region=regionId,
-            owner=current_user.id
-        )
+    img_url = None
+    filename = None
 
-        db.session.add(wine)
-        db.session.commit()
-        message = 'You added {} to the journal'.format(wine.name)
-        flash(message)
-        return redirect(url_for('wines.list_wines'))
+    if request.method == 'POST':
+        if 'image' in request.files and request.files['image'].filename:
+            filename = photos.save(request.files['image'])
+        if new_wine_form.validate_on_submit():
+            categoryId = get_category_id(new_wine_form.category.data, cat_list)
+            regionId = get_region_id(new_wine_form.region.data, reg_list)
+            img_url = upload_image(filename)
+
+            wine = Wine(
+                name=new_wine_form.name.data,
+                maker=new_wine_form.maker.data,
+                vintage=new_wine_form.vintage.data,
+                price=new_wine_form.price.data,
+                description=new_wine_form.description.data,
+                category=categoryId,
+                region=regionId,
+                owner=current_user.id,
+                image=img_url
+            )
+
+            db.session.add(wine)
+            db.session.commit()
+            message = 'You added {} to the journal'.format(wine.name)
+            flash(message)
+            return redirect(url_for('wines.list_wines'))
 
     return render_template('wines/wine-new.html',
                            form=new_wine_form,
                            cat_list=cat_list,
-                           reg_list=reg_list)
+                           reg_list=reg_list,
+                           img_url=img_url)
 
 
 @wines.route('/<int:wine_id>/', methods=['GET'])
@@ -97,7 +113,13 @@ def wine_edit(wine_id):
     prepopulated_data = Formatted_Data(wine, cat_list, reg_list)
     edit_wine_form = EditWineForm(obj=prepopulated_data)
 
+    img_url = None
+    filename = None
+
     if request.method == 'POST':
+        if 'image' in request.files and request.files['image'].filename:
+            filename = photos.save(request.files['image'])
+            img_url = upload_image(filename)
         if edit_wine_form.validate_on_submit():
             categoryId = get_category_id(edit_wine_form.category.data, cat_list)
             regionId = get_region_id(edit_wine_form.region.data, reg_list)
@@ -110,7 +132,12 @@ def wine_edit(wine_id):
             wine.region = regionId
             wine.category = categoryId
             wine.owner = edit_wine_form.owner.data
-            wine.image = ''
+            if img_url:
+                wine.image = img_url
+            else:
+                if edit_wine_form.delete_image.data == "true":
+                    wine.image = ''
+
 
             db.session.add(wine)
             db.session.commit()
@@ -123,12 +150,7 @@ def wine_edit(wine_id):
                            cat_list=cat_list,
                            reg_list=reg_list,
                            wine=wine,
-                           is_admin=is_admin,
-                           AWS_DEST_BUCKET=AWS_DEST_BUCKET,
-                           AWS_ENDPOINT=AWS_ENDPOINT,
-                           AWS_CLIENT_ACCESS_KEY=AWS_CLIENT_ACCESS_KEY,
-                           AWS_HOST=AWS_HOST,
-                           JSDEBUG=JSDEBUG)
+                           is_admin=is_admin)
 
 
 @wines.route('/<int:wine_id>/delete', methods=['GET', 'POST'])
@@ -170,6 +192,7 @@ class Formatted_Data:
         self.category = self.get_category_label()
         self.region = self.get_region_label()
         self.owner = wine.owner
+        self.image = wine.image
 
     def get_category_label(self):
         category_id = self.wine.category
