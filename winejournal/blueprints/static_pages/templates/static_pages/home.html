@@ -1,16 +1,18 @@
 {% extends "base.html" %}
-{% block title%}Rick Anderson's Wine Journal{% endblock %}
-{% block meta_description%}Rick Anderson's Wine Journal - Udacity FSWD Course Project{% endblock %}
+{% block title %}Rick Anderson's Wine Journal{% endblock %}
+{% block meta_description %}Anderson Family and Friends' Wine Journal - Udacity
+    FSWD Course Project{% endblock %}
 {% block content %}
-<div class="mdl-layout__content">
-    <div class="container">
-        <h1 class="mdl-typography--display-3">Rick's Wine Journal</h1>
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col">
-                <p>Home page content</p>
-            </div>
+    <div class="mdl-layout__content">
+        <div class="container">
+            <header class="title-area">
+                <img src="/static/img/group-drinking-wine.jpg"
+                     alt="family drinking wine" height="400px" width="1140px">
+                <h1 class="mdl-typography--display-2">Anderson Family and
+                    Friends' Wine Journal</h1>
+            </header>
+            {% include '/wines/wine-recent-posts.html' %}
         </div>
     </div>
-</div>
 
 {% endblock %}

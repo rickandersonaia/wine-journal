@@ -156,29 +156,36 @@
 
     <div
             {% if img_url %}
-                class="mdl-card-image mdl-card mdl-shadow--2dp"
+                class="mdl-card-image mdl-shadow--3dp"
             {% endif %} }} ,
                 style="margin-bottom: 30px;" id="thumbnail">
         {% if img_url %}
-            <img class="mdl-card-image" src="{{ img_url }}" width="330px"
+            <img class="mdl-card-image" src="{{ img_url }}" width="100%"
                  height="auto">
         {% endif %}
     </div>
 
     <div class="mdl-form-field mdl-grid">
         <div class="mdl-cell mdl-cell--8-col">
-            <label for="{{ field.id }}">{{ field.label }} </label>
-            {{ field(onchange="fileSelected();", **kwargs) |safe }}
-            <div id="fileName"></div>
-            <div id="fileSize"></div>
-            <div id="fileType"></div>
+            <label for="{{ field.id }}" class="file-container mdl-button
+                   mdl-button--colored mdl-js-button
+                 mdl-button--raised mdl-js-ripple-effect"><i
+                    class="material-icons">file_upload</i> Upload an Image
+                {{ field(onchange="fileSelected();", **kwargs) |safe }}
+            </label>
         </div>
 
         <div class="mdl-cell mdl-cell--4-col  mdl-typography--text-right">
-            <div class="mdl-button mdl-button--colored mdl-js-button
-                 mdl-button--raised mdl-js-ripple-effect"
-                    onclick="removeImage();">Delete
+            <div class="mdl-button mdl-js-button mdl-button--fab
+            mdl-button--mini-fab mdl-button--colored"
+                 onclick="removeImage();"><i class="material-icons">close</i>
             </div>
+        </div>
+        <div id="wine-meta" class="mdl-card mdl-shadow--2dp wine-meta"
+             style="display:none;">
+            <p id="fileName"></p>
+            <p id="fileSize"></p>
+            <p id="fileType"></p>
         </div>
     </div>
     <script>
@@ -202,6 +209,7 @@
         function showFile() {
             var fileInput = document.getElementById('image');
             var fileDisplayArea = document.getElementById('thumbnail');
+            var wineMeta = document.getElementById('wine-meta');
             console.log(fileInput)
 
             console.log('it changed')
@@ -223,6 +231,8 @@
 
                     // Add the image to the page.
                     fileDisplayArea.appendChild(img);
+                    fileDisplayArea.style.display = 'block';
+                    wineMeta.style.display = 'block';
                 }
 
                 reader.readAsDataURL(file);
@@ -236,10 +246,15 @@
             const file = document.getElementById('image');
             const hidden = document.getElementById('delete_image');
             const fileDisplayArea = document.getElementById('thumbnail');
+            var wineMeta = document.getElementById('wine-meta');
             file.value = '';
             hidden.value = "true"
             fileDisplayArea.innerHTML = "";
-            fileDisplayArea.style.display ='none';
+            fileDisplayArea.style.display = 'none';
+            wineMeta.style.display = 'none';
+            document.getElementById('fileName').innerHTML = '';
+            document.getElementById('fileSize').innerHTML = '';
+            document.getElementById('fileType').innerHTML = '';
         }
     </script>
 

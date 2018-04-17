@@ -5,9 +5,11 @@ from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
 from flask_dance.consumer import oauth_authorized
+from sqlalchemy import desc
 from sqlalchemy.orm.exc import NoResultFound
 from winejournal.data_models.users import User
 from winejournal.data_models.oauth import Oauth
+from winejournal.data_models.wines import Wine
 from winejournal.extensions import db
 from winejournal.extensions import csrf, login_manager
 import boto3
@@ -59,8 +61,9 @@ client = boto3.client('s3',
 
 @staticPages.route('/')
 def home():
-    print(STATIC_IMAGE_PATH)
-    return render_template('static_pages/home.html')
+    wine_list = db.session.query(Wine).limit(5)
+    return render_template('static_pages/home.html',
+                           wine_list=wine_list)
 
 
 @staticPages.route('/login')

@@ -1,0 +1,25 @@
+<h2 class="mdl-typography--display-2">Recent Posts</h2>
+<div class="mdl-grid">
+    {% for wine in wine_list %}
+    <div class="mdl-cell mdl-cell--4-col wine-teaser">
+        <div class="mdl-card mdl-shadow--4dp">
+            <div class="mdl-card__media">
+                <img src="{{ wine.image }}"
+                     alt="{{ wine.name }} - {{ wine.vintage }}"
+                    width="100%" height="auto">
+                <div class="mdl-card__title">
+                    <h3 class="mdl-card__title-text">{{ wine.name }}
+                        - {{ wine.vintage }}</h3>
+                </div>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Shared by:
+            </div>
+            <div class="mdl-card__actions">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="{{ url_for('wines.wine_detail', wine_id=wine.id) }}">Read More</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -1,16 +1,22 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
 from flask_login import current_user, login_required
+from flask_uploads import UploadSet, IMAGES
+
 from winejournal.blueprints.categories.forms import \
     NewCategoryForm, EditCategoryForm, DeleteCategoryForm
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
+from winejournal.blueprints.s3.views import upload_image
 from winejournal.data_models.categories import Category, category_owner_required
 from winejournal.data_models.users import admin_required
+from winejournal.data_models.wines import Wine
 from winejournal.extensions import db
 
 categories = Blueprint('categories', __name__, template_folder='templates',
                        url_prefix='/categories')
+
+photos = UploadSet('photos', IMAGES)
 
 
 @categories.route('/', methods=['GET'])
@@ -24,24 +30,33 @@ def list_categories():
 def new_category():
     cat_list = get_sorted_categories()
     new_category_form = NewCategoryForm()
-    if new_category_form.validate_on_submit():
-        parentId = 0
-        if new_category_form.parent.data:
-            for id, name in cat_list.items():
-                if name == new_category_form.parent.data:
-                    parentId = int(id)
-        category = Category(
-            name=new_category_form.name.data,
-            description=new_category_form.description.data,
-            parent_id=parentId,
-            owner = current_user.id
-        )
+    img_url = None
+    filename = None
 
-        db.session.add(category)
-        db.session.commit()
-        message = 'You added the {} category'.format(category.name)
-        flash(message)
-        return redirect(url_for('categories.list_categories'))
+    if request.method == 'POST':
+        if 'image' in request.files and request.files['image'].filename:
+            filename = photos.save(request.files['image'])
+        if new_category_form.validate_on_submit():
+            parentId = 0
+            if new_category_form.parent.data:
+                for id, name in cat_list.items():
+                    if name == new_category_form.parent.data:
+                        parentId = int(id)
+
+            img_url = upload_image(filename)
+            category = Category(
+                name=new_category_form.name.data,
+                description=new_category_form.description.data,
+                parent_id=parentId,
+                owner = current_user.id,
+                image = img_url
+            )
+
+            db.session.add(category)
+            db.session.commit()
+            message = 'You added the {} category'.format(category.name)
+            flash(message)
+            return redirect(url_for('categories.list_categories'))
 
     return render_template('categories/category-new.html',
                            form=new_category_form,
@@ -54,11 +69,13 @@ def category_detail(category_id):
     is_owner = get_is_owner(category_id)
     cat_list = get_sorted_categories()
     category = db.session.query(Category).filter_by(id=category_id).one()
+    wine_list = db.session.query(Wine).filter_by(category=category_id).all()
     data = Prepopulated_Data(category, cat_list)
     return render_template('categories/category-detail.html',
                            category=data,
                            is_admin=is_admin,
-                           is_owner=is_owner)
+                           is_owner=is_owner,
+                           wine_list=wine_list)
 
 
 @categories.route('/<int:category_id>/edit', methods=['GET', 'POST'])
@@ -73,19 +90,27 @@ def category_edit(category_id):
 
     edit_category_form = EditCategoryForm(obj=prepopulated_data)
 
+    img_url = None
+    filename = None
+
     if request.method == 'POST':
-        if edit_category_form.validate_on_submit():
-            parentId = get_parent_id(edit_category_form, cat_list)
+        if 'image' in request.files and request.files['image'].filename:
+            filename = photos.save(request.files['image'])
+            if edit_category_form.validate_on_submit():
+                parentId = get_parent_id(edit_category_form, cat_list)
 
-            category.name = edit_category_form.name.data
-            category.description = edit_category_form.description.data
-            category.parent_id = parentId
+                img_url = upload_image(filename)
 
-            db.session.add(category)
-            db.session.commit()
-            message = 'You updated the {} category'.format(category.name)
-            flash(message)
-            return redirect(url_for('categories.list_categories'))
+                category.name = edit_category_form.name.data
+                category.description = edit_category_form.description.data
+                category.parent_id = parentId
+                category.image = img_url
+
+                db.session.add(category)
+                db.session.commit()
+                message = 'You updated the {} category'.format(category.name)
+                flash(message)
+                return redirect(url_for('categories.list_categories'))
 
 
     return render_template('categories/category-edit.html',
@@ -136,6 +161,7 @@ class Prepopulated_Data:
         self.name = category.name
         self.description = category.description
         self.parent = self.get_parent_label()
+        self.image = category.image
 
     def get_parent_label(self):
         parent_id = self.category.parent_id

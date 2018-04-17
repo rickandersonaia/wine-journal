@@ -2,7 +2,7 @@
         render_text_input_field,
         render_textarea_field,
         render_select_input_field_wine,
-        render_range_input_field ,
+        render_range_input_field,
         render_file_field %}
 {% extends "base.html" %}
 {% block title %}Edit the {{ form.name.data }} wine{% endblock %}
@@ -12,17 +12,19 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/getmdl-select.min.css' ) }}">
 {% endblock %}
+{% block body_class %}class="wine-edit-view"{% endblock %}
 
 {% block content %}
-    <div class="mdl-layout__content container">
-        <h1>Edit the {{ form.name.data }} wine</h1>
+    <div class="mdl-layout__content container two-column">
+        <h1 class="mdl-typography--display-2">Edit the {{ form.name.data }}
+            wine</h1>
         <div class="mdl-grid">
-            <div class="mdl-cell--4-col">
-                <form method="post"
-                      action=""
-                      enctype="multipart/form-data" ,
-                      id="upload-form">
-                    {{ form.csrf_token }}
+            <form method="post"
+                  action=""
+                  enctype="multipart/form-data" ,
+                  id="upload-form">
+                {{ form.csrf_token }}
+                <div class="mdl-cell mdl-cell--6-col">
                     {{ render_text_input_field(form.name) }}
                     {{ render_text_input_field(form.maker) }}
                     {{ render_text_input_field(form.vintage) }}
@@ -33,12 +35,11 @@
                     {% if is_admin %}
                         {{ render_text_input_field(form.owner) }}
                     {% endif %}
-                    {{ render_file_field(form.image, wine.image) }}
-                    {{ form.delete_image }}
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--6-col">
-                            <button class="mdl-button mdl-js-button
-                                           mdl-button--raised"
+                            <button class="mdl-button mdl-button--colored
+                            mdl-js-button mdl-button--raised
+                            mdl-js-ripple-effect"
                                     type="submit">
                                 Save Edits
                             </button>
@@ -55,9 +56,13 @@
                             {% endif %}
                         </div>
                     </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_file_field(form.image, wine.image) }}
+                    {{ form.delete_image }}
 
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

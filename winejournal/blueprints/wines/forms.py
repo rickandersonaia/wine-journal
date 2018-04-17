@@ -14,6 +14,7 @@ class NewWineForm(FlaskForm):
     category = StringField('Wine category')
     region = StringField('Wine region')
     image = FileField('Upload an Image')
+    delete_image = HiddenField()
 
 
 class EditWineForm(FlaskForm):

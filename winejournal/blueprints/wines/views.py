@@ -2,15 +2,12 @@ from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
-from werkzeug.utils import secure_filename
 
-from instance.settings import AWS_DEST_BUCKET, AWS_ENDPOINT, \
-    AWS_CLIENT_ACCESS_KEY, AWS_HOST, JSDEBUG
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
-from winejournal.blueprints.s3.views import get_filename, upload_image
+from winejournal.blueprints.s3.views import upload_image
 from winejournal.blueprints.wines.forms import \
     NewWineForm, EditWineForm, DeleteWineForm
 from winejournal.data_models.categories import Category
@@ -18,13 +15,12 @@ from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine, wine_owner_required
 from winejournal.extensions import db
-from winejournal import app
-
 
 wines = Blueprint('wines', __name__, template_folder='templates',
                   url_prefix='/wine')
 
 photos = UploadSet('photos', IMAGES)
+
 
 @wines.route('/', methods=['GET'])
 def list_wines():
@@ -137,7 +133,6 @@ def wine_edit(wine_id):
             else:
                 if edit_wine_form.delete_image.data == "true":
                     wine.image = ''
-
 
             db.session.add(wine)
             db.session.commit()

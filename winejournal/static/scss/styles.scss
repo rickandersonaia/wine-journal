@@ -4,6 +4,73 @@
   width: 100%;
   max-width: 1140px;
   margin: 0 auto;
+  &.two-column {
+    max-width: 800px;
+  }
+}
+
+header {
+  img.logo {
+    filter: invert(100%);
+  }
+  .mdl-layout-title {
+    padding-left: 12px;
+  }
+}
+
+header.title-area {
+  position: relative;
+
+  h1 {
+    position: absolute;
+    width: 100%;
+    color:#fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    bottom: 0px;
+    padding:20px;
+    box-sizing: border-box;
+  }
+}
+
+.subheader{
+  font-size: 18px;
+  line-height: 27px;
+  padding: 20px;
+
+  span{
+    display:inline-block;
+    margin-right: 20px;
+  }
+}
+
+.mdl-card{
+  width:100%;
+}
+
+.mdl-card__supporting-text,
+.mdl-card__subtitle-text {
+  color: #616161;
+}
+
+.mdl-card.wine-meta {
+  min-height: 0px;
+  padding: 20px;
+  background-color: #efefef;
+  margin-top: 24px;
+  p {
+    margin-bottom: 0px;
+  }
+}
+
+.wine-details .mdl-list__item {
+  font-size: 14px;
+  img {
+    margin-right: 14px;
+  }
+}
+
+form .mdl-cell.mdl-cell--6-col {
+  float: left;
 }
 
 // Inspired by Chris Coyier's Range Input Value Bubbles
@@ -48,44 +115,90 @@ output:after {
 }
 
 //Login form
-.mdl-dialog .modal-close{
-  float:right;
+.mdl-dialog .modal-close {
+  float: right;
 }
+
 .mdl-dialog__actions--full-width > * {
   box-sizing: border-box;
 }
+
 .mdl-button.google,
-.mdl-button.google:focus:not(:active){
+.mdl-button.google:focus:not(:active) {
   background-color: #d34836;
 }
 
 .mdl-button.twitter,
-.mdl-button.twitter:focus:not(:active){
-  background-color:#00aced;
+.mdl-button.twitter:focus:not(:active) {
+  background-color: #00aced;
 }
 
 mdl-button.facebook,
-.mdl-button.facebook:focus:not(:active){
-  background-color:#3A589E;
+.mdl-button.facebook:focus:not(:active) {
+  background-color: #3A589E;
 }
 
 .mdl-button.facebook,
 .mdl-button.twitter,
-.mdl-button.google{
-  color:#fff;
+.mdl-button.google {
+  color: #fff;
   text-align: center;
-  margin-bottom:10px;
-  padding-top:5px;
+  margin-bottom: 10px;
+  padding-top: 5px;
 }
 
 .mdl-button.facebook:hover,
 .mdl-button.twitter:hover,
-.mdl-button.google:hover{
-  color:#2d2d2d;
-  background-color:#d2d2d2;
+.mdl-button.google:hover {
+  color: #2d2d2d;
+  background-color: #d2d2d2;
 }
 
-.mdl-button.twitter{
-  color:#fff;
-  background-color:#00aced;
+.mdl-button.twitter {
+  color: #fff;
+  background-color: #00aced;
+}
+
+//File upload input
+
+.file-container {
+  overflow: hidden;
+  position: relative;
+  [type=file] {
+    cursor: inherit;
+    display: block;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+  }
+}
+
+//Wine teasers
+.wine-teaser {
+  margin-bottom: 24px;
+}
+
+.wine-teaser .mdl-card__media {
+  position: relative;
+  background-color: #fff;
+
+  .mdl-card__title {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    bottom: 0px;
+  }
+  .mdl-card__title-text {
+    color: #fff;
+    font-weight: 500;
+  }
+  img {
+    height: 330px;
+    object-fit: cover;
+  }
 }
