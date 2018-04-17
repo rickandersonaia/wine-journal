@@ -1,13 +1,15 @@
-from winejournal.extensions import db
 from functools import wraps
-from flask_login import current_user
+
 from flask import redirect, url_for, flash
+from flask_login import current_user
+
+from winejournal.extensions import db
 
 
 class Comment(db.Model):
     __tablename__ = 'comments'
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     text = db.Column(db.Text)
     image = db.Column(db.String(250))
@@ -36,6 +38,7 @@ def comment_owner_required(f):
 
     :return: Function
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if current_user.is_admin():

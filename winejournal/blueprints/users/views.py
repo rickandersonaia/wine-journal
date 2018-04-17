@@ -11,7 +11,6 @@ users = Blueprint('users', __name__, template_folder='templates',
                   url_prefix='/users')
 
 
-
 @users.route('/', methods=['GET'])
 @login_required
 def list_users():
@@ -138,4 +137,3 @@ def get_is_owner(user_id):
         return True
     else:
         return False
-

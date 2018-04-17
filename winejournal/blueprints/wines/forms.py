@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, TextAreaField, IntegerField, HiddenField
-from wtforms_components import IntegerSliderField
 from wtforms.validators import InputRequired
+from wtforms_components import IntegerSliderField
 
 
 class NewWineForm(FlaskForm):

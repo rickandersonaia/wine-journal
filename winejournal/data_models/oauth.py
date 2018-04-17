@@ -1,6 +1,7 @@
-from winejournal.extensions import db
 from flask_dance.consumer.backend.sqla import OAuthConsumerMixin
+
 from winejournal.data_models.users import User
+from winejournal.extensions import db
 
 
 class Oauth(db.Model, OAuthConsumerMixin):

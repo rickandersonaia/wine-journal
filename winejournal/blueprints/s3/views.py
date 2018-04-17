@@ -1,9 +1,12 @@
-import boto3, os, os.path, time
+import os
+import os.path
+
+import boto3
 from flask import Blueprint
 from werkzeug.utils import secure_filename
 
 from instance.settings import AWS_CLIENT_SECRET_KEY, \
-    AWS_CLIENT_ACCESS_KEY, AWS_DEST_BUCKET, AWS_ENDPOINT, STATIC_IMAGE_PATH
+    AWS_CLIENT_ACCESS_KEY, AWS_ENDPOINT, STATIC_IMAGE_PATH
 from winejournal.extensions import csrf
 
 s3 = Blueprint('s3', __name__, template_folder='templates',
@@ -42,19 +45,18 @@ def upload_image(file):
                 return AWS_ENDPOINT + '/' + file
 
             except Exception as e:
-                # This is a catch all exception, edit this part to fit your needs.
+            # This is a catch all exception.
                 print("Something Happened: ", e)
                 return e
     else:
         return None
+
 
 @s3.route('/delete-local', methods=['POST'])
 @csrf.exempt
 def delete_local_image(filename):
     if filename:
         os.remove(filename)
-
-
 
 
 @s3.route('/delete', methods=['POST'])
@@ -75,7 +77,7 @@ def delete_image(file):
                 return AWS_ENDPOINT + '/' + file
 
             except Exception as e:
-                # This is a catch all exception, edit this part to fit your needs.
+            # This is a catch all exception.
                 print("Something Happened: ", e)
                 return e
     else:

@@ -1,18 +1,20 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, RadioField, BooleanField
 from wtforms.validators import InputRequired, URL, EqualTo, Optional
-from wtforms_components import EmailField, Email
 from wtforms_alchemy import Unique, model_form_factory
+from wtforms_components import EmailField, Email
 
 from winejournal.data_models.users import User, role_list
 from winejournal.extensions import db
 
 BaseModelForm = model_form_factory(FlaskForm)
 
+
 class ModelForm(BaseModelForm):
     @classmethod
     def get_session(self):
         return db.session
+
 
 class LoginForm(ModelForm):
     username: StringField('User name', validators=[InputRequired()])
@@ -43,6 +45,7 @@ class NewUserForm(ModelForm):
 
 class EditUserForm(NewUserForm):
     username = StringField('Username')
+
 
 class DeleteUserForm(ModelForm):
     username = StringField('Username')

@@ -1,17 +1,18 @@
-from winejournal.extensions import db
 from functools import wraps
-from flask_login import current_user
-from flask import redirect, url_for, flash
 
+from flask import redirect, url_for, flash
+from flask_login import current_user
+
+from winejournal.extensions import db
 
 
 class Wine(db.Model):
     __tablename__ = 'wines'
 
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(80), nullable = False)
-    maker = db.Column(db.String(80), nullable = False)
-    vintage = db.Column(db.String(80), index= True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    maker = db.Column(db.String(80), nullable=False)
+    vintage = db.Column(db.String(80), index=True)
     price = db.Column(db.Integer)
     description = db.Column(db.String(250))
     image = db.Column(db.String(250))
@@ -20,7 +21,8 @@ class Wine(db.Model):
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     tasting_notes = db.relationship('TastingNote',
-                              backref=db.backref('tasting_notes', lazy=True))
+                                    backref=db.backref('tasting_notes',
+                                                       lazy=True))
 
     @property
     def serialize(self):
@@ -45,6 +47,7 @@ def wine_owner_required(f):
 
     :return: Function
     """
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if current_user.is_admin():

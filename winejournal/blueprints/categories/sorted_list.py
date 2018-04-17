@@ -1,5 +1,5 @@
-from winejournal.extensions import db
 from winejournal.data_models.categories import Category
+from winejournal.extensions import db
 
 
 def get_unsorted_categories():

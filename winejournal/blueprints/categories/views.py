@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, \
     flash, request
-from flask_login import current_user, login_required
+from flask_login import current_user
 from flask_uploads import UploadSet, IMAGES
 
 from winejournal.blueprints.categories.forms import \
@@ -48,8 +48,8 @@ def new_category():
                 name=new_category_form.name.data,
                 description=new_category_form.description.data,
                 parent_id=parentId,
-                owner = current_user.id,
-                image = img_url
+                owner=current_user.id,
+                image=img_url
             )
 
             db.session.add(category)
@@ -111,7 +111,6 @@ def category_edit(category_id):
                 message = 'You updated the {} category'.format(category.name)
                 flash(message)
                 return redirect(url_for('categories.list_categories'))
-
 
     return render_template('categories/category-edit.html',
                            form=edit_category_form,
@@ -180,4 +179,3 @@ def get_is_owner(category_id):
         return True
     else:
         return False
-

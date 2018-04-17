@@ -1,24 +1,26 @@
+import os
+
 from flask import Flask
 from flask_assets import Environment, Bundle
 from flask_uploads import configure_uploads, UploadSet, IMAGES
+
+from winejournal.blueprints.categories import categories
+from winejournal.blueprints.regions import regions
+from winejournal.blueprints.s3 import s3
 from winejournal.blueprints.static_pages import staticPages
 from winejournal.blueprints.static_pages.views import \
     twitter_blueprint, \
-    google_blueprint,\
+    google_blueprint, \
     facebook_blueprint
-from winejournal.blueprints.categories import categories
-from winejournal.blueprints.regions import regions
-from winejournal.blueprints.wines import wines
-from winejournal.blueprints.users import users
-from winejournal.blueprints.s3 import s3
 from winejournal.blueprints.tasting_notes import tastingNote
+from winejournal.blueprints.users import users
+from winejournal.blueprints.wines import wines
 from winejournal.extensions import (
     debug_toolbar,
     csrf,
     db,
     login_manager
 )
-import os
 
 photos = UploadSet('photos', IMAGES)
 
@@ -42,7 +44,6 @@ def create_app(settings_override=None):
                  filters='pyscss', output='css/styles.css')
     assets.register('css_all', css)
     assets.init_app(app)
-
 
     app.config['UPLOADED_PHOTOS_DEST'] = 'winejournal/static/img'
     configure_uploads(app, photos)

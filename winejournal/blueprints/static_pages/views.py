@@ -1,28 +1,23 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
-from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
-from flask_dance.contrib.google import make_google_blueprint, google
-from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
-from flask_login import current_user, login_required, login_user, logout_user
-from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
-from flask_dance.consumer import oauth_authorized
-from sqlalchemy import desc
-from sqlalchemy.orm.exc import NoResultFound
-from winejournal.data_models.users import User
-from winejournal.data_models.oauth import Oauth
-from winejournal.data_models.wines import Wine
-from winejournal.extensions import db
-from winejournal.extensions import csrf, login_manager
 import boto3
-import random, string
-import httplib2
-import json
-import requests
-from instance.settings import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETS
-from instance.settings import TWITTER_API_KEY, TWITTER_API_SECRET
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_dance.consumer import oauth_authorized
+from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
+from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
+from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.contrib.twitter import make_twitter_blueprint, twitter
+from flask_login import current_user, login_user, logout_user
+from sqlalchemy.orm.exc import NoResultFound
+
+from instance.settings import AWS_CLIENT_ACCESS_KEY, AWS_CLIENT_SECRET_KEY
 from instance.settings import FACEBOOK_OAUTH_CLIENT_ID, \
     FACEBOOK_OAUTH_CLIENT_SECRET
-from instance.settings import AWS_CLIENT_ACCESS_KEY, AWS_CLIENT_SECRET_KEY
-from instance.settings import STATIC_IMAGE_PATH
+from instance.settings import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETS
+from instance.settings import TWITTER_API_KEY, TWITTER_API_SECRET
+from winejournal.data_models.oauth import Oauth
+from winejournal.data_models.users import User
+from winejournal.data_models.wines import Wine
+from winejournal.extensions import db
+from winejournal.extensions import login_manager
 
 staticPages = Blueprint('static_pages', __name__, template_folder='templates')
 
@@ -56,8 +51,9 @@ facebook_blueprint.backend = SQLAlchemyBackend(
     user_required=False)
 
 client = boto3.client('s3',
-                      aws_access_key_id = AWS_CLIENT_ACCESS_KEY,
-                      aws_secret_access_key = AWS_CLIENT_SECRET_KEY)
+                      aws_access_key_id=AWS_CLIENT_ACCESS_KEY,
+                      aws_secret_access_key=AWS_CLIENT_SECRET_KEY)
+
 
 @staticPages.route('/')
 def home():
@@ -91,7 +87,8 @@ def twitter_login():
     account_info = twitter.get('account/settings.json')
     account_info_json = account_info.json()
 
-    return '<h1>Your Twitter Name is @{}</h1>'.format(account_info_json['screen_name'])
+    return '<h1>Your Twitter Name is @{}</h1>'.format(
+        account_info_json['screen_name'])
 
 
 @oauth_authorized.connect_via(twitter_blueprint)
@@ -140,7 +137,7 @@ def google_logged_in(blueprint, token):
 
     if account_info.ok:
         account_info_json = account_info.json()
-        print (account_info_json)
+        print(account_info_json)
         email = account_info_json['email']
         query = db.session.query(User).filter_by(email=email)
 
@@ -180,7 +177,7 @@ def facebook_logged_in(blueprint, token):
 
     if account_info.ok:
         account_info_json = account_info.json()
-        print (account_info_json)
+        print(account_info_json)
         email = account_info_json['email']
         query = db.session.query(User).filter_by(email=email)
 
@@ -201,6 +198,3 @@ def facebook_logged_in(blueprint, token):
 
         login_user(user)
         flash('You are now logged in via Facebook')
-
-
-

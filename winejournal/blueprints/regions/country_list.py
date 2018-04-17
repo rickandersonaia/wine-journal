@@ -17,7 +17,7 @@ class Countries:
             'Israel',
             'United Kingdom',
             'Other'
-            ]
+        ]
 
     def state_list(self):
         return [
@@ -33,4 +33,3 @@ class Countries:
             'Pennsylvania',
             'Other'
         ]
-

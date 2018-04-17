@@ -18,5 +18,6 @@ class EditRegionForm(FlaskForm):
     country = StringField('Country')
     state = StringField('State')
 
+
 class DeleteRegionForm(FlaskForm):
     parent = StringField('Region parent')
