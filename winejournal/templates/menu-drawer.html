@@ -1,0 +1,20 @@
+<div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Our Wine Journal</span>
+    <nav class="mdl-navigation">
+        <a class="mdl-navigation__link"
+           href="{{ url_for('static_pages.home') }}">
+            <i class="material-icons">home</i> Home
+        </a>
+        <a class="mdl-navigation__link"
+           href="{{ url_for('wines.list_wines') }}">Wine List</a>
+        <a class="mdl-navigation__link"
+           href="{{ url_for('categories.list_categories') }}">Wine
+            Categories</a>
+        <a class="mdl-navigation__link"
+           href="{{ url_for('regions.list_regions') }}">Wine Regions</a>
+        {% if current_user.is_authenticated %}
+        <a class="mdl-navigation__link"
+           href="{{ url_for('users.user_edit', user_id=current_user.id) }}">Account</a>
+        {% endif %}
+    </nav>
+</div>

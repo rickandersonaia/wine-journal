@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField, RadioField
+from flask_wtf.file import FileField
+from wtforms import StringField, TextAreaField, IntegerField, RadioField, HiddenField
 from wtforms.validators import InputRequired
 from wtforms_components import IntegerSliderField
 
@@ -10,6 +11,9 @@ class NewNoteForm(FlaskForm):
     price = StringField('Purchase Price?')
     vintage = IntegerField('Vintage')
     rating = IntegerSliderField('Rating')
+    image = FileField('Upload an Image')
+    delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class EditNoteForm(FlaskForm):
@@ -18,6 +22,9 @@ class EditNoteForm(FlaskForm):
     price = StringField('Purchase Price?')
     vintage = IntegerField('Vintage')
     rating = IntegerSliderField('Rating')
+    image = FileField('Upload an Image')
+    delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 class DeleteNoteForm(FlaskForm):
-    parent = StringField('Region parent')
+    title = StringField('Tasting Note Title')

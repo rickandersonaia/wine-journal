@@ -1,0 +1,42 @@
+{% from '_material_form_fields.html' import
+        render_text_input_field,
+        render_textarea_field,
+        render_range_input_field_stars,
+        render_file_field %}
+{% extends "base.html" %}
+{% block title %}Add new tasting note for {{ wine.name }}{% endblock %}
+{% block meta_description %}Add a new tasting note about {{ wine.name }} to the
+    journal{% endblock %}
+
+
+{% block content %}
+    <div class="mdl-layout__content container two-column">
+        <h1 class="mdl-typography--display-2">Add new tasting note
+            for {{ wine.name }}</h1>
+        <div class="mdl-grid">
+            <form method="post"
+                  action="{{ url_for('tasting_notes.new_tasting_note', wine_id=wine.id) }}"
+                  enctype="multipart/form-data"
+                  id="upload-form">
+                {{ form.csrf_token }}
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_text_input_field(form.title) }}
+                    {{ render_textarea_field(form.text) }}
+                    {{ render_text_input_field(form.vintage) }}
+                    {{ render_range_input_field_stars(form.rating, min="0", max="10", value="5", step="1") }}
+                    {{ render_text_input_field(form.price) }}
+                    <button class="mdl-button mdl-js-button mdl-button--raised"
+                            type="submit">
+                        Add new Tasting Note
+                    </button>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_file_field(form.image, img_url) }}
+                    {{ form.delete_image }}
+                    <p>Upload an image from your phone - any direction</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

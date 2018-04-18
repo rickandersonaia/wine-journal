@@ -20,7 +20,8 @@
         <div class="mdl-grid">
             <form method="post"
                   action=""
-                  enctype="multipart/form-data">
+                  enctype="multipart/form-data"
+                  id="upload-form">
                 {{ form.csrf_token }}
                 <div class="mdl-cell mdl-cell--6-col">
                     {{ render_text_input_field(form.name) }}
@@ -51,6 +52,8 @@
                 <div class="mdl-cell mdl-cell--6-col">
                     {{ render_file_field(form.image, category.image) }}
                     {{ form.delete_image }}
+                    <p>This image should be 1140 px wide and between 200 and 400
+                        px tall</p>
 
                 </div>
             </form>

@@ -62,6 +62,21 @@ def home():
                            wine_list=wine_list)
 
 
+@staticPages.route('/help')
+def help():
+    return render_template('static_pages/help.html')
+
+
+@staticPages.route('/privacy-policy')
+def privacy():
+    return render_template('static_pages/privacy.html')
+
+
+@staticPages.route('/terms-of-service')
+def tos():
+    return render_template('static_pages/terms-of-service.html')
+
+
 @staticPages.route('/login')
 def show_login():
     return render_template('static_pages/login.html')

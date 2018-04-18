@@ -16,6 +16,9 @@ class Category(db.Model):
     parent_id = db.Column(db.Integer, index=True)
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    wine = db.relationship('Wine', backref=db.backref('wine_category',
+                                                       lazy=True))
+
     @property
     def serialize(self):
         return {

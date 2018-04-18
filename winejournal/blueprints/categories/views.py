@@ -60,13 +60,22 @@ def new_category():
 
     return render_template('categories/category-new.html',
                            form=new_category_form,
-                           cat_list=cat_list)
+                           cat_list=cat_list,
+                           img_url=img_url)
 
 
 @categories.route('/<int:category_id>/', methods=['GET'])
 def category_detail(category_id):
-    is_admin = current_user.is_admin()
-    is_owner = get_is_owner(category_id)
+    if current_user.is_authenticated:
+        display_name = current_user.displayName()
+        avatar = current_user.avatar()
+        is_admin = current_user.is_admin()
+        is_owner = get_is_owner(category_id)
+    else:
+        display_name = None
+        avatar = None
+        is_admin = False
+        is_owner = False
     cat_list = get_sorted_categories()
     category = db.session.query(Category).filter_by(id=category_id).one()
     wine_list = db.session.query(Wine).filter_by(category=category_id).all()

@@ -1,0 +1,38 @@
+<h2 class="mdl-typography--display-2">Tasting Notes</h2>
+{% if not wine.tasting_notes %}
+    <h3 class="mdl-typography--display-1 mdl-typography--headline-color-contrast">
+        There are no tasting notes yet - drink up & share!
+    </h3>
+{% endif %}
+{% for note in wine.tasting_notes %}
+    <div class="mdl-grid tasting-notes">
+        {% if note.image %}
+            <div class="mdl-cell mdl-cell--6-col">
+                <img src="{{ note.image }}" alt="{{ note.title }}"
+                     width="100%" height="auto" class="mdl-shadow--3dp">
+            </div>
+        {% endif %}
+        <div class="mdl-cell mdl-cell--6-col">
+            <h3 class="mdl-typography--display-1">{{ note.title }}</h3>
+            <div class="wine-meta mdl-card mdl-card--border">
+                <p>Rating: <span class="star-rating">{{ note.rating | int }}</span></p>
+                <p>Purchase price: {{ note.price }} - Vintage: {{ note.vintage }}</p>
+            </div>
+            <blockquote class="mdl-typography--body-1">{{ note.text }}</blockquote>
+
+            <div class="mdl-list__item">
+                <img class="mdl-list__item-avatar"
+                     src="{{ wine.user.image }}"
+                     alt="{{ wine.user.display_name }} avatar">
+
+                Shared by: {{ wine.user.display_name }}
+            </div>
+            {% if is_admin or current_user.id == wine.user.id %}
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="{{ url_for('tasting_notes.tasting_notes_edit', tnote_id=note.id) }}">Edit</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

@@ -1,5 +1,10 @@
 //Desktop width
 
+.mdl-layout {
+  height: auto;
+  overflow-y: visible;
+}
+
 .container {
   width: 100%;
   max-width: 1140px;
@@ -9,7 +14,12 @@
   }
 }
 
+.mdl-layout__content {
+  margin-top: 64px;
+}
+
 header {
+  position: fixed;
   img.logo {
     filter: invert(100%);
   }
@@ -24,27 +34,40 @@ header.title-area {
   h1 {
     position: absolute;
     width: 100%;
-    color:#fff;
+    color: #fff;
     background-color: rgba(0, 0, 0, 0.7);
     bottom: 0px;
-    padding:20px;
+    padding: 20px;
     box-sizing: border-box;
   }
 }
 
-.subheader{
+.subheader {
   font-size: 18px;
   line-height: 27px;
   padding: 20px;
 
-  span{
-    display:inline-block;
+  span {
+    display: inline-block;
     margin-right: 20px;
   }
 }
 
-.mdl-card{
-  width:100%;
+// Menu Drawer
+.mdl-layout__drawer {
+  .mdl-layout-title {
+    background-image: url("../img/mstile-150x150.png");
+    background-position: center;
+    background-color: #efefef;
+    height: 75px;
+    color: #1A237E;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #888;
+  }
+}
+
+.mdl-card {
+  width: 100%;
 }
 
 .mdl-card__supporting-text,
@@ -62,11 +85,12 @@ header.title-area {
   }
 }
 
+.mdl-list__item-avatar {
+  margin-right: 14px;
+}
+
 .wine-details .mdl-list__item {
   font-size: 14px;
-  img {
-    margin-right: 14px;
-  }
 }
 
 form .mdl-cell.mdl-cell--6-col {
@@ -200,5 +224,38 @@ mdl-button.facebook,
   img {
     height: 330px;
     object-fit: cover;
+  }
+}
+
+// Tasting Notes
+
+.tasting-notes .mdl-typography--display-1 {
+  margin: 0;
+}
+
+.wine-meta .star-rating .material-icons {
+  font-size: 24px;
+  color: gold;
+  text-shadow: 2px 2px 2px #888;
+  vertical-align: bottom;
+}
+
+.tasting-notes blockquote {
+  margin: 14px;
+}
+
+// Wine List
+.wine-list .mdl-chip{
+  display:inline-block;
+  margin-left: 14px;
+}
+
+// Footer
+footer {
+  img.logo {
+    filter: invert(100%);
+  }
+  a {
+    color: #fff;
   }
 }

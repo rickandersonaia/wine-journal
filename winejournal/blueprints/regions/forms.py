@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField
+from flask_wtf.file import FileField
+from wtforms import StringField, TextAreaField, HiddenField
 from wtforms.validators import InputRequired
 
 
@@ -9,6 +10,8 @@ class NewRegionForm(FlaskForm):
     parent = StringField('Region parent')
     country = StringField('Country')
     state = StringField('State')
+    image = FileField('Upload an Image')
+    delete_image = HiddenField()
 
 
 class EditRegionForm(FlaskForm):
@@ -17,6 +20,8 @@ class EditRegionForm(FlaskForm):
     parent = StringField('Region parent')
     country = StringField('Country')
     state = StringField('State')
+    image = FileField('Upload an Image')
+    delete_image = HiddenField()
 
 
 class DeleteRegionForm(FlaskForm):

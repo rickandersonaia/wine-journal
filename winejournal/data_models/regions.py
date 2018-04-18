@@ -18,6 +18,9 @@ class Region(db.Model):
     state = db.Column(db.String(20), index=True)
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    wine = db.relationship('Wine', backref=db.backref('wine_region',
+                                                       lazy=True))
+
     @property
     def serialize(self):
         return {

@@ -1,60 +1,59 @@
 {% extends "base.html" %}
-{% block title %}Delete {{wine.name}}{% endblock %}
-{% block meta_description %}Delete {{wine.name}} from the
+{% block title %}Delete {{ wine.name }}{% endblock %}
+{% block meta_description %}Delete {{ wine.name }} from the
     journal{% endblock %}
 
 {% block content %}
     <div class="mdl-layout__content container">
-        <h1>Delete the {{wine.name}} wine?</h1>
+        <h1>Delete the {{ wine.name }} wine?</h1>
         <div class="mdl-grid">
-            <div class="mdl-cell--4-col">
-                <div class="mdl-cell mdl-cell--4-col">
-                    <div class="mdl-card mdl-shadow--2dp ">
-                        <div class="mdl-card__title mdl-card--border">
-                            <h2 class="mdl-card__title-text">
-                                {{ wine.name }}</h2>
-                        </div>
-                        <div class="mdl-card__supporting-text">
-                            <p>{{ region.name }} - {{ region.country }}</p>
-                            {% if wine.maker %}
-                                <p>{{ wine.maker }}</p>
-                            {% endif %}
-                             {% if category.name %}
-                                <p>Category: {{ category.name }}</p>
-                            {% endif %}
-                            {% if price %}
-                                <p>Price: {{ price }}</p>
-                            {% endif %}
-                            {% if wine.description %}
-                                <p>{{ wine.description }}</p>
-                            {% endif %}
-                            {% if wine.owner %}
-                                <p>Shared by: {{ wine.owner }}</p>
-                            {% endif %}
-                            <p>Wine ID: {{ wine.id }}</p>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-card mdl-shadow--2dp ">
+                    <div class="mdl-card__title mdl-card--border">
+                        <h2 class="mdl-card__title-text">
+                            {{ wine.name }}</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        <p>{{ region.name }} - {{ region.country }}</p>
+                        {% if wine.maker %}
+                            <p>{{ wine.maker }}</p>
+                        {% endif %}
+                        {% if category.name %}
+                            <p>Category: {{ category.name }}</p>
+                        {% endif %}
+                        {% if price %}
+                            <p>Price: {{ price }}</p>
+                        {% endif %}
+                        {% if wine.description %}
+                            <p>{{ wine.description }}</p>
+                        {% endif %}
+                        {% if wine.owner %}
+                            <p>Shared by: {{ wine.owner }}</p>
+                        {% endif %}
+                        <p>Wine ID: {{ wine.id }}</p>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
                         <form action="" method="post">
-                        {{ form.csrf_token }}
+                            {{ form.csrf_token }}
                             <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--6-col">
-                            <button class="mdl-button mdl-js-button
+                                <div class="mdl-cell mdl-cell--6-col">
+                                    <button class="mdl-button mdl-js-button
                                 mdl-button--raised mdl-js-ripple-effect
                                 mdl-button--accent"
-                                type="submit">
-                                Delete</button>
+                                            type="submit">
+                                        Delete
+                                    </button>
                                 </div>
 
-                            <div class="mdl-cell mdl-cell--6-col mdl-typography--text-right">
-                            <a class="mdl-button mdl-js-button
+                                <div class="mdl-cell mdl-cell--6-col mdl-typography--text-right">
+                                    <a class="mdl-button mdl-js-button
                                 mdl-button--raised mdl-js-ripple-effect
                                 mdl-button--colored mdl-typography--text-right"
-                                href="{{url_for('wines.list_wines')}}">
-                                Cancel</a>
+                                       href="{{ url_for('wines.list_wines') }}">
+                                        Cancel</a>
                                 </div>
                             </div>
                         </form>
-                        </div>
                     </div>
                 </div>
             </div>

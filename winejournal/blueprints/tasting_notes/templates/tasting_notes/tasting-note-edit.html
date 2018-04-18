@@ -1,0 +1,60 @@
+{% from '_material_form_fields.html' import
+        render_text_input_field,
+        render_textarea_field,
+        render_range_input_field_stars,
+        render_file_field %}
+{% extends "base.html" %}
+{% block title %}Edit a tasting note for {{ wine.name }}{% endblock %}
+{% block meta_description %}Edit an new tasting note about {{ wine.name }} in
+    the
+    journal{% endblock %}
+
+
+{% block content %}
+    <div class="mdl-layout__content container two-column">
+        <h1 class="mdl-typography--display-2">Edit the tasting note
+            for {{ wine.name }}</h1>
+        <div class="mdl-grid">
+            <form method="post"
+                  action="{{ url_for('tasting_notes.tasting_notes_edit', tnote_id=note.id) }}"
+                  enctype="multipart/form-data"
+                  id="upload-form">
+                {{ form.csrf_token }}
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_text_input_field(form.title) }}
+                    {{ render_textarea_field(form.text) }}
+                    {{ render_text_input_field(form.vintage) }}
+                    {{ render_range_input_field_stars(form.rating, min="0", max="10", value="5", step="1") }}
+                    {{ render_text_input_field(form.price) }}
+                    <button class="mdl-button mdl-js-button mdl-button--raised"
+                            type="submit">
+                        Save your Edits
+                    </button>
+                    <a href="{{ url_for('tasting_notes.tasting_notes_delete', tnote_id=note.id) }}"
+                       class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                        Delete
+                    </a>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_file_field(form.image, note.image) }}
+                    {{ form.delete_image }}
+                    {{ form.rotate_image }}
+                    <p>Upload an image from your phone - any direction</p>
+                    <div class="mdl-card__actions">
+                        <a href=""
+                           class="mdl-button mdl-js-button mdl-button--raised"><i
+                                class="material-icons">rotate_left</i> Left</a>
+                        <a href=""
+                           class="mdl-button mdl-js-button mdl-button--raised">Rotate
+                            180</a>
+                        <a href=""
+                           class="mdl-button mdl-js-button mdl-button--raised">
+                            <i class="material-icons">rotate_right</i>
+                            Right</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

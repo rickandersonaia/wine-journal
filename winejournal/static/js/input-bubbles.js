@@ -26,21 +26,21 @@ function modifyOffset() {
 
 function modifyInputs() {
 
-	var inputs = document.getElementsByTagName("input");
-	for (var i = 0; i < inputs.length; i++) {
-		if (inputs[i].getAttribute("type") == "range") {
-			inputs[i].onchange = modifyOffset;
+	var input = document.getElementById("price");
 
-			// the following taken from http://stackoverflow.com/questions/2856513/trigger-onchange-event-manually
-			if ("fireEvent" in inputs[i]) {
-			    inputs[i].fireEvent("onchange");
-			} else {
-			    var evt = document.createEvent("HTMLEvents");
-			    evt.initEvent("change", false, true);
-			    inputs[i].dispatchEvent(evt);
-			}
+	if (input.getAttribute("type") == "range") {
+		input.onchange = modifyOffset;
+
+		// the following taken from http://stackoverflow.com/questions/2856513/trigger-onchange-event-manually
+		if ("fireEvent" in input) {
+			input.fireEvent("onchange");
+		} else {
+			var evt = document.createEvent("HTMLEvents");
+			evt.initEvent("change", false, true);
+			input.dispatchEvent(evt);
 		}
 	}
+
 }
 
 modifyInputs();

@@ -1,9 +1,10 @@
-<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--indigo-900">
+<header class="mdl-layout__header mdl-layout--fixed-header mdl-color--indigo-900">
     <div class="mdl-layout__header-row">
-        <img src="/static/img/logo.png" alt="Our wine journal logo" class="logo">
+        <img src="/static/img/logo.png" alt="Our wine journal logo"
+             class="logo">
         <span class="mdl-layout-title">Our Wine Journal</span>
         <div class="mdl-layout-spacer"></div>
-        <nav class="mdl-navigation">
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
             <a class="mdl-navigation__link"
                href="{{ url_for('static_pages.home') }}">
                 <i class="material-icons">home</i>
@@ -11,16 +12,17 @@
             <a class="mdl-navigation__link"
                href="{{ url_for('wines.list_wines') }}">Wine List</a>
             <a class="mdl-navigation__link"
-               href="{{ url_for('categories.list_categories') }}">Wine Categories</a>
+               href="{{ url_for('categories.list_categories') }}">Wine
+                Categories</a>
             <a class="mdl-navigation__link"
                href="{{ url_for('regions.list_regions') }}">Wine Regions</a>
-
-        {% if current_user.is_authenticated %}
-            <a class="mdl-navigation__link"
-               href="{{ url_for('static_pages.logout') }}">Logout</a>
-        {% else %}
-            <a class="mdl-navigation__link" id="login">Login</a>
-        {% endif %}
         </nav>
+        {% if current_user.is_authenticated %}
+                <a class="mdl-navigation__link"
+                   href="{{ url_for('static_pages.logout') }}">Logout</a>
+            {% else %}
+                <a class="mdl-navigation__link" id="login">Login</a>
+            {% endif %}
     </div>
 </header>
+{% include 'menu-drawer.html' %}

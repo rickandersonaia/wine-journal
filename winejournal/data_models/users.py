@@ -5,6 +5,7 @@ from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash
 
 from config.settings import INITIAL_ADMIN_SETUP
+from winejournal.data_models.comments import Comment
 from winejournal.extensions import db
 
 
@@ -71,6 +72,11 @@ class User(db.Model, UserMixin):
             return self.image
         else:
             return None
+
+    def get_comments(self):
+        comments_list = db.session.query(Comment).filter_by(
+            author_id=self.id).all()
+        return comments_list
 
     @classmethod
     def find_by_identity(cls, identity):

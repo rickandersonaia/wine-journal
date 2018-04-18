@@ -123,6 +123,40 @@
 
 {% endmacro %}
 
+{#Template for range input field#}
+
+{% macro render_range_input_field_stars(field) %}
+
+    <div class="range_wrapper star-rating">
+        {{ field.label() }}
+        {{ field(class_='mdl-slider mdl-js-slider', onchange="setStars()",
+            onload="setStars()", **kwargs) |safe }}
+        <div id="star-rating"></div>
+    </div>
+    <script>
+        function setStars() {
+            var stars = [
+                '<i class="material-icons">thumb_down</i>',
+                '<i class="material-icons">star_half</i>',
+                '<i class="material-icons">star</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star_half</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star_half</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star_half</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star_half</i>',
+                '<i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i><i class="material-icons">star</i>'];
+            var ratingField = document.getElementById('star-rating');
+            var formField = document.getElementById('rating')
+            var rating = formField.value;
+            console.log(formField.value)
+            ratingField.innerHTML = stars[rating];
+        }
+    </script>
+
+{% endmacro %}
+
 {#Template for Radio Button field#}
 
 {% macro render_radio_button_field(field) %}

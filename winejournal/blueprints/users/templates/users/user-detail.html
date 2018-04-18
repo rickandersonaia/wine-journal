@@ -6,51 +6,49 @@
     <div class="mdl-layout__content container">
         <h1>{{ display_name }} Details</h1>
         <div class="mdl-grid">
-            <div class="mdl-cell--4-col">
-                <div class="mdl-cell mdl-cell--4-col">
-                    <div class="mdl-card mdl-shadow--2dp ">
-                        <div class="mdl-card__title mdl-card--border">
-                            <h2 class="mdl-card__title-text">
-                                {{ display_name }} - User Id {{ user.id }}</h2>
-                        </div>
-                        <div class="mdl-card__supporting-text">
-                            <p>username - {{ user.username }}</p>
-                            <p>email - {{ user.email }}</p>
-                            <p>first_name - {{ user.first_name }}</p>
-                            <p>last_name - {{ user.last_name }}</p>
-                            <p>dispay_name - {{ user.last_name }}</p>
-                            {% if user.image %}
-                                <img src="{{ user.image }}" height="50px">
-                            {% else %}
-                                <p>Image - none</p>
-                            {% endif %}
-                            <p>User role - {{ user.role }}</p>
-                            <p>Enabled? - {{ user.is_enabled }}</p>
-                        </div>
-                        <div class="mdl-card__actions mdl-card--border">
-                            <div class="mdl-grid">
-                                <div class="mdl-cell mdl-cell--6-col">
-                                    {% if is_owner or is_admin %}
+            <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-card mdl-shadow--2dp ">
+                    <div class="mdl-card__title mdl-card--border">
+                        <h2 class="mdl-card__title-text">
+                            {{ display_name }} - User Id {{ user.id }}</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        <p>username - {{ user.username }}</p>
+                        <p>email - {{ user.email }}</p>
+                        <p>first_name - {{ user.first_name }}</p>
+                        <p>last_name - {{ user.last_name }}</p>
+                        <p>dispay_name - {{ user.last_name }}</p>
+                        {% if user.image %}
+                            <img src="{{ user.image }}" height="50px">
+                        {% else %}
+                            <p>Image - none</p>
+                        {% endif %}
+                        <p>User role - {{ user.role }}</p>
+                        <p>Enabled? - {{ user.is_enabled }}</p>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--6-col">
+                                {% if is_owner or is_admin %}
                                     <a class="mdl-button mdl-js-button
                                     mdl-button--raised mdl-js-ripple-effect
                                     mdl-button--accent"
                                        href="{{ url_for('users.user_edit',
                                     user_id = user.id) }}">
                                         Edit</a>
-                                    {% endif %}
-                                </div>
+                                {% endif %}
+                            </div>
 
-                                <div class="mdl-cell mdl-cell--6-col
+                            <div class="mdl-cell mdl-cell--6-col
                                             mdl-typography--text-right">
-                                    <a class="mdl-button mdl-js-button
+                                <a class="mdl-button mdl-js-button
                                                 mdl-button--raised
                                                 mdl-js-ripple-effect
                                                 mdl-button--colored
                                                 mdl-typography--text-right"
-                                       href="{{ url_for(
+                                   href="{{ url_for(
                                         'users.list_users') }}">
-                                        Cancel</a>
-                                </div>
+                                    Cancel</a>
                             </div>
                         </div>
                     </div>

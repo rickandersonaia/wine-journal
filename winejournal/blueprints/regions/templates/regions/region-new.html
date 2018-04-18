@@ -2,7 +2,8 @@
         render_text_input_field,
         render_textarea_field,
         render_select_input_field,
-        render_simple_select_input_field %}
+        render_simple_select_input_field,
+        render_file_field %}
 {% extends "base.html" %}
 {% block title %}Add new region{% endblock %}
 {% block meta_description %}Add a new wine region to the journal{% endblock %}
@@ -12,14 +13,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="mdl-layout__content container">
-        <h1>Add a new Wine Region</h1>
+    <div class="mdl-layout__content container two-column">
+        <h1 class="mdl-typography--display-2">Add a new Wine Region</h1>
         <div class="mdl-grid">
-            <div class="mdl-cell--4-col">
-                <form method="post"
-                      action="{{ url_for('regions.new_region') }}"
-                      enctype="multipart/form-data">
-                    {{ form.csrf_token }}
+            <form method="post"
+                  action="{{ url_for('regions.new_region') }}"
+                  enctype="multipart/form-data"
+                  id="upload-form">
+                {{ form.csrf_token }}
+                <div class="mdl-cell mdl-cell--6-col">
                     {{ render_text_input_field(form.name) }}
                     {{ render_textarea_field(form.description) }}
                     {{ render_select_input_field(form.parent, reg_list) }}
@@ -29,8 +31,14 @@
                             type="submit">
                         Add new Region
                     </button>
-                </form>
-            </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_file_field(form.image, img_url) }}
+                    {{ form.delete_image }}
+                    <p>This image should be 1140 px wide and between 200 and 400
+                        px tall</p>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
