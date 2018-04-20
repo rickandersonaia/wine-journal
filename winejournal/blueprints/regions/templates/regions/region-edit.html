@@ -55,15 +55,14 @@
                 <div class="mdl-cell mdl-cell--6-col">
                     {{ render_file_field(form.image, img_url) }}
                     {{ form.delete_image }}
-                    <p>This image should be 1140 px wide and between 200 and 400
-                        px tall</p>
+                    {{ form.rotate_image }}
+                    <p>This image will be reduced to 1140px wide and cropped to 350px tall</p>
                 </div>
             </form>
         </div>
     </div>
 {% endblock %}
 {% block footer_scripts %}
-    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}">
-
-    </script>
+    <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}"> </script>
+    <script src="{{ url_for('static', filename='js/image-upload.js' ) }}"></script>
 {% endblock %}

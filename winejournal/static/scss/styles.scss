@@ -202,6 +202,24 @@ mdl-button.facebook,
   }
 }
 
+.one-third{
+  width:33%;
+  float:left;
+  &.left-align{
+    text-align:left;
+  }
+  &.center-align{
+    text-align: center;
+  }
+  &.right-align{
+    text-align: right;
+  }
+}
+
+.mdl-card__actions.orientation-buttons{
+  padding:14px 0;
+}
+
 //Wine teasers
 .wine-teaser {
   margin-bottom: 24px;

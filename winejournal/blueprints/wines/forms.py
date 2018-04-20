@@ -15,6 +15,7 @@ class NewWineForm(FlaskForm):
     region = StringField('Wine region')
     image = FileField('Upload an Image')
     delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class EditWineForm(FlaskForm):
@@ -28,6 +29,7 @@ class EditWineForm(FlaskForm):
     owner = IntegerField('Owner')
     image = FileField('Upload an Image')
     delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class DeleteWineForm(FlaskForm):

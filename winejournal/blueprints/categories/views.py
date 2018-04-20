@@ -3,10 +3,12 @@ from flask import Blueprint, render_template, redirect, url_for, \
 from flask_login import current_user
 from flask_uploads import UploadSet, IMAGES
 
+from config.settings import DEFAULT_CATEGORY_IMAGE
 from winejournal.blueprints.categories.forms import \
     NewCategoryForm, EditCategoryForm, DeleteCategoryForm
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
+from winejournal.blueprints.media.process_banner_image import ProcessBannerImage
 from winejournal.blueprints.s3.views import upload_image
 from winejournal.data_models.categories import Category, category_owner_required
 from winejournal.data_models.users import admin_required
@@ -36,6 +38,12 @@ def new_category():
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
+            img = ProcessBannerImage(
+                filename,  # path to temporary image location
+                new_category_form.rotate_image.data,  # desired rotation
+                1140  # maximum height or width
+            )
+            img.process_image()  # saves the modified image to the temp location
         if new_category_form.validate_on_submit():
             parentId = 0
             if new_category_form.parent.data:
@@ -44,6 +52,8 @@ def new_category():
                         parentId = int(id)
 
             img_url = upload_image(filename)
+            if img_url == None:
+                img_url = DEFAULT_CATEGORY_IMAGE
             category = Category(
                 name=new_category_form.name.data,
                 description=new_category_form.description.data,
@@ -105,6 +115,12 @@ def category_edit(category_id):
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
+            img = ProcessBannerImage(
+                filename,  # path to temporary image location
+                edit_category_form.rotate_image.data,  # desired rotation
+                1140  # maximum height or width
+            )
+            img.process_image()  # saves the modified image to the temp location
             if edit_category_form.validate_on_submit():
                 parentId = get_parent_id(edit_category_form, cat_list)
 
@@ -113,7 +129,12 @@ def category_edit(category_id):
                 category.name = edit_category_form.name.data
                 category.description = edit_category_form.description.data
                 category.parent_id = parentId
-                category.image = img_url
+                if img_url:
+                    category.image = img_url
+                else:
+                    if edit_category_form.delete_image.data == "true":
+                        print('delete')
+                        category.image = DEFAULT_CATEGORY_IMAGE
 
                 db.session.add(category)
                 db.session.commit()

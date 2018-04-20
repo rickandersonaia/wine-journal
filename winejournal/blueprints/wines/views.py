@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, \
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
+from config.settings import DEFAULT_WINE_IMAGE
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
 from winejournal.blueprints.regions.sorted_list import \
@@ -10,6 +11,7 @@ from winejournal.blueprints.regions.sorted_list import \
 from winejournal.blueprints.s3.views import upload_image
 from winejournal.blueprints.wines.forms import \
     NewWineForm, EditWineForm, DeleteWineForm
+from winejournal.blueprints.media.process_standard_image import ProcessStandardImage
 from winejournal.data_models.categories import Category
 from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
@@ -39,12 +41,19 @@ def new_wine():
     filename = None
 
     if request.method == 'POST':
-        if 'image' in request.files and request.files['image'].filename:
-            filename = photos.save(request.files['image'])
+        filename = photos.save(request.files['image'])
+        img = ProcessStandardImage(
+            filename,  # path to temporary image location
+            new_wine_form.rotate_image.data,  # desired rotation
+            600  # maximum height or width
+        )
+        img.process_image()  # saves the modified image to the temp location
         if new_wine_form.validate_on_submit():
             categoryId = get_category_id(new_wine_form.category.data, cat_list)
             regionId = get_region_id(new_wine_form.region.data, reg_list)
             img_url = upload_image(filename)
+            if img_url == None:
+                img_url = DEFAULT_WINE_IMAGE
 
             wine = Wine(
                 name=new_wine_form.name.data,
@@ -115,6 +124,12 @@ def wine_edit(wine_id):
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
+            img = ProcessStandardImage(
+                filename,  # path to temporary image location
+                edit_wine_form.rotate_image.data,  # desired rotation
+                600  # maximum height or width
+            )
+            img.process_image()  # saves the modified image to the temp location
             img_url = upload_image(filename)
         if edit_wine_form.validate_on_submit():
             categoryId = get_category_id(edit_wine_form.category.data, cat_list)
@@ -132,7 +147,7 @@ def wine_edit(wine_id):
                 wine.image = img_url
             else:
                 if edit_wine_form.delete_image.data == "true":
-                    wine.image = ''
+                    wine.image = DEFAULT_WINE_IMAGE
 
             db.session.add(wine)
             db.session.commit()

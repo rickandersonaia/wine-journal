@@ -39,22 +39,12 @@
                     {{ render_file_field(form.image, note.image) }}
                     {{ form.delete_image }}
                     {{ form.rotate_image }}
-                    <p>Upload an image from your phone - any direction</p>
-                    <div class="mdl-card__actions">
-                        <a href=""
-                           class="mdl-button mdl-js-button mdl-button--raised"><i
-                                class="material-icons">rotate_left</i> Left</a>
-                        <a href=""
-                           class="mdl-button mdl-js-button mdl-button--raised">Rotate
-                            180</a>
-                        <a href=""
-                           class="mdl-button mdl-js-button mdl-button--raised">
-                            <i class="material-icons">rotate_right</i>
-                            Right</a>
-                    </div>
                 </div>
             </form>
         </div>
     </div>
 
+{% endblock %}
+{% block footer_scripts %}
+<script src="{{ url_for('static', filename='js/image-upload.js' ) }}"></script>
 {% endblock %}

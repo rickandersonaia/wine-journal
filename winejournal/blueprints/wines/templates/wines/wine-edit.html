@@ -60,6 +60,7 @@
                 <div class="mdl-cell mdl-cell--6-col">
                     {{ render_file_field(form.image, wine.image) }}
                     {{ form.delete_image }}
+                    {{ form.rotate_image }}
 
                 </div>
             </form>
@@ -69,4 +70,5 @@
 {% block footer_scripts %}
     <script src="{{ url_for('static', filename='js/getmdl-select.min.js' ) }}"></script>
     <script src="{{ url_for('static', filename='js/input-bubbles.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='js/image-upload.js' ) }}"></script>
 {% endblock %}

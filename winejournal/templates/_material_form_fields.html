@@ -194,7 +194,8 @@
             {% endif %} }} ,
                 style="margin-bottom: 30px;" id="thumbnail">
         {% if img_url %}
-            <img class="mdl-card-image" src="{{ img_url }}" width="100%"
+            <img id="picture" class="mdl-card-image" src="{{ img_url }}"
+                 width="100%"
                  height="auto">
         {% endif %}
     </div>
@@ -203,8 +204,8 @@
         <div class="mdl-cell mdl-cell--8-col">
             <label for="{{ field.id }}" class="file-container mdl-button
                    mdl-button--colored mdl-js-button
-                 mdl-button--raised mdl-js-ripple-effect"><i
-                    class="material-icons">file_upload</i> Upload an Image
+                 mdl-button--raised mdl-js-ripple-effect">
+                <i class="material-icons">file_upload</i> Upload an Image
                 {{ field(onchange="fileSelected();", **kwargs) |safe }}
             </label>
         </div>
@@ -221,75 +222,25 @@
             <p id="fileSize"></p>
             <p id="fileType"></p>
         </div>
+        <div class="mdl-card__actions orientation-buttons clearfix">
+            <div class="one-third left-align">
+                <a onclick="imageRotateLeft()"
+                   class="mdl-button mdl-js-button mdl-button--raised"><i
+                        class="material-icons">rotate_left</i> Left</a>
+            </div>
+            <div class="one-third center-align">
+                <a onclick="imageRotate180()"
+                   class="mdl-button mdl-js-button mdl-button--raised"><i
+                        class="material-icons">cached</i>
+                    180</a>
+            </div>
+            <div class="one-third right-align">
+                <a onclick="imageRotateRight()"
+                   class="mdl-button mdl-js-button mdl-button--raised">
+                    <i class="material-icons">rotate_right</i>
+                    Right</a>
+            </div>
+        </div>
     </div>
-    <script>
-
-        function fileSelected() {
-            var file = document.getElementById('image').files[0];
-            if (file) {
-                var fileSize = 0;
-                if (file.size > 1024 * 1024)
-                    fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
-                else
-                    fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
-
-                document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
-                document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
-                document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
-                showFile();
-            }
-        }
-
-        function showFile() {
-            var fileInput = document.getElementById('image');
-            var fileDisplayArea = document.getElementById('thumbnail');
-            var wineMeta = document.getElementById('wine-meta');
-            console.log(fileInput)
-
-            console.log('it changed')
-            var file = fileInput.files[0];
-            var imageType = /image.*/;
-
-            if (file.type.match(imageType)) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    fileDisplayArea.innerHTML = "";
-
-                    // Create a new image.
-                    var img = new Image();
-                    // Set the img src property using the data URL.
-                    img.src = reader.result;
-                    img.setAttribute("width", "100%");
-                    img.setAttribute("height", "auto%");
-
-                    // Add the image to the page.
-                    fileDisplayArea.appendChild(img);
-                    fileDisplayArea.style.display = 'block';
-                    wineMeta.style.display = 'block';
-                }
-
-                reader.readAsDataURL(file);
-            } else {
-                fileDisplayArea.innerHTML = "File not supported!";
-            }
-
-        }
-
-        function removeImage() {
-            const file = document.getElementById('image');
-            const hidden = document.getElementById('delete_image');
-            const fileDisplayArea = document.getElementById('thumbnail');
-            var wineMeta = document.getElementById('wine-meta');
-            file.value = '';
-            hidden.value = "true"
-            fileDisplayArea.innerHTML = "";
-            fileDisplayArea.style.display = 'none';
-            wineMeta.style.display = 'none';
-            document.getElementById('fileName').innerHTML = '';
-            document.getElementById('fileSize').innerHTML = '';
-            document.getElementById('fileType').innerHTML = '';
-        }
-    </script>
 
 {% endmacro %}

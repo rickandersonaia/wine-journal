@@ -16,6 +16,9 @@ INITIAL_ADMIN_SETUP = True
 
 UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
 UPLOADED_PHOTOS_URL = '/static/img/'
+DEFAULT_CATEGORY_IMAGE = '/static/img/generic-wine-category.jpg'
+DEFAULT_REGION_IMAGE = '/static/img/generic-wine-region.jpg'
+DEFAULT_WINE_IMAGE = '/static/img/generic-wine-bottle.jpg'
 # Flask-Mail.
 # MAIL_DEFAULT_SENDER = 'contact@local.host'
 # MAIL_SERVER = 'smtp.gmail.com'

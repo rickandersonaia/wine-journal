@@ -12,6 +12,7 @@ class NewRegionForm(FlaskForm):
     state = StringField('State')
     image = FileField('Upload an Image')
     delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class EditRegionForm(FlaskForm):
@@ -22,6 +23,7 @@ class EditRegionForm(FlaskForm):
     state = StringField('State')
     image = FileField('Upload an Image')
     delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class DeleteRegionForm(FlaskForm):

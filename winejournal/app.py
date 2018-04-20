@@ -13,6 +13,7 @@ from winejournal.blueprints.static_pages.views import \
     google_blueprint, \
     facebook_blueprint
 from winejournal.blueprints.tasting_notes import tastingNote
+from winejournal.blueprints.media.views import media
 from winejournal.blueprints.users import users
 from winejournal.blueprints.wines import wines
 from winejournal.extensions import (
@@ -55,6 +56,7 @@ def create_app(settings_override=None):
     app.register_blueprint(users)
     app.register_blueprint(s3)
     app.register_blueprint(tastingNote)
+    app.register_blueprint(media)
     app.register_blueprint(twitter_blueprint, url_prefix='/twitter_login')
     app.register_blueprint(google_blueprint, url_prefix='/google_login')
     app.register_blueprint(facebook_blueprint, url_prefix='/facebook_login')

@@ -1,0 +1,1 @@
+from winejournal.blueprints.media.views import media

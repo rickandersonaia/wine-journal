@@ -10,6 +10,7 @@ class NewCategoryForm(FlaskForm):
     parent = StringField('Category parent')
     image = FileField('Upload an Image')
     delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class EditCategoryForm(FlaskForm):
@@ -18,6 +19,7 @@ class EditCategoryForm(FlaskForm):
     parent = StringField('Category parent')
     image = FileField('Upload an Image')
     delete_image = HiddenField()
+    rotate_image = HiddenField()
 
 
 class DeleteCategoryForm(FlaskForm):

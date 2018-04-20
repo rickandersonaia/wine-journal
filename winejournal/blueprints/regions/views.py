@@ -3,11 +3,13 @@ from flask import Blueprint, render_template, redirect, url_for, \
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
+from config.settings import DEFAULT_REGION_IMAGE
 from winejournal.blueprints.regions.country_list import Countries
 from winejournal.blueprints.regions.forms import \
     NewRegionForm, EditRegionForm, DeleteRegionForm
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
+from winejournal.blueprints.media.process_banner_image import ProcessBannerImage
 from winejournal.blueprints.s3.views import upload_image
 from winejournal.data_models.regions import Region, region_owner_required
 from winejournal.data_models.users import admin_required
@@ -40,6 +42,12 @@ def new_region():
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
+            img = ProcessBannerImage(
+                filename, #path to temporary image location
+                new_region_form.rotate_image.data, # desired rotation
+                1140 # maximum height or width
+            )
+            img.process_image() # saves the modified image to the temp location
         if new_region_form.validate_on_submit():
             parentId = 0
             if new_region_form.parent.data:
@@ -48,6 +56,8 @@ def new_region():
                         parentId = int(id)
 
             img_url = upload_image(filename)
+            if img_url == None:
+                img_url = DEFAULT_REGION_IMAGE
             region = Region(
                 name=new_region_form.name.data,
                 description=new_region_form.description.data,
@@ -114,6 +124,12 @@ def region_edit(region_id):
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
+            img = ProcessBannerImage(
+                filename, #path to temporary image location
+                edit_region_form.rotate_image.data, # desired rotation
+                1140 # maximum height or width
+            )
+            img.process_image() # saves the modified image to the temp location
             if edit_region_form.validate_on_submit():
                 parentId = get_parent_id(edit_region_form, reg_list)
 
@@ -124,7 +140,11 @@ def region_edit(region_id):
                 region.parent_id = parentId
                 region.country = edit_region_form.country.data
                 region.state = edit_region_form.state.data
-                region.image = img_url
+                if img_url:
+                    region.image = img_url
+                else:
+                    if edit_region_form.delete_image.data == "true":
+                        region.image = DEFAULT_REGION_IMAGE
 
                 db.session.add(region)
                 db.session.commit()
