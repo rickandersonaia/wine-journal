@@ -67,7 +67,7 @@ def new_category():
             message = 'You added the {} category'.format(category.name)
             flash(message)
             return redirect(url_for('categories.list_categories'))
-
+    print(request.method)
     return render_template('categories/category-new.html',
                            form=new_category_form,
                            cat_list=cat_list,
@@ -121,26 +121,26 @@ def category_edit(category_id):
                 1140  # maximum height or width
             )
             img.process_image()  # saves the modified image to the temp location
-            if edit_category_form.validate_on_submit():
-                parentId = get_parent_id(edit_category_form, cat_list)
+        if edit_category_form.validate_on_submit():
+            parentId = get_parent_id(edit_category_form, cat_list)
 
-                img_url = upload_image(filename)
+            img_url = upload_image(filename)
 
-                category.name = edit_category_form.name.data
-                category.description = edit_category_form.description.data
-                category.parent_id = parentId
-                if img_url:
-                    category.image = img_url
-                else:
-                    if edit_category_form.delete_image.data == "true":
-                        print('delete')
-                        category.image = DEFAULT_CATEGORY_IMAGE
+            category.name = edit_category_form.name.data
+            category.description = edit_category_form.description.data
+            category.parent_id = parentId
+            if img_url:
+                category.image = img_url
+            else:
+                if edit_category_form.delete_image.data == "true":
+                    print('delete')
+                    category.image = DEFAULT_CATEGORY_IMAGE
 
-                db.session.add(category)
-                db.session.commit()
-                message = 'You updated the {} category'.format(category.name)
-                flash(message)
-                return redirect(url_for('categories.list_categories'))
+            db.session.add(category)
+            db.session.commit()
+            message = 'You updated the {} category'.format(category.name)
+            flash(message)
+            return redirect(url_for('categories.list_categories'))
 
     return render_template('categories/category-edit.html',
                            form=edit_category_form,

@@ -130,27 +130,27 @@ def region_edit(region_id):
                 1140 # maximum height or width
             )
             img.process_image() # saves the modified image to the temp location
-            if edit_region_form.validate_on_submit():
-                parentId = get_parent_id(edit_region_form, reg_list)
+        if edit_region_form.validate_on_submit():
+            parentId = get_parent_id(edit_region_form, reg_list)
 
-                img_url = upload_image(filename)
+            img_url = upload_image(filename)
 
-                region.name = edit_region_form.name.data
-                region.description = edit_region_form.description.data
-                region.parent_id = parentId
-                region.country = edit_region_form.country.data
-                region.state = edit_region_form.state.data
-                if img_url:
-                    region.image = img_url
-                else:
-                    if edit_region_form.delete_image.data == "true":
-                        region.image = DEFAULT_REGION_IMAGE
+            region.name = edit_region_form.name.data
+            region.description = edit_region_form.description.data
+            region.parent_id = parentId
+            region.country = edit_region_form.country.data
+            region.state = edit_region_form.state.data
+            if img_url:
+                region.image = img_url
+            else:
+                if edit_region_form.delete_image.data == "true":
+                    region.image = DEFAULT_REGION_IMAGE
 
-                db.session.add(region)
-                db.session.commit()
-                message = 'You updated the {} region'.format(region.name)
-                flash(message)
-                return redirect(url_for('regions.list_regions'))
+            db.session.add(region)
+            db.session.commit()
+            message = 'You updated the {} region'.format(region.name)
+            flash(message)
+            return redirect(url_for('regions.list_regions'))
 
     return render_template('regions/region-edit.html',
                            form=edit_region_form,
