@@ -33,7 +33,7 @@ DEFAULT_WINE_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-bottle.jpg'
 # MAIL_PASSWORD = 'awesomepassword'
 
 # SQLAlchemy.
-db_uri = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
+db_uri = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
 # username: winejournal
 # password: devpassword
 SQLALCHEMY_DATABASE_URI = db_uri

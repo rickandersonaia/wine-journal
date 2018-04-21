@@ -77,7 +77,7 @@ def extensions(app):
     :param app: Flask application instance
     :return: None
     """
-    debug_toolbar.init_app(app)
+    # debug_toolbar.init_app(app)
     csrf.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
