@@ -19,7 +19,7 @@ from winejournal.blueprints.users import users
 from winejournal.blueprints.wines import wines
 from winejournal.blueprints.filters import filters
 from winejournal.extensions import (
-    debug_toolbar,
+    # debug_toolbar,
     csrf,
     db,
     login_manager
