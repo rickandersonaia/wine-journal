@@ -3,7 +3,7 @@ from datetime import timedelta
 DEBUG = True
 ASSETS_DEBUG = True
 
-SERVER_NAME = 'localhost:5000'
+SERVER_NAME = '0.0.0.0:5000'
 SECRET_KEY = 'insecurekeyfordev'
 
 # Social site login authentication
@@ -25,7 +25,8 @@ DEFAULT_REGION_IMAGE = '/static/img/generic-wine-region.jpg'
 DEFAULT_WINE_IMAGE = '/static/img/generic-wine-bottle.jpg'
 
 # SQLAlchemy.
-db_uri = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
+db_uri = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
+# db_uri = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
 # username: winejournal
 # password: devpassword
 SQLALCHEMY_DATABASE_URI = db_uri

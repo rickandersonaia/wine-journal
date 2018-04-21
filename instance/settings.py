@@ -6,7 +6,8 @@ DEBUG = True
 JSDEBUG = 'true'
 ASSETS_DEBUG = True
 
-SERVER_NAME = 'https://our-wine-journal.herokuapp.com/'
+SERVER_NAME = '0.0.0.0:5000'
+# SERVER_NAME = 'https://our-wine-journal.herokuapp.com/'
 SECRET_KEY = 'Letstryaverysecurekeywithanicelong67key'
 
 #set this flag to true when an initial user has been created and is given the
@@ -22,15 +23,6 @@ UPLOADED_PHOTOS_URL = '/static/img/'
 DEFAULT_CATEGORY_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-category.jpg'
 DEFAULT_REGION_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-region.jpg'
 DEFAULT_WINE_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-bottle.jpg'
-
-# Flask-Mail.
-# MAIL_DEFAULT_SENDER = 'contact@local.host'
-# MAIL_SERVER = 'smtp.gmail.com'
-# MAIL_PORT = 587
-# MAIL_USE_TLS = True
-# MAIL_USE_SSL = False
-# MAIL_USERNAME = 'you@gmail.com'
-# MAIL_PASSWORD = 'awesomepassword'
 
 # SQLAlchemy.
 db_uri = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
