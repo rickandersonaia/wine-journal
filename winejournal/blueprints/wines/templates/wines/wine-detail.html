@@ -37,11 +37,15 @@
                         <p>{{ wine.description }}</p>
                     {% endif %}
                     {% if wine.owner %}
-                        <p class="mdl-list__item">
+                        <p class="mdl-list__item mdl-list__item--two-line">
+                        <span class="mdl-list__item-primary-content">
                             <img class="mdl-list__item-avatar"
                                  src="{{ wine.user.image }}"
                                  alt="{{ wine.user.display_name }} avatar">
-                            <span>Shared by: {{ wine.user.display_name }}</span></p>
+                            <span>Shared by: {{ wine.user.display_name }}</span>
+                            <span class="mdl-list__item-sub-title">Posted on: {{ wine.created_on | date }}</span>
+                         </span>
+                        </p>
                     {% endif %}
                     <p>Wine ID: {{ wine.id }}</p>
                 </div>
@@ -61,14 +65,14 @@
                         <div class="mdl-cell mdl-cell--8-col
                                             mdl-typography--text-right">
                             {% if current_user.is_authenticated %}
-                            <a class="mdl-button mdl-js-button
+                                <a class="mdl-button mdl-js-button
                                                 mdl-button--raised
                                                 mdl-js-ripple-effect
                                                 mdl-button--colored
                                                 mdl-typography--text-right"
-                               href="{{ url_for(
+                                   href="{{ url_for(
                                         'tasting_notes.new_tasting_note', wine_id=wine.id) }}">
-                                New Tasting Note</a>
+                                    New Tasting Note</a>
                             {% endif %}
                         </div>
                     </div>

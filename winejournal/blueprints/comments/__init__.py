@@ -1,0 +1,1 @@
+from winejournal.blueprints.comments.views import comment

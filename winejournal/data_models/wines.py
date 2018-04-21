@@ -3,10 +3,11 @@ from functools import wraps
 from flask import redirect, url_for, flash
 from flask_login import current_user
 
+from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.extensions import db
 
 
-class Wine(db.Model):
+class Wine(db.Model, TimeStampMixin):
     __tablename__ = 'wines'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -37,6 +38,8 @@ class Wine(db.Model):
             'region': self.region,
             'category': self.category,
             'owner': self.owner,
+            'created_on': self.created_on,
+            'updated_on': self.updated_on
         }
 
 

@@ -3,10 +3,11 @@ from functools import wraps
 from flask import redirect, url_for, flash
 from flask_login import current_user
 
+from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.extensions import db
 
 
-class Comment(db.Model):
+class Comment(db.Model, TimeStampMixin):
     __tablename__ = 'comments'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -20,14 +21,11 @@ class Comment(db.Model):
         return {
             'id': self.id,
             'author_id': self.author_id,
-            'title': self.title,
-            'tasting_notes': self.tasting_notes,
+            'text': self.text,
             'image': self.image,
-            'vintage': self.vintage,
-            'rating': self.rating,
-            'price': self.price,
-            'likes': self.likes,
-            'dlikes': self.dlikes,
+            'tnote_id': self.tnote_id,
+            'created_on': self.created_on,
+            'updated_on': self.updated_on
         }
 
 

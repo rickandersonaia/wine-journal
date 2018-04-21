@@ -5,11 +5,12 @@ from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash
 
 from config.settings import INITIAL_ADMIN_SETUP
+from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.data_models.comments import Comment
 from winejournal.extensions import db
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, TimeStampMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +47,9 @@ class User(db.Model, UserMixin):
             'display_name': self.display_name,
             'image': self.image,
             'role': self.role,
-            'is_enabled': self.is_enabled
+            'is_enabled': self.is_enabled,
+            'created_on': self.created_on,
+            'updated_on': self.updated_on
         }
 
     def is_active(self):

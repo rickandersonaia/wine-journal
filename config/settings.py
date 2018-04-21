@@ -5,10 +5,14 @@ ASSETS_DEBUG = True
 
 SERVER_NAME = 'localhost:5000'
 SECRET_KEY = 'insecurekeyfordev'
+
+# Social site login authentication
 GOOGLE_CLIENT_ID = ''
 GOOGLE_CLIENT_SECRETS = ''
 TWITTER_API_KEY = ''
 TWITTER_API_SECRET = ''
+FACEBOOK_OAUTH_CLIENT_ID = ''
+FACEBOOK_OAUTH_CLIENT_SECRET = ''
 
 #set this flag to true when an initial user has been created and is given the
 # admin role.  This should be false on startup
@@ -19,15 +23,6 @@ UPLOADED_PHOTOS_URL = '/static/img/'
 DEFAULT_CATEGORY_IMAGE = '/static/img/generic-wine-category.jpg'
 DEFAULT_REGION_IMAGE = '/static/img/generic-wine-region.jpg'
 DEFAULT_WINE_IMAGE = '/static/img/generic-wine-bottle.jpg'
-# Flask-Mail.
-# MAIL_DEFAULT_SENDER = 'contact@local.host'
-# MAIL_SERVER = 'smtp.gmail.com'
-# MAIL_PORT = 587
-# MAIL_USE_TLS = True
-# MAIL_USE_SSL = False
-# MAIL_USERNAME = 'you@gmail.com'
-# MAIL_PASSWORD = 'awesomepassword'
-
 
 # SQLAlchemy.
 db_uri = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'

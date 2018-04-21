@@ -3,10 +3,11 @@ from functools import wraps
 from flask import redirect, url_for, flash
 from flask_login import current_user
 
+from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.extensions import db
 
 
-class TastingNote(db.Model):
+class TastingNote(db.Model, TimeStampMixin):
     __tablename__ = 'tasting_notes'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -22,7 +23,7 @@ class TastingNote(db.Model):
     wine_id = db.Column(db.Integer, db.ForeignKey('wines.id'))
 
     comments = db.relationship('Comment',
-                               backref=db.backref('tasting_note', lazy=True))
+                               backref=db.backref('tasting_note', lazy='subquery'))
 
     @property
     def serialize(self):
@@ -37,6 +38,8 @@ class TastingNote(db.Model):
             'price': self.price,
             'likes': self.likes,
             'dlikes': self.dlikes,
+            'created_on': self.created_on,
+            'updated_on': self.updated_on
         }
 
 

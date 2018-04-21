@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}All Wine Regions{% endblock %}
+{% block meta_description %}A list of all wine regions in the
+    journal{% endblock %}
+
+{% block content %}
+    <div class="mdl-layout__content container">
+        <h1>Wine Region Detail</h1>
+        <div class="mdl-grid tasting-notes">
+            {% if note.image %}
+                <div class="mdl-cell mdl-cell--6-col">
+                    <img src="{{ note.image }}" alt="{{ note.title }}"
+                         width="100%" height="auto" class="mdl-shadow--3dp">
+                </div>
+            {% endif %}
+            <div class="mdl-cell mdl-cell--6-col">
+                <h3 class="mdl-typography--display-1">{{ note.title }}</h3>
+                <div class="wine-meta mdl-card mdl-card--border">
+                    <p>Rating: <span
+                            class="star-rating">{{ note.rating | int }}</span>
+                    </p>
+                    <p>Purchase price: {{ note.price }} -
+                        Vintage: {{ note.vintage }}</p>
+                </div>
+                <blockquote
+                        class="mdl-typography--body-1">{{ note.text }}</blockquote>
+
+                <div class="mdl-list__item">
+                    <img class="mdl-list__item-avatar"
+                         src="{{ note.user.image }}"
+                         alt="{{ note.user.display_name }} avatar">
+
+                    Shared by: {{ note.user.display_name }}
+                </div>
+                {% if is_admin or current_user.id == note.user.id %}
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                           href="{{ url_for('tasting_notes.tasting_notes_edit', tnote_id=note.id) }}">Edit</a>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

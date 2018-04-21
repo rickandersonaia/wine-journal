@@ -1,0 +1,55 @@
+{% from '_material_form_fields.html' import
+        render_text_input_field,
+        render_textarea_field,
+        render_file_field %}
+{% extends "base.html" %}
+{% block title %}
+    Edit the comment for the{{ comment.tasting_note.title }}tasting note
+{% endblock %}
+{% block meta_description %}
+    Edit the comment for the{{ comment.tasting_note.title }} tasting note in
+    the journal
+{% endblock %}
+
+
+{% block content %}
+    <div class="mdl-layout__content container two-column">
+        <h1 class="mdl-typography--display-2">
+            Edit the comment for the {{ comment.tasting_note.title }} tasting note
+        </h1>
+        <div class="mdl-grid">
+            <form method="post"
+                  action="{{ url_for('comment.comment_edit', comment_id=comment.id) }}"
+                  enctype="multipart/form-data"
+                  id="upload-form">
+                {{ form.csrf_token }}
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_textarea_field(form.text) }}
+                    {% if is_admin %}
+                        <p>Tasting Note ID</p>
+                        {{ render_text_input_field(form.tnote_id) }}
+                        <p>Author ID</p>
+                        {{ render_text_input_field(form.author_id) }}
+                    {% endif %}
+                    <button class="mdl-button mdl-js-button mdl-button--raised"
+                            type="submit">
+                        Save your Edits
+                    </button>
+                    <a href="{{ url_for('comment.comments_delete',  comment_id=comment.id) }}"
+                       class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                        Delete
+                    </a>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    {{ render_file_field(form.image, comment.image) }}
+                    {{ form.delete_image }}
+                    {{ form.rotate_image }}
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block footer_scripts %}
+<script src="{{ url_for('static', filename='js/image-upload.js' ) }}"></script>
+{% endblock %}

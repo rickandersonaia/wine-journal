@@ -3,10 +3,11 @@ from functools import wraps
 from flask import redirect, url_for, flash
 from flask_login import current_user
 
+from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.extensions import db
 
 
-class Region(db.Model):
+class Region(db.Model, TimeStampMixin):
     __tablename__ = 'regions'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,7 +31,9 @@ class Region(db.Model):
             'image': self.image,
             'parent_id': self.parent_id,
             'country': self.country,
-            'state': self.state
+            'state': self.state,
+            'created_on': self.created_on,
+            'updated_on': self.updated_on
         }
 
 

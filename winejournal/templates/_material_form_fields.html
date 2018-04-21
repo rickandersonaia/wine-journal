@@ -21,7 +21,7 @@
 
 {% macro render_textarea_field(field) %}
     <div class="mdl-textfield mdl-js-textfield {% if field.errors %}is-invalid{% endif %}">
-        {{ field(class_='mdl-textfield__input', **kwargs) |safe }}
+        {{ field(class_='mdl-textfield__input', rows='5', **kwargs) |safe }}
         {{ field.label(class_='mdl-textfield__label') }}
     </div>
     {% if field.errors %}

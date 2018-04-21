@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}All Tasting Notes{% endblock %}
+{% block meta_description %}A list of all tasting notes in the
+    journal{% endblock %}
+
+{% block content %}
+    <div class="mdl-layout__content container">
+        <h1>Tasting Notes</h1>
+        <div class="mdl-grid">
+            <div class="mdl-cell--4-col">
+                <ul class="mdl-list">
+                    {% for note in tasting_notes %}
+                        <li class="mdl-list__item">
+                            <a href="{{ url_for('wines.wine_detail', wine_id=note.wine_id) }}">
+                                {{ note.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

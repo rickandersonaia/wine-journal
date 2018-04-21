@@ -6,12 +6,13 @@ from flask_uploads import UploadSet, IMAGES
 from config.settings import DEFAULT_WINE_IMAGE
 from winejournal.blueprints.categories.sorted_list import \
     get_sorted_categories
+from winejournal.blueprints.media.process_standard_image import \
+    ProcessStandardImage
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
 from winejournal.blueprints.s3.views import upload_image
 from winejournal.blueprints.wines.forms import \
     NewWineForm, EditWineForm, DeleteWineForm
-from winejournal.blueprints.media.process_standard_image import ProcessStandardImage
 from winejournal.data_models.categories import Category
 from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
