@@ -21,6 +21,7 @@ Flask-DebugToolbar==0.10.1
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.3.2
+Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
 google-api-python-client==1.6.6
 google-auth==1.4.1
@@ -39,6 +40,7 @@ MarkupSafe==1.0
 mccabe==0.6.1
 oauth2client==4.1.2
 oauthlib==2.0.7
+Pillow==5.1.0
 pluggy==0.6.0
 psycopg2==2.7.4
 py==1.5.2
@@ -70,7 +72,7 @@ validators==0.12.1
 vine==1.1.4
 webassets==0.12.1
 Werkzeug==0.12.2
--e git+https://github.com/rickandersonaia/wine-journal.git@1fe89ce1b5af23c0aa719b356c7c1507596af01c#egg=WineJournal_CLI
+-e git+https://github.com/rickandersonaia/wine-journal.git@d3ec5cc6dbd6b70903760d516d8a7777d96c150f#egg=WineJournal_CLI
 WTForms==2.1
 WTForms-Alchemy==0.16.6
 WTForms-Components==0.10.3
