@@ -3,7 +3,7 @@ from datetime import timedelta
 DEBUG = True
 ASSETS_DEBUG = True
 
-SERVER_NAME = '0.0.0.0:5000'
+# SERVER_NAME = '0.0.0.0:5000'
 SECRET_KEY = 'insecurekeyfordev'
 
 # Social site login authentication

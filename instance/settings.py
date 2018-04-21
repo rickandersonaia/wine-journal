@@ -6,7 +6,7 @@ DEBUG = True
 JSDEBUG = 'true'
 ASSETS_DEBUG = True
 
-SERVER_NAME = '0.0.0.0:5000'
+# SERVER_NAME = '0.0.0.0:5000'
 # SERVER_NAME = 'https://our-wine-journal.herokuapp.com/'
 SECRET_KEY = 'Letstryaverysecurekeywithanicelong67key'
 
