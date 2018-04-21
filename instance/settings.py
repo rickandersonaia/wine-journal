@@ -6,8 +6,8 @@ DEBUG = True
 JSDEBUG = 'true'
 ASSETS_DEBUG = True
 
-SERVER_NAME = 'localhost:5000'
-SECRET_KEY = 'insecurekeyfordev'
+SERVER_NAME = 'https://our-wine-journal.herokuapp.com/'
+SECRET_KEY = 'Letstryaverysecurekeywithanicelong67key'
 
 #set this flag to true when an initial user has been created and is given the
 # admin role.  This should be false on startup
