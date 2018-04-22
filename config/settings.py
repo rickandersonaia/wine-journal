@@ -25,15 +25,21 @@ DEFAULT_CATEGORY_IMAGE = '/static/img/generic-wine-category.jpg'
 DEFAULT_REGION_IMAGE = '/static/img/generic-wine-region.jpg'
 DEFAULT_WINE_IMAGE = '/static/img/generic-wine-bottle.jpg'
 
-# SQLAlchemy.
-# DB_URI = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
-# DB_URI = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
-# username: winejournal
-# password: devpassword
-DB_USERNAME=os.environ['WINEJOURNAL_DB_USERNAME'] #mgjnxqagefnuxl
-DB_PASSWORD=os.environ['WINEJOURNAL_DB_PASSWORD'] #60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1
-DB_HOST=os.environ['WINEJOURNAL_DB_HOST'] #ec2-54-235-193-34.compute-1.amazonaws.com
-DATABASE_NAME=os.environ['WINEJOURNAL_DATABASE_NAME'] #d549853lc81enb
+ROOT_PATH = os.path.dirname(os.path.realpath('../winejournal/app.py'))
+STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../winejournal/static/img/'))
+STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..','winejournal', 'static', 'img')))
+
+UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
+UPLOADED_PHOTOS_URL = '/static/img/'
+DEFAULT_CATEGORY_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-category.jpg'
+DEFAULT_REGION_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-region.jpg'
+DEFAULT_WINE_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-bottle.jpg'
+
+# SQLAlchemy
+DB_USERNAME=os.environ['WINEJOURNAL_DB_USERNAME']
+DB_PASSWORD=os.environ['WINEJOURNAL_DB_PASSWORD']
+DB_HOST=os.environ['WINEJOURNAL_DB_HOST']
+DATABASE_NAME=os.environ['WINEJOURNAL_DATABASE_NAME']
 DB_URI = "postgresql+psycopg2://%s:%s@%s:5432/%s" % (DB_USERNAME, DB_PASSWORD, DB_HOST, DATABASE_NAME)
 
 SQLALCHEMY_DATABASE_URI = DB_URI
@@ -51,8 +57,8 @@ OAUTHLIB_RELAX_TOKEN_SCOPE=1
 # s3 variables
 AWS_CLIENT_ACCESS_KEY=''
 AWS_CLIENT_SECRET_KEY=''
-AWS_DEST_BUCKET='winejournal'
-AWS_ENDPOINT='https://s3-us-west-2.amazonaws.com/winejournal'
-AWS_HOST = 's3-us-west-2.amazonaws.com'
+AWS_DEST_BUCKET='diywptv.winejournal'
+AWS_ENDPOINT='https://s3-us-west-1.amazonaws.com/diywptv.winejournal'
+AWS_HOST = 's3-us-west-1.amazonaws.com'
 
 

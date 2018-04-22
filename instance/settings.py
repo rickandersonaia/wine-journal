@@ -29,6 +29,9 @@ DEFAULT_WINE_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-bottle.jpg'
 # username: winejournal
 # password: devpassword
 # SQLALCHEMY_DATABASE_URI = db_uri
+DB_PASSWORD=os.environ['WINEJOURNAL_DB_PASSWORD'] #60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1
+DB_HOST=os.environ['WINEJOURNAL_DB_HOST'] #ec2-54-235-193-34.compute-1.amazonaws.com
+DATABASE_NAME=os.environ['WINEJOURNAL_DATABASE_NAME'] #d549853lc81enb
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # User.
@@ -51,8 +54,8 @@ FACEBOOK_OAUTH_CLIENT_SECRET = json.loads(
 APPLICATION_NAME = "Restaurant Menu Application"
 
 # s3 variables
-AWS_CLIENT_ACCESS_KEY='AKIAICFFYHMTX2AKPKCQ'
-AWS_CLIENT_SECRET_KEY='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'
+AWS_CLIENT_ACCESS_KEY='AKIAIWLPMGZLEIUCA3HA'
+AWS_CLIENT_SECRET_KEY='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'
 AWS_DEST_BUCKET='diywptv.winejournal'
 AWS_ENDPOINT='https://s3-us-west-1.amazonaws.com/diywptv.winejournal'
 AWS_HOST = 's3-us-west-1.amazonaws.com'

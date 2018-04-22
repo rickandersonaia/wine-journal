@@ -14,6 +14,57 @@ function fileSelected() {
         showFile();
     }
 }
+(function() {
+  document.getElementById("file_input").onchange = function(){
+    var files = document.getElementById("file_input").files;
+    var file = files[0];
+    if(!file){
+      return alert("No file selected.");
+    }
+    getSignedRequest(file);
+  };
+})();
+
+function getSignedRequest(file){
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        var response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.data, response.url);
+      }
+      else{
+        alert("Could not get signed URL.");
+      }
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, s3Data, url){
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", s3Data.url);
+
+  var postData = new FormData();
+  for(key in s3Data.fields){
+    postData.append(key, s3Data.fields[key]);
+  }
+  postData.append('file', file);
+
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200 || xhr.status === 204){
+        document.getElementById("preview").src = url;
+        document.getElementById("avatar-url").value = url;
+      }
+      else{
+        alert("Could not upload file.");
+      }
+   }
+  };
+  xhr.send(postData);
+}
 
 function showFile() {
     var fileInput = document.getElementById('image');
@@ -52,9 +103,9 @@ function showFile() {
 }
 
 function removeImage() {
-    const file = document.getElementById('image');
-    const hidden = document.getElementById('delete_image');
-    const fileDisplayArea = document.getElementById('thumbnail');
+    var file = document.getElementById('image');
+    var hidden = document.getElementById('delete_image');
+    var fileDisplayArea = document.getElementById('thumbnail');
     var wineMeta = document.getElementById('wine-meta');
     file.value = '';
     hidden.value = "true"
@@ -67,8 +118,8 @@ function removeImage() {
 }
 
 function imageRotateLeft() {
-    const image = document.getElementById('thumbnail');
-    const rotateField = document.getElementById('rotate_image')
+    var image = document.getElementById('thumbnail');
+    var rotateField = document.getElementById('rotate_image')
     image.style.WebkitTransform = "rotate(0deg)";
     image.style.WebkitTransform = "rotate(-90deg)";
     image.style.transform = "rotate(0deg)";
@@ -77,8 +128,8 @@ function imageRotateLeft() {
 }
 
 function imageRotateRight() {
-    const image = document.getElementById('thumbnail');
-    const rotateField = document.getElementById('rotate_image')
+    var image = document.getElementById('thumbnail');
+    var rotateField = document.getElementById('rotate_image')
     image.style.WebkitTransform = "rotate(0deg)";
     image.style.WebkitTransform = "rotate(90deg)";
     image.style.transform = "rotate(0deg)";
@@ -87,8 +138,8 @@ function imageRotateRight() {
 }
 
 function imageRotate180() {
-    const image = document.getElementById('thumbnail');
-    const rotateField = document.getElementById('rotate_image')
+    var image = document.getElementById('thumbnail');
+    var rotateField = document.getElementById('rotate_image')
     image.style.WebkitTransform = "rotate(0deg)";
     image.style.WebkitTransform = "rotate(180deg)";
     image.style.transform = "rotate(0deg)";
