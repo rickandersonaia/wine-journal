@@ -1,10 +1,11 @@
 from datetime import timedelta
+import os
 
 DEBUG = True
 ASSETS_DEBUG = True
 
 # SERVER_NAME = '0.0.0.0:5000'
-SECRET_KEY = 'insecurekeyfordev'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # Social site login authentication
 GOOGLE_CLIENT_ID = ''
@@ -25,11 +26,17 @@ DEFAULT_REGION_IMAGE = '/static/img/generic-wine-region.jpg'
 DEFAULT_WINE_IMAGE = '/static/img/generic-wine-bottle.jpg'
 
 # SQLAlchemy.
-db_uri = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
-# db_uri = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
+# DB_URI = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
+# DB_URI = 'postgresql+psycopg2://winejournal:devpassword@localhost:5432/winejournal'
 # username: winejournal
 # password: devpassword
-SQLALCHEMY_DATABASE_URI = db_uri
+DB_USERNAME=os.environ['WINEJOURNAL_DB_USERNAME'] #mgjnxqagefnuxl
+DB_PASSWORD=os.environ['WINEJOURNAL_DB_PASSWORD'] #60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1
+DB_HOST=os.environ['WINEJOURNAL_DB_HOST'] #ec2-54-235-193-34.compute-1.amazonaws.com
+DATABASE_NAME=os.environ['WINEJOURNAL_DATABASE_NAME'] #d549853lc81enb
+DB_URI = "postgresql+psycopg2://%s:%s@%s:5432/%s" % (DB_USERNAME, DB_PASSWORD, DB_HOST, DATABASE_NAME)
+
+SQLALCHEMY_DATABASE_URI = DB_URI
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # User.

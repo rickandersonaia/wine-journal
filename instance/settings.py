@@ -8,7 +8,7 @@ ASSETS_DEBUG = True
 
 # SERVER_NAME = '0.0.0.0:5000'
 # SERVER_NAME = 'https://our-wine-journal.herokuapp.com/'
-SECRET_KEY = 'Letstryaverysecurekeywithanicelong67key'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 #set this flag to true when an initial user has been created and is given the
 # admin role.  This should be false on startup
@@ -25,10 +25,10 @@ DEFAULT_REGION_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-region.jpg'
 DEFAULT_WINE_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-bottle.jpg'
 
 # SQLAlchemy.
-db_uri = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
+# db_uri = 'postgres://mgjnxqagefnuxl:60ea9f2d1067e6c01906c26ec33b5f6921a58ab9a9e8a012ecba9560853b88d1@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d549853lc81enb'
 # username: winejournal
 # password: devpassword
-SQLALCHEMY_DATABASE_URI = db_uri
+# SQLALCHEMY_DATABASE_URI = db_uri
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # User.

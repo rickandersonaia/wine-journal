@@ -72,7 +72,7 @@ validators==0.12.1
 vine==1.1.4
 webassets==0.12.1
 Werkzeug==0.12.2
--e git+https://github.com/rickandersonaia/wine-journal.git@d3ec5cc6dbd6b70903760d516d8a7777d96c150f#egg=WineJournal_CLI
+-e git+https://github.com/rickandersonaia/wine-journal.git@4a1e93e47db34ee7db68ecd15bcdbc4252dc84b1#egg=WineJournal_CLI
 WTForms==2.1
 WTForms-Alchemy==0.16.6
 WTForms-Components==0.10.3
