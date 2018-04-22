@@ -27,6 +27,7 @@ google-api-python-client==1.6.6
 google-auth==1.4.1
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.2.0
+gunicorn==19.7.1
 httplib2==0.11.3
 idna==2.5
 infinity==1.4
@@ -72,7 +73,7 @@ validators==0.12.1
 vine==1.1.4
 webassets==0.12.1
 Werkzeug==0.12.2
--e git+https://github.com/rickandersonaia/wine-journal.git@4a1e93e47db34ee7db68ecd15bcdbc4252dc84b1#egg=WineJournal_CLI
+-e git+https://github.com/rickandersonaia/wine-journal.git@9e6e9d36ed2c7fc9dc5f82cb7f3b8e7f09f20f3e#egg=WineJournal_CLI
 WTForms==2.1
 WTForms-Alchemy==0.16.6
 WTForms-Components==0.10.3
