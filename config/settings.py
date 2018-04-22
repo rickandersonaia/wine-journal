@@ -17,7 +17,7 @@ FACEBOOK_OAUTH_CLIENT_SECRET = ''
 
 #set this flag to true when an initial user has been created and is given the
 # admin role.  This should be false on startup
-INITIAL_ADMIN_SETUP = True
+INITIAL_ADMIN_SETUP = False
 
 UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
 UPLOADED_PHOTOS_URL = '/static/img/'
