@@ -15,8 +15,8 @@ SECRET_KEY = os.environ['SECRET_KEY']
 INITIAL_ADMIN_SETUP = False
 
 ROOT_PATH = os.path.dirname(os.path.realpath('../winejournal/app.py'))
-STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../wine-journal/winejournal/static/img/'))
-STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..','wine-journal', 'winejournal', 'static', 'img')))
+STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../winejournal/static/img/'))
+STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..', 'winejournal', 'static', 'img')))
 
 UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
 UPLOADED_PHOTOS_URL = '/static/img/'
