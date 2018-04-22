@@ -36,10 +36,8 @@ SEED_ADMIN_EMAIL = 'dev@local.host'
 SEED_ADMIN_PASSWORD = 'devpassword'
 REMEMBER_COOKIE_DURATION = timedelta(days=90)
 
-GOOGLE_CLIENT_ID = json.loads(
-    open('winejournal/client_secrets.json', 'r').read())['web']['client_id']
-GOOGLE_CLIENT_SECRETS = json.loads(
-    open('winejournal/client_secrets.json', 'r').read())['web']['client_secret']
+GOOGLE_CLIENT_ID = os.environ('WJ_GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRETS = os.environ('WJ_GOOGLE_CLIENT_SECRETS')
 TWITTER_API_KEY = 'JpWODQRv8ACIowNruaV272d9O'
 TWITTER_API_SECRET = 'zVLLl66TQphRPvdR5QaxB2Ic9dNvc9d6aRODE7p6M1HXueERlM'
 
