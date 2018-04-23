@@ -19,7 +19,7 @@ from winejournal.blueprints.users import users
 from winejournal.blueprints.wines import wines
 from winejournal.blueprints.filters import filters
 from winejournal.extensions import (
-    debug_toolbar,
+    # debug_toolbar,
     csrf,
     db,
     login_manager
@@ -75,7 +75,7 @@ def extensions(app):
     :param app: Flask application instance
     :return: None
     """
-    debug_toolbar.init_app(app)
+    # debug_toolbar.init_app(app)
     csrf.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
