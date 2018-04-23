@@ -42,13 +42,14 @@ def new_wine():
     filename = None
 
     if request.method == 'POST':
-        filename = photos.save(request.files['image'])
-        img = ProcessStandardImage(
-            filename,  # path to temporary image location
-            new_wine_form.rotate_image.data,  # desired rotation
-            600  # maximum height or width
-        )
-        img.process_image()  # saves the modified image to the temp location
+        if 'image' in request.files and request.files['image'].filename:
+            filename = photos.save(request.files['image'])
+            img = ProcessStandardImage(
+                filename,  # path to temporary image location
+                new_wine_form.rotate_image.data,  # desired rotation
+                600  # maximum height or width
+            )
+            img.process_image()  # saves the modified image to the temp location
         if new_wine_form.validate_on_submit():
             categoryId = get_category_id(new_wine_form.category.data, cat_list)
             regionId = get_region_id(new_wine_form.region.data, reg_list)
@@ -125,7 +126,6 @@ def wine_edit(wine_id):
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
-            print(filename)
             img = ProcessStandardImage(
                 filename,  # path to temporary image location
                 edit_wine_form.rotate_image.data,  # desired rotation

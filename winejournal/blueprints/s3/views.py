@@ -44,7 +44,7 @@ def upload_image(file):
                         "ACL": "public-read"
                     }
                 )
-                # delete_local_image(filename)
+                delete_local_image(filename)
                 return AWS_ENDPOINT + '/' + file
 
             except Exception as e:
@@ -60,6 +60,12 @@ def upload_image(file):
 def delete_local_image(filename):
     if filename:
         os.remove(filename)
+
+
+"""
+This is intended to delete an unused image from Amazon S3.  However it is not
+currently used and needs to be reworked
+"""
 
 
 @s3.route('/delete', methods=['POST'])
@@ -85,6 +91,12 @@ def delete_image(file):
                 return e
     else:
         return None
+
+
+"""
+This was suggested by Heroku as a way of creating a signing request and then passing
+it back to a javascript client.  It is retained here for future reference
+"""
 
 
 @s3.route('/sign-s3')
@@ -118,5 +130,5 @@ def sign_s3():
     return json.dumps({
         'data': presigned_post,
         'url': 'https://s3-us-west-1.amazonaws.com/%s/%s' % (
-        AWS_DEST_BUCKET, file_name)
+            AWS_DEST_BUCKET, file_name)
     })

@@ -12,7 +12,7 @@ class Region(db.Model, TimeStampMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(250))
+    description = db.Column(db.Text)
     image = db.Column(db.String(250))
     parent_id = db.Column(db.Integer)
     country = db.Column(db.String(20), index=True)

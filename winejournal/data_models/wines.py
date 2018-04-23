@@ -15,7 +15,7 @@ class Wine(db.Model, TimeStampMixin):
     maker = db.Column(db.String(80), nullable=False)
     vintage = db.Column(db.String(80), index=True)
     price = db.Column(db.Integer)
-    description = db.Column(db.String(250))
+    description = db.Column(db.Text)
     image = db.Column(db.String(250))
     region = db.Column(db.Integer, db.ForeignKey('regions.id'))
     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
