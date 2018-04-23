@@ -15,8 +15,8 @@ SECRET_KEY = os.environ['SECRET_KEY']
 INITIAL_ADMIN_SETUP = False
 
 ROOT_PATH = os.path.dirname(os.path.realpath('../winejournal/app.py'))
-STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../winejournal/static/img/'))
-STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..', 'winejournal', 'static', 'img')))
+STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../wine-journal/winejournal/static/img/'))
+STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..','wine-journal', 'winejournal', 'static', 'img')))
 
 UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
 UPLOADED_PHOTOS_URL = '/static/img/'
@@ -59,3 +59,4 @@ AWS_CLIENT_SECRET_KEY='iD8jLFUuIftUw/qHUW1JXr3sKFeTdqwYJboGzphE'
 AWS_DEST_BUCKET='diywptv.winejournal'
 AWS_ENDPOINT='https://s3-us-west-1.amazonaws.com/diywptv.winejournal'
 AWS_HOST = 's3-us-west-1.amazonaws.com'
+AWS_REGION = 'us-west-1'

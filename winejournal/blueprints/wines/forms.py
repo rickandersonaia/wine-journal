@@ -16,6 +16,7 @@ class NewWineForm(FlaskForm):
     image = FileField('Upload an Image')
     delete_image = HiddenField()
     rotate_image = HiddenField()
+    image_url = HiddenField()
 
 
 class EditWineForm(FlaskForm):
@@ -30,6 +31,7 @@ class EditWineForm(FlaskForm):
     image = FileField('Upload an Image')
     delete_image = HiddenField()
     rotate_image = HiddenField()
+    image_url = HiddenField()
 
 
 class DeleteWineForm(FlaskForm):

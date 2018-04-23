@@ -6,8 +6,8 @@ import boto3
 from flask import Blueprint, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
-from instance.settings import AWS_CLIENT_SECRET_KEY, \
-    AWS_CLIENT_ACCESS_KEY, AWS_ENDPOINT, STATIC_IMAGE_PATH
+from instance.settings import AWS_CLIENT_SECRET_KEY, AWS_REGION, \
+    AWS_CLIENT_ACCESS_KEY, AWS_ENDPOINT, STATIC_IMAGE_PATH, AWS_DEST_BUCKET
 from winejournal.extensions import csrf
 
 s3 = Blueprint('s3', __name__, template_folder='templates',
@@ -85,21 +85,25 @@ def delete_image(file):
         return None
 
 
-@s3.route('sign-s3')
+@s3.route('/sign-s3')
+@csrf.exempt
 def sign_s3():
-    # Load necessary information into the application
-    S3_BUCKET = os.environ.get('S3_BUCKET')
 
     # Load required data from the request
-    file_name = request.args.get('file-name')
-    file_type = request.args.get('file-type')
+    file_name = request.args.get('file_name')
+    file_type = request.args.get('file_type')
 
     # Initialise the S3 client
-    s3 = boto3.client('s3')
+    s3obj = boto3.client(
+        "s3",
+        aws_access_key_id=AWS_CLIENT_ACCESS_KEY,
+        aws_secret_access_key=AWS_CLIENT_SECRET_KEY,
+        region_name=AWS_REGION
+    )
 
     # Generate and return the presigned URL
-    presigned_post = s3.generate_presigned_post(
-        Bucket=S3_BUCKET,
+    presigned_post = s3obj.generate_presigned_post(
+        Bucket=AWS_DEST_BUCKET,
         Key=file_name,
         Fields={"acl": "public-read", "Content-Type": file_type},
         Conditions=[
@@ -112,5 +116,5 @@ def sign_s3():
     # Return the data to the client
     return json.dumps({
         'data': presigned_post,
-        'url': 'https://%s.s3-us-west-1.amazonaws.com/%s' % (S3_BUCKET, file_name)
+        'url': 'https://s3-us-west-1.amazonaws.com/%s/%s' % (AWS_DEST_BUCKET, file_name)
     })

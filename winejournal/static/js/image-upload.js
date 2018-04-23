@@ -12,22 +12,13 @@ function fileSelected() {
         document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
         document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
         showFile();
+        getSignedRequest(file)
     }
 }
-(function() {
-  document.getElementById("file_input").onchange = function(){
-    var files = document.getElementById("file_input").files;
-    var file = files[0];
-    if(!file){
-      return alert("No file selected.");
-    }
-    getSignedRequest(file);
-  };
-})();
 
 function getSignedRequest(file){
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+  xhr.open("GET", "/s3/sign-s3?file_name="+file.name+"&file_type="+file.type);
   xhr.onreadystatechange = function(){
     if(xhr.readyState === 4){
       if(xhr.status === 200){
@@ -44,8 +35,9 @@ function getSignedRequest(file){
 
 function uploadFile(file, s3Data, url){
   var xhr = new XMLHttpRequest();
+  var imageURL = document.getElementById('image_url')
   xhr.open("POST", s3Data.url);
-
+console.log(s3Data, url)
   var postData = new FormData();
   for(key in s3Data.fields){
     postData.append(key, s3Data.fields[key]);
@@ -55,8 +47,8 @@ function uploadFile(file, s3Data, url){
   xhr.onreadystatechange = function() {
     if(xhr.readyState === 4){
       if(xhr.status === 200 || xhr.status === 204){
-        document.getElementById("preview").src = url;
-        document.getElementById("avatar-url").value = url;
+        document.getElementById("image").setAttribute('data-url', url);
+        imageURL.value = url;
       }
       else{
         alert("Could not upload file.");

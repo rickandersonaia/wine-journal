@@ -12,7 +12,7 @@ from instance.settings import STATIC_IMAGE_PATH
 class ProcessStandardImage():
 
     def __init__(self, image, rotate=0, max_dimension=600):
-        self.raw_image = os.path.join(STATIC_IMAGE_PATH, image)
+        self.raw_image = image
         if rotate == '':
             rotate = 0
         self.rotate = int(rotate)

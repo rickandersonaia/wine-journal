@@ -124,14 +124,18 @@ def wine_edit(wine_id):
 
     if request.method == 'POST':
         if 'image' in request.files and request.files['image'].filename:
-            filename = photos.save(request.files['image'])
+            img_url = edit_wine_form.image_url.data
+            # filename = photos.save(request.files['image'])
+            # fileobj = request.files['image']
+            # file = fileobj.read()
             img = ProcessStandardImage(
-                filename,  # path to temporary image location
+                img_url,  # file url
                 edit_wine_form.rotate_image.data,  # desired rotation
                 600  # maximum height or width
             )
             img.process_image()  # saves the modified image to the temp location
-            img_url = upload_image(filename)
+            img_url = edit_wine_form.image_url.data
+
         if edit_wine_form.validate_on_submit():
             categoryId = get_category_id(edit_wine_form.category.data, cat_list)
             regionId = get_region_id(edit_wine_form.region.data, reg_list)
