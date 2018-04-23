@@ -3,7 +3,7 @@ import os.path
 
 from PIL import Image
 
-from instance.settings import STATIC_IMAGE_PATH
+from config.settings import TEMP_IMAGE_PATH
 
 
 # The goal here is to create an image 600px wide when the image is vertical
@@ -12,7 +12,7 @@ from instance.settings import STATIC_IMAGE_PATH
 class ProcessStandardImage():
 
     def __init__(self, image, rotate=0, max_dimension=600):
-        self.raw_image = image
+        self.raw_image = os.path.join(TEMP_IMAGE_PATH, image)
         if rotate == '':
             rotate = 0
         self.rotate = int(rotate)

@@ -19,21 +19,17 @@ FACEBOOK_OAUTH_CLIENT_SECRET = ''
 # admin role.  This should be false on startup
 INITIAL_ADMIN_SETUP = False
 
-UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
-UPLOADED_PHOTOS_URL = '/static/img/'
-DEFAULT_CATEGORY_IMAGE = '/static/img/generic-wine-category.jpg'
-DEFAULT_REGION_IMAGE = '/static/img/generic-wine-region.jpg'
-DEFAULT_WINE_IMAGE = '/static/img/generic-wine-bottle.jpg'
-
 ROOT_PATH = os.path.dirname(os.path.realpath('../winejournal/app.py'))
 STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../winejournal/static/img/'))
 STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..','winejournal', 'static', 'img')))
+TEMP_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..', 'wine-journal', 'tmp')))
 
-UPLOADED_PHOTOS_DEST = 'winejournal/static/img'
-UPLOADED_PHOTOS_URL = '/static/img/'
-DEFAULT_CATEGORY_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-category.jpg'
-DEFAULT_REGION_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-region.jpg'
-DEFAULT_WINE_IMAGE = UPLOADED_PHOTOS_URL + 'generic-wine-bottle.jpg'
+UPLOADED_PHOTOS_DEST = TEMP_IMAGE_PATH
+UPLOADED_PHOTOS_URL = '/tmp/'
+DEFAULT_IMAGE_URL = '/static/img/'
+DEFAULT_CATEGORY_IMAGE = DEFAULT_IMAGE_URL + 'generic-wine-category.jpg'
+DEFAULT_REGION_IMAGE = DEFAULT_IMAGE_URL + 'generic-wine-region.jpg'
+DEFAULT_WINE_IMAGE = DEFAULT_IMAGE_URL + 'generic-wine-bottle.jpg'
 
 # SQLAlchemy
 DB_USERNAME=os.environ['WINEJOURNAL_DB_USERNAME']
@@ -60,5 +56,6 @@ AWS_CLIENT_SECRET_KEY=''
 AWS_DEST_BUCKET='diywptv.winejournal'
 AWS_ENDPOINT='https://s3-us-west-1.amazonaws.com/diywptv.winejournal'
 AWS_HOST = 's3-us-west-1.amazonaws.com'
+AWS_REGION = 'us-west-1'
 
 

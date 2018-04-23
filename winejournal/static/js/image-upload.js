@@ -12,7 +12,7 @@ function fileSelected() {
         document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
         document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
         showFile();
-        getSignedRequest(file)
+        // getSignedRequest(file)
     }
 }
 

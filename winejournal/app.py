@@ -19,7 +19,7 @@ from winejournal.blueprints.users import users
 from winejournal.blueprints.wines import wines
 from winejournal.blueprints.filters import filters
 from winejournal.extensions import (
-    # debug_toolbar,
+    debug_toolbar,
     csrf,
     db,
     login_manager
@@ -47,8 +47,6 @@ def create_app(settings_override=None):
                  filters='pyscss', output='css/styles.css')
     assets.register('css_all', css)
     assets.init_app(app)
-
-    app.config['UPLOADED_PHOTOS_DEST'] = 'winejournal/static/img'
     configure_uploads(app, photos)
 
     app.register_blueprint(staticPages)
@@ -77,7 +75,7 @@ def extensions(app):
     :param app: Flask application instance
     :return: None
     """
-    # debug_toolbar.init_app(app)
+    debug_toolbar.init_app(app)
     csrf.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)

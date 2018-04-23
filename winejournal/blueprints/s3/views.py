@@ -3,11 +3,12 @@ import os
 import os.path
 
 import boto3
-from flask import Blueprint, request, redirect, url_for
+from flask import Blueprint, request
 from werkzeug.utils import secure_filename
 
-from instance.settings import AWS_CLIENT_SECRET_KEY, AWS_REGION, \
-    AWS_CLIENT_ACCESS_KEY, AWS_ENDPOINT, STATIC_IMAGE_PATH, AWS_DEST_BUCKET
+from config.settings import TEMP_IMAGE_PATH, STATIC_IMAGE_PATH, AWS_ENDPOINT, \
+    AWS_DEST_BUCKET, AWS_REGION
+from instance.settings import AWS_CLIENT_SECRET_KEY, AWS_CLIENT_ACCESS_KEY
 from winejournal.extensions import csrf
 
 s3 = Blueprint('s3', __name__, template_folder='templates',
@@ -16,7 +17,8 @@ s3 = Blueprint('s3', __name__, template_folder='templates',
 s3obj = boto3.client(
     "s3",
     aws_access_key_id=AWS_CLIENT_ACCESS_KEY,
-    aws_secret_access_key=AWS_CLIENT_SECRET_KEY
+    aws_secret_access_key=AWS_CLIENT_SECRET_KEY,
+    region_name=AWS_REGION
 )
 
 
@@ -31,7 +33,7 @@ def get_filename(file):
 @csrf.exempt
 def upload_image(file):
     if file:
-        filename = os.path.join(STATIC_IMAGE_PATH, file)
+        filename = os.path.join(TEMP_IMAGE_PATH, file)
         with open(filename, 'rb') as data:
             try:
                 s3obj.upload_fileobj(
@@ -42,7 +44,7 @@ def upload_image(file):
                         "ACL": "public-read"
                     }
                 )
-                delete_local_image(filename)
+                # delete_local_image(filename)
                 return AWS_ENDPOINT + '/' + file
 
             except Exception as e:
@@ -88,7 +90,6 @@ def delete_image(file):
 @s3.route('/sign-s3')
 @csrf.exempt
 def sign_s3():
-
     # Load required data from the request
     file_name = request.args.get('file_name')
     file_type = request.args.get('file_type')
@@ -116,5 +117,6 @@ def sign_s3():
     # Return the data to the client
     return json.dumps({
         'data': presigned_post,
-        'url': 'https://s3-us-west-1.amazonaws.com/%s/%s' % (AWS_DEST_BUCKET, file_name)
+        'url': 'https://s3-us-west-1.amazonaws.com/%s/%s' % (
+        AWS_DEST_BUCKET, file_name)
     })
