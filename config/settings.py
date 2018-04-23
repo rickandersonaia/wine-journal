@@ -22,7 +22,7 @@ INITIAL_ADMIN_SETUP = False
 ROOT_PATH = os.path.dirname(os.path.realpath('../winejournal/app.py'))
 STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../winejournal/static/img/'))
 STATIC_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..','winejournal', 'static', 'img')))
-TEMP_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..', 'wine-journal', 'tmp')))
+TEMP_IMAGE_PATH = os.path.normcase(os.path.realpath(os.path.join('..', 'tmp')))
 
 UPLOADED_PHOTOS_DEST = TEMP_IMAGE_PATH
 UPLOADED_PHOTOS_URL = '/tmp/'
