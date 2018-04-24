@@ -1,3 +1,5 @@
+window.onload(setStars());
+
 function setStars() {
     var stars = [
         '<i class="material-icons">thumb_down</i>',

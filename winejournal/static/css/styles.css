@@ -1,35 +1,26 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\000033}}
 .mdl-layout {
   height: auto;
   overflow-y: visible; }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\000038}}
   .container {
     width: 100%;
     max-width: 1140px;
     margin: 0 auto; }
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000311}}
     .container.two-column {
       max-width: 800px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000317}}
 .mdl-layout__content {
   margin-top: 64px; }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000321}}
   header {
     position: fixed; }
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000322}}
     header img.logo {
       filter: invert(100%); }
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000325}}
       header .mdl-layout-title {
         padding-left: 12px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000331}}
 header.title-area {
   position: relative; }
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000333}}
   header.title-area h1 {
     position: absolute;
     width: 100%;
@@ -39,17 +30,14 @@ header.title-area {
     padding: 20px;
     box-sizing: border-box; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000345}}
 .subheader {
   font-size: 18px;
   line-height: 27px;
   padding: 20px; }
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000349}}
   .subheader span {
     display: inline-block;
     margin-right: 20px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000357}}
 .mdl-layout__drawer .mdl-layout-title {
   background-image: url("../img/mstile-150x150.png");
   background-position: center;
@@ -59,37 +47,33 @@ header.title-area {
   font-weight: bold;
   text-shadow: 2px 2px 2px #888; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000369}}
-.mdl-card {
-  width: 100%; }
+.home-intro p {
+  font-size: 16px;
+  line-height: 25px; }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000374}}
-  .mdl-card__supporting-text, .mdl-card__subtitle-text {
-    color: #616161; }
+  .mdl-card {
+    width: 100%; }
 
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000378}}
-    .mdl-card.wine-meta {
-      min-height: 0px;
-      padding: 20px;
-      background-color: #efefef;
-      margin-top: 24px; }
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000382}}
-      .mdl-card.wine-meta p {
-        margin-bottom: 0px; }
+    .mdl-card__supporting-text, .mdl-card__subtitle-text {
+      color: #616161; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000388}}
+      .mdl-card.wine-meta {
+        min-height: 0px;
+        padding: 20px;
+        background-color: #efefef;
+        margin-top: 24px; }
+        .mdl-card.wine-meta p {
+          margin-bottom: 0px; }
+
 .mdl-list__item-avatar {
   margin-right: 14px; }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000392}}
   .wine-details .mdl-list__item {
     font-size: 14px; }
 
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\0000396}}
     form .mdl-cell.mdl-cell--6-col {
       float: left; }
 
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003102}}
       output {
         position: absolute;
         background-color: #3f51b5;
@@ -104,7 +88,6 @@ header.title-area {
         bottom: 28px;
         left: 0; }
 
-        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003117}}
         output:after {
           content: "";
           position: absolute;
@@ -118,65 +101,51 @@ header.title-area {
           margin-left: -5px;
           margin-top: -1px; }
 
-          @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003131}}
           .range_wrapper {
             position: relative;
             width: 300px; }
-            @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003134}}
             .range_wrapper label {
               display: inline-block;
               padding-bottom: 40px; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003140}}
 .mdl-textfield__input {
   border-bottom: 3px solid rgba(0, 0, 0, 0.12); }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003144}}
   .mdl-textfield__label {
     color: #888; }
 
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003149}}
     .mdl-dialog .modal-close {
       float: right; }
 
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003153}}
       .mdl-dialog__actions--full-width > * {
         box-sizing: border-box; }
 
-        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003158}}
         .mdl-button.google, .mdl-button.google:focus:not(:active) {
           background-color: #d34836; }
 
-          @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003163}}
           .mdl-button.twitter, .mdl-button.twitter:focus:not(:active) {
             background-color: #00aced; }
 
-            @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003168}}
             mdl-button.facebook, .mdl-button.facebook:focus:not(:active) {
               background-color: #3A589E; }
 
-              @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003174}}
               .mdl-button.facebook, .mdl-button.twitter, .mdl-button.google {
                 color: #fff;
                 text-align: center;
                 margin-bottom: 10px;
                 padding-top: 5px; }
 
-                @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003183}}
                 .mdl-button.facebook:hover, .mdl-button.twitter:hover, .mdl-button.google:hover {
                   color: #2d2d2d;
                   background-color: #d2d2d2; }
 
-                  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003188}}
                   .mdl-button.twitter {
                     color: #fff;
                     background-color: #00aced; }
 
-                    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003195}}
                     .file-container {
                       overflow: hidden;
                       position: relative; }
-                      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003197}}
                       .file-container [type=file] {
                         cursor: inherit;
                         display: block;
@@ -189,70 +158,54 @@ header.title-area {
                         text-align: right;
                         top: 0; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003212}}
 .one-third {
   width: 33%;
   float: left; }
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003214}}
   .one-third.left-align {
     text-align: left; }
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003217}}
     .one-third.center-align {
       text-align: center; }
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003220}}
       .one-third.right-align {
         text-align: right; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003226}}
 .mdl-card__actions.orientation-buttons {
   padding: 14px 0; }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003231}}
   .wine-teaser {
     margin-bottom: 24px; }
 
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003235}}
     .wine-teaser .mdl-card__media {
       position: relative;
       background-color: #fff; }
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003238}}
       .wine-teaser .mdl-card__media .mdl-card__title {
         position: absolute;
         width: 100%;
         background-color: rgba(0, 0, 0, 0.7);
         bottom: 0px; }
-        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003244}}
         .wine-teaser .mdl-card__media .mdl-card__title-text {
           color: #fff;
           font-weight: 500; }
-          @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003248}}
           .wine-teaser .mdl-card__media img {
             height: 330px;
             object-fit: cover; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003257}}
 .tasting-notes .mdl-typography--display-1 {
   margin: 0; }
 
-  @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003261}}
-  .wine-meta .star-rating .material-icons {
+  .star-rating .material-icons, .wine-meta .star-rating .material-icons {
     font-size: 24px;
     color: gold;
     text-shadow: 2px 2px 2px #888;
     vertical-align: bottom; }
 
-    @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003268}}
     .tasting-notes blockquote {
       margin: 14px; }
 
-      @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003273}}
       .wine-list .mdl-chip {
         display: inline-block;
         margin-left: 14px; }
 
-        @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003279}}
         footer img.logo {
           filter: invert(100%); }
-          @media -sass-debug-info{filename{font-family:file\:\/\/D\:\\Rick\\udacity-fsd\\fullstack-nanodegree-vm\\vagrant\\wine-journal\\winejournal\\static\\scss\/styles\.scss}line{font-family:\00003282}}
           footer a {
             color: #fff; }

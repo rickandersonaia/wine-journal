@@ -11,8 +11,19 @@
                 <h1 class="mdl-typography--display-2">Anderson Family and
                     Friends' Wine Journal</h1>
             </header>
+            <div class="mdl-grid home-intro">
+                <div class="mdl-cell mdl-cell--6-col">
+                    {% include '/static_pages/welcome-block.html' %}
+                </div>
+                <div class="mdl-cell mdl-cell--6-col">
+                    {% include '/tasting_notes/recent-tasting-notes.html' %}
+                </div>
+            </div>
             {% include '/wines/wine-recent-posts.html' %}
         </div>
     </div>
 
+{% endblock %}
+{% block footer_scripts %}
+    <script src="{{ url_for('static', filename='js/star-rating.js' ) }}"></script>
 {% endblock %}

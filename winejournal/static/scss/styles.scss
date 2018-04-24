@@ -66,6 +66,12 @@ header.title-area {
   }
 }
 
+// Home Page
+.home-intro p{
+  font-size:16px;
+  line-height:25px;
+}
+
 .mdl-card {
   width: 100%;
 }
@@ -258,6 +264,7 @@ mdl-button.facebook,
   margin: 0;
 }
 
+.star-rating .material-icons,
 .wine-meta .star-rating .material-icons {
   font-size: 24px;
   color: gold;
