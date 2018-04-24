@@ -94,7 +94,9 @@ def category_detail(category_id):
                            category=data,
                            is_admin=is_admin,
                            is_owner=is_owner,
-                           wine_list=wine_list)
+                           wine_list=wine_list,
+                           display_name=display_name,
+                           avatar=avatar)
 
 
 @categories.route('/<int:category_id>/edit', methods=['GET', 'POST'])

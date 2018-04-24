@@ -4,12 +4,12 @@ from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
 from config.settings import DEFAULT_REGION_IMAGE
+from winejournal.blueprints.media.process_banner_image import ProcessBannerImage
 from winejournal.blueprints.regions.country_list import Countries
 from winejournal.blueprints.regions.forms import \
     NewRegionForm, EditRegionForm, DeleteRegionForm
 from winejournal.blueprints.regions.sorted_list import \
     get_sorted_regions
-from winejournal.blueprints.media.process_banner_image import ProcessBannerImage
 from winejournal.blueprints.s3.views import upload_image
 from winejournal.data_models.regions import Region, region_owner_required
 from winejournal.data_models.users import admin_required
@@ -43,11 +43,11 @@ def new_region():
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
             img = ProcessBannerImage(
-                filename, #path to temporary image location
-                new_region_form.rotate_image.data, # desired rotation
-                1140 # maximum height or width
+                filename,  # path to temporary image location
+                new_region_form.rotate_image.data,  # desired rotation
+                1140  # maximum height or width
             )
-            img.process_image() # saves the modified image to the temp location
+            img.process_image()  # saves the modified image to the temp location
         if new_region_form.validate_on_submit():
             parentId = 0
             if new_region_form.parent.data:
@@ -102,7 +102,9 @@ def region_detail(region_id):
                            region=data,
                            is_admin=is_admin,
                            is_owner=is_owner,
-                           wine_list=wine_list)
+                           wine_list=wine_list,
+                           display_name=display_name,
+                           avatar=avatar)
 
 
 @regions.route('/<int:region_id>/edit', methods=['GET', 'POST'])
@@ -125,11 +127,11 @@ def region_edit(region_id):
         if 'image' in request.files and request.files['image'].filename:
             filename = photos.save(request.files['image'])
             img = ProcessBannerImage(
-                filename, #path to temporary image location
-                edit_region_form.rotate_image.data, # desired rotation
-                1140 # maximum height or width
+                filename,  # path to temporary image location
+                edit_region_form.rotate_image.data,  # desired rotation
+                1140  # maximum height or width
             )
-            img.process_image() # saves the modified image to the temp location
+            img.process_image()  # saves the modified image to the temp location
         if edit_region_form.validate_on_submit():
             parentId = get_parent_id(edit_region_form, reg_list)
 

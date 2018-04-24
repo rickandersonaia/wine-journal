@@ -20,7 +20,7 @@ class Region(db.Model, TimeStampMixin):
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     wine = db.relationship('Wine', backref=db.backref('wine_region',
-                                                       lazy=True))
+                                                      lazy=True))
 
     @property
     def serialize(self):

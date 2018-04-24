@@ -23,10 +23,11 @@ class TastingNote(db.Model, TimeStampMixin):
     wine_id = db.Column(db.Integer, db.ForeignKey('wines.id'))
 
     comments = db.relationship('Comment',
-                               backref=db.backref('tasting_note', lazy='subquery'))
-    wine = db.relationship('Wine',
                                backref=db.backref('tasting_note',
                                                   lazy='subquery'))
+    wine = db.relationship('Wine',
+                           backref=db.backref('tasting_note',
+                                              lazy='subquery'))
 
     @property
     def serialize(self):

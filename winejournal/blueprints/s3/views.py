@@ -94,8 +94,9 @@ def delete_image(file):
 
 
 """
-This was suggested by Heroku as a way of creating a signing request and then passing
-it back to a javascript client.  It is retained here for future reference
+This was suggested by Heroku as a way of creating a signing request 
+and then passing it back to a javascript client.  It is retained here for 
+future reference
 """
 
 

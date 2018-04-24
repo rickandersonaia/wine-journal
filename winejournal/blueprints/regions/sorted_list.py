@@ -1,5 +1,3 @@
-from sqlalchemy.orm import sessionmaker
-
 from winejournal.data_models.regions import Region
 from winejournal.extensions import db
 
@@ -20,5 +18,6 @@ def get_sorted_regions():
                     sorted_region_list[region_2.id] = '- ' + region_2.name
                     for region_3 in regions:
                         if region_3.parent_id == region_2.id:
-                            sorted_region_list[region_3.id] = '-- ' + region_3.name
+                            sorted_region_list[
+                                region_3.id] = '-- ' + region_3.name
     return sorted_region_list

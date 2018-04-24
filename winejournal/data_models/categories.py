@@ -7,7 +7,7 @@ from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.extensions import db
 
 
-class Category(db.Model,TimeStampMixin):
+class Category(db.Model, TimeStampMixin):
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +18,7 @@ class Category(db.Model,TimeStampMixin):
     owner = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     wine = db.relationship('Wine', backref=db.backref('wine_category',
-                                                       lazy=True))
+                                                      lazy=True))
 
     @property
     def serialize(self):

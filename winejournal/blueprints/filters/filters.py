@@ -1,5 +1,4 @@
 from flask import Blueprint
-from itertools import count
 
 filters = Blueprint('filters', __name__, )
 
@@ -11,7 +10,6 @@ def filter_datetime(date_value='', format='%B %d, %Y'):
 
 @filters.app_template_filter('stars')
 def filter_stars(rating=''):
-
     stars = [
         '<i class="material-icons">thumb_down</i>',
         '<i class="material-icons">star_half</i>',
@@ -27,6 +25,7 @@ def filter_stars(rating=''):
     ]
     index = int(rating)
     return stars[index]
+
 
 @filters.app_template_filter('note')
 def filter_notes_label(notes=''):

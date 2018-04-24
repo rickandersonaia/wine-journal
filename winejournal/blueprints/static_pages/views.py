@@ -14,9 +14,9 @@ from instance.settings import FACEBOOK_OAUTH_CLIENT_ID, \
 from instance.settings import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETS
 from instance.settings import TWITTER_API_KEY, TWITTER_API_SECRET
 from winejournal.data_models.oauth import Oauth
+from winejournal.data_models.tastingnotes import TastingNote
 from winejournal.data_models.users import User
 from winejournal.data_models.wines import Wine
-from winejournal.data_models.tastingnotes import TastingNote
 from winejournal.extensions import db
 from winejournal.extensions import login_manager
 
@@ -59,7 +59,8 @@ client = boto3.client('s3',
 @staticPages.route('/')
 def home():
     wine_list = db.session.query(Wine).order_by(Wine.created_on.desc()).limit(6)
-    tasting_notes = db.session.query(TastingNote).order_by(TastingNote.created_on.desc()).limit(6)
+    tasting_notes = db.session.query(TastingNote).order_by(
+        TastingNote.created_on.desc()).limit(6)
     return render_template('static_pages/home.html',
                            wine_list=wine_list,
                            tasting_notes=tasting_notes)

@@ -23,7 +23,6 @@ class ProcessBannerImage():
         self.right = self.get_crop_right()
         self.bottom = self.get_crop_bottom()
 
-
     def process_image(self):
         box = (self.upper, self.left, self.right, self.bottom)
         if self.rotate > 0:

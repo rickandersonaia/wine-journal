@@ -3,6 +3,8 @@
 This project was developed for the "catalog project" in the Udacity Full Stack Web Development Course.  It creates a
 crowd sourced journal of wine and wine tastings
 
+https://ourwinejournal.com
+
 ## Project description
 
 ## Development server

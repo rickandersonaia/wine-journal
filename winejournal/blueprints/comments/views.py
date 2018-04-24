@@ -110,8 +110,8 @@ def comment_edit(comment_id):
 
             db.session.add(comment)
             db.session.commit()
-            message = 'You updated your comment about the {} tasting note'.format(
-                comment.tasting_note.title)
+            message = 'You updated your comment about the {} tasting note'\
+                .format(comment.tasting_note.title)
             flash(message)
             return redirect(url_for('wines.wine_detail',
                                     wine_id=comment.tasting_note.wine_id))

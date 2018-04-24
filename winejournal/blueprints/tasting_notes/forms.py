@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms import StringField, TextAreaField, IntegerField, RadioField, HiddenField
+from wtforms import StringField, TextAreaField, IntegerField, HiddenField
 from wtforms.validators import InputRequired
 from wtforms_components import IntegerSliderField
 
@@ -25,6 +25,7 @@ class EditNoteForm(FlaskForm):
     image = FileField('Upload an Image')
     delete_image = HiddenField()
     rotate_image = HiddenField()
+
 
 class DeleteNoteForm(FlaskForm):
     title = StringField('Tasting Note Title')
