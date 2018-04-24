@@ -16,7 +16,8 @@
             <h3 class="mdl-typography--display-1">{{ note.title }}</h3>
             <div class="wine-meta mdl-card mdl-card--border">
                 <p>Rating: <span
-                        class="star-rating">{{ note.rating | int }}</span></p>
+                        class="star-rating">{{ note.rating | stars | safe }}
+                    ({{ note.rating | int }})</span></p>
                 <p>Purchase price: {{ note.price }} -
                     Vintage: {{ note.vintage }}</p>
             </div>

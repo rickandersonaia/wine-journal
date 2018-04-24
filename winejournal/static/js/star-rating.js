@@ -1,4 +1,5 @@
-window.onload(setStars());
+// This has been superceeded with a custom filter - it is retained here for
+// reference
 
 function setStars() {
     var stars = [
@@ -20,6 +21,6 @@ function setStars() {
         var rating = parseInt(ratingFields[i].innerText);
         console.log(rating)
         ratingFields[i].innerText = '';
-        ratingFields[i].innerHTML = stars[rating];
+        ratingFields[i].innerHTML = stars[rating] + ' (' + rating + ')';
     }
 }

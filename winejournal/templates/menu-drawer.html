@@ -1,6 +1,10 @@
 <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Our Wine Journal</span>
     <nav class="mdl-navigation">
+        <a href="{{ url_for('users.user_edit', user_id=current_user.id) }}">
+            <img src="{{ current_user.image }}" alt="user avatar"
+                 class="menu-avatar">
+        </a>
         <a class="mdl-navigation__link"
            href="{{ url_for('static_pages.home') }}">
             <i class="material-icons">home</i> Home

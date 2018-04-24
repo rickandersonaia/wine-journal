@@ -64,12 +64,19 @@ header.title-area {
     font-weight: bold;
     text-shadow: 2px 2px 2px #888;
   }
+  .menu-avatar {
+    display: block;
+    border-radius: 50%;
+    text-align: center;
+    width: 120px;
+    margin: 0 auto 24px auto;
+  }
 }
 
 // Home Page
-.home-intro p{
-  font-size:16px;
-  line-height:25px;
+.home-intro p {
+  font-size: 16px;
+  line-height: 25px;
 }
 
 .mdl-card {
@@ -143,12 +150,13 @@ output:after {
     padding-bottom: 40px;
   }
 }
-.mdl-textfield__input{
-  border-bottom: 3px solid rgba(0,0,0,.12);
+
+.mdl-textfield__input {
+  border-bottom: 3px solid rgba(0, 0, 0, .12);
 }
 
-.mdl-textfield__label{
-  color:#888;
+.mdl-textfield__label {
+  color: #888;
 }
 
 //Login form
@@ -215,22 +223,22 @@ mdl-button.facebook,
   }
 }
 
-.one-third{
-  width:33%;
-  float:left;
-  &.left-align{
-    text-align:left;
+.one-third {
+  width: 33%;
+  float: left;
+  &.left-align {
+    text-align: left;
   }
-  &.center-align{
+  &.center-align {
     text-align: center;
   }
-  &.right-align{
+  &.right-align {
     text-align: right;
   }
 }
 
-.mdl-card__actions.orientation-buttons{
-  padding:14px 0;
+.mdl-card__actions.orientation-buttons {
+  padding: 14px 0;
 }
 
 //Wine teasers
@@ -277,12 +285,26 @@ mdl-button.facebook,
 }
 
 // Wine List
-.wine-list .mdl-chip{
-  display:inline-block;
-  margin-left: 14px;
+.wine-list {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+
+  .mdl-chip {
+    display: inline-block;
+    margin-left: 14px;
+  }
+  .mdl-list__item{
+    padding:16px 0px;
+  }
+  .mdl-list__item-picture{
+    width: 50px;
+    margin-right: 10px;
+  }
 }
 
-// Footer
+.wine-list
+  // Footer
 footer {
   img.logo {
     filter: invert(100%);

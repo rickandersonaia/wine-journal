@@ -46,6 +46,12 @@ header.title-area {
   color: #1A237E;
   font-weight: bold;
   text-shadow: 2px 2px 2px #888; }
+  .mdl-layout__drawer .menu-avatar {
+    display: block;
+    border-radius: 50%;
+    text-align: center;
+    width: 120px;
+    margin: 0 auto 24px auto; }
 
 .home-intro p {
   font-size: 16px;
@@ -201,11 +207,20 @@ header.title-area {
     .tasting-notes blockquote {
       margin: 14px; }
 
-      .wine-list .mdl-chip {
-        display: inline-block;
-        margin-left: 14px; }
+      .wine-list {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto; }
+        .wine-list .mdl-chip {
+          display: inline-block;
+          margin-left: 14px; }
+          .wine-list .mdl-list__item {
+            padding: 16px 0px; }
+            .wine-list .mdl-list__item-picture {
+              width: 50px;
+              margin-right: 10px; }
 
-        footer img.logo {
-          filter: invert(100%); }
-          footer a {
-            color: #fff; }
+.wine-list footer img.logo {
+  filter: invert(100%); }
+  .wine-list footer a {
+    color: #fff; }
