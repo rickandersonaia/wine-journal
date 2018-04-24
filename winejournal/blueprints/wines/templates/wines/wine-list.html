@@ -16,27 +16,31 @@
                        href="{{ url_for('wines.new_wine') }}">
                         Add New Wine</a>
                 {% endif %}
-                <ul class="mdl-list wine-list">
+                <div class="mdl-list wine-list">
                     {% for wine in wine_list %}
-                        <li class="mdl-list__item mdl-list__item--three-line">
+                        <div class="mdl-list__item mdl-list__item--three-line">
                             <img src="{{ wine.image }}"
                                  class="mdl-list__item-picture">
-                            <span class="mdl-list__item-primary-content">
-                                <a href="{{ url_for('wines.wine_detail',wine_id=wine.id) }}"
-                                   class="">
-                                {{ wine.name }}
-                                </a>
-                            <span class=".mdl-list__item-secondary-info">  -- {{ wine.vintage }}, {{ wine.wine_category.name }}</span>
-                            <span><i>{{ wine.wine_region.name }}</i>
-                             {% if wine.tasting_notes %}
-                                 <span class="mdl-chip mdl-color--primary">
-                                    <span class="mdl-chip__text mdl-color-text--primary-contrast">{{ wine.tasting_notes | note }}</span>
-                                </span>
-                             {% endif %}
-                            </span>
-                        </li>
+                            <div class="mdl-list__item-primary-content">
+                                <p>
+                                    <a href="{{ url_for('wines.wine_detail',wine_id=wine.id) }}"
+                                       class="">
+                                        {{ wine.name }}
+                                    </a>
+                                    <span class=".mdl-list__item-secondary-info">  -- {{ wine.vintage }}, {{ wine.wine_category.name }}</span>
+                                </p>
+                                <p><i>{{ wine.wine_region.name }}</i>
+                                    {% if wine.tasting_notes %}</p>
+                                        <p>
+                                        <span class="mdl-chip mdl-color--primary">
+                                        <span class="mdl-chip__text mdl-color-text--primary-contrast">{{ wine.tasting_notes | note }}</span>
+                                    </span>
+                                    {% endif %}
+                                    </p>
+                            </div>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
         </div>
     </div>

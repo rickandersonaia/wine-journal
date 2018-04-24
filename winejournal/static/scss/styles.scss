@@ -288,19 +288,22 @@ mdl-button.facebook,
 .wine-list {
   width: 100%;
   max-width: 350px;
-  margin: 0 auto;
 
-  .mdl-chip {
-    display: inline-block;
-    margin-left: 14px;
+  .mdl-list__item {
+    padding: 16px 0px;
+
+    p {
+      margin: 0;
+    }
   }
-  .mdl-list__item{
-    padding:16px 0px;
+  .mdl-list__item-picture {
+    width: 60px;
+    margin: 30px 10px 0 0;
   }
-  .mdl-list__item-picture{
-    width: 50px;
-    margin-right: 10px;
+  .mdl-list__item--three-line {
+    height: 110px;
   }
+
 }
 
 .wine-list

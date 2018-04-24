@@ -1,18 +1,18 @@
 <h2 class="mdl-typography--display-2">Recent Tasting Notes</h2>
-<ul class="wine-list mdl-list">
+<div class="wine-list mdl-list">
 {% for note in tasting_notes %}
-  <li class="mdl-list__item mdl-list__item--two-line">
-    <span class="mdl-list__item-primary-content">
+  <div class="mdl-list__item mdl-list__item--two-line">
+    <div class="mdl-list__item-primary-content">
      <img src="{{ note.user.image }}" alt="{{ note.user.display_name }}"
           class="mdl-list__item-avatar">
-      <span><a href="{{ url_for('wines.wine_detail', wine_id=note.wine_id) }}" >{{ note.wine.name }}</a></span>
-      <span class="mdl-list__item-sub-title">{{ note.user.display_name }}</span>
-    </span>
+      <p><a href="{{ url_for('wines.wine_detail', wine_id=note.wine_id) }}" >{{ note.wine.name }}</a>
+      <span class="mdl-list__item-sub-title">{{ note.user.display_name }}</span></p>
+    </div>
   <span class="mdl-list__item-secondary-content">
       <span class="mdl-list__item-secondary-info">Rating</span>
       <span class="star-rating">{{ note.rating | stars | safe }} ({{ note.rating | int }})</span>
     </span>
-  </li>
+  </div>
 
 {% endfor %}
-</ul>
+</div>
