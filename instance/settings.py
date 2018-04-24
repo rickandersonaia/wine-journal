@@ -1,8 +1,6 @@
 import json
 import os
 
-# SERVER_NAME = '0.0.0.0:5000'
-# SERVER_NAME = 'https://our-wine-journal.herokuapp.com/'
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SQLAlchemy.

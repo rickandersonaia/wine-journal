@@ -3,6 +3,6 @@
 vendor
 /venv/
 /static/.webassets-cache/
-#/winejournal/client_secrets.json
-#/instance/settings.py
+winejournal/client_secrets.json
+instance/settings.py
 envars

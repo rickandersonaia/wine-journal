@@ -1,23 +1,22 @@
 from datetime import timedelta
 import os
 
-DEBUG = True
-ASSETS_DEBUG = True
+DEBUG = False
+ASSETS_DEBUG = False
 
-# SERVER_NAME = '0.0.0.0:5000'
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # Social site login authentication
-GOOGLE_CLIENT_ID = ''
-GOOGLE_CLIENT_SECRETS = ''
-TWITTER_API_KEY = ''
-TWITTER_API_SECRET = ''
 FACEBOOK_OAUTH_CLIENT_ID = ''
 FACEBOOK_OAUTH_CLIENT_SECRET = ''
+GOOGLE_CLIENT_ID = os.environ['WJ_GOOGLE_CLIENT_ID']
+GOOGLE_CLIENT_SECRETS = os.environ['WJ_GOOGLE_CLIENT_SECRETS']
+TWITTER_API_KEY = os.environ['TWITTER_API_KEY']
+TWITTER_API_SECRET = os.environ['TWITTER_API_SECRET']
 
 #set this flag to true when an initial user has been created and is given the
 # admin role.  This should be false on startup
-INITIAL_ADMIN_SETUP = False
+INITIAL_ADMIN_SETUP = True
 
 ROOT_PATH = os.path.dirname(os.path.realpath('../winejournal/app.py'))
 STATIC_FOLDER_PATH = os.path.dirname(os.path.realpath('../winejournal/static/img/'))
@@ -46,7 +45,7 @@ SEED_ADMIN_EMAIL = 'dev@local.host'
 SEED_ADMIN_PASSWORD = 'devpassword'
 REMEMBER_COOKIE_DURATION = timedelta(days=90)
 
-OAUTHLIB_INSECURE_TRANSPORT=1
+#OAUTHLIB_INSECURE_TRANSPORT=1
 OAUTHLIB_RELAX_TOKEN_SCOPE=1
 
 
