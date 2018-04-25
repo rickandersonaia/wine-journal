@@ -1,12 +1,12 @@
 from functools import wraps
 
-from flask import redirect, url_for, flash
+from flask import redirect, url_for, flash, abort
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash
 
 from config.settings import INITIAL_ADMIN_SETUP
-from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.data_models.comments import Comment
+from winejournal.data_models.timestamp import TimeStampMixin
 from winejournal.extensions import db
 
 
@@ -41,7 +41,6 @@ class User(db.Model, UserMixin, TimeStampMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'password': self.password,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'display_name': self.display_name,
@@ -96,12 +95,7 @@ class User(db.Model, UserMixin, TimeStampMixin):
     @classmethod
     def encrypt_password(cls, plaintext_password):
         """
-        Hash a plaintext string using PBKDF2. This is good enough according
-        to the NIST (National Institute of Standards and Technology).
-
-        In other words while bcrypt might be superior in practice, if you use
-        PBKDF2 properly (which we are), then your passwords are safe.
-
+        Hash a plaintext string using PBKDF2.
         :param plaintext_password: Password in plain text
         :type plaintext_password: str
         :return: str
@@ -110,6 +104,24 @@ class User(db.Model, UserMixin, TimeStampMixin):
             return generate_password_hash(plaintext_password)
 
         return None
+
+    @classmethod
+    def check_password(cls, plaintext_password):
+        """
+        Hash a plaintext string using PBKDF2.
+
+        :param plaintext_password: Password in plain text
+        :type plaintext_password: str
+        :return: boolean
+        """
+        if plaintext_password:
+            hashed_password = generate_password_hash(plaintext_password)
+            if User.password == hashed_password:
+                return True
+            else:
+                return False
+
+        return False
 
 
 def role_list():
@@ -120,8 +132,10 @@ def role_list():
     return roles
 
 
+
 def admin_required(f):
     """
+    Authorization decorator for functions that require an admin
     Ensure a user is admin, if not redirect them to the home page.
 
     :return: Function
@@ -131,7 +145,7 @@ def admin_required(f):
     def decorated_function(*args, **kwargs):
         if not current_user.is_admin():
             flash('You must be an admin to view that page')
-            return redirect(url_for('users.list_users'))
+            return redirect(url_for('static_pages.home'))
 
         return f(*args, **kwargs)
 
@@ -140,7 +154,8 @@ def admin_required(f):
 
 def owner_required(f):
     """
-    Ensure a user is admin or the actual user,
+    Authorization decorator for functions that require the record's owner
+    Ensure a user is admin or the actual user who created the record,
     if not redirect them to the user list page.
 
     :return: Function
@@ -154,7 +169,29 @@ def owner_required(f):
             user_id = kwargs['user_id']
             if current_user.id != user_id:
                 flash('You must be the owner to access that page')
-                return redirect(url_for('users.list_users'))
+                return redirect(url_for('static_pages.home'))
+
+            return f(*args, **kwargs)
+
+    return decorated_function
+
+def api_owner_required(f):
+    """
+    Authorization decorator for api requests that require the record's owner
+    Ensure a user is admin or the actual user who created the record,
+    if not send a 400 error.
+
+    :return: Function
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_admin():
+            return f(*args, **kwargs)
+        else:
+            user_id = kwargs['user_id']
+            if current_user.id != user_id:
+                abort(400)
 
             return f(*args, **kwargs)
 

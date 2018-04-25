@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, \
-    flash, request
-from flask_login import current_user
+    flash, request, jsonify
+from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
 from config.settings import DEFAULT_CATEGORY_IMAGE
@@ -13,7 +13,7 @@ from winejournal.blueprints.s3.views import upload_image
 from winejournal.data_models.categories import Category, category_owner_required
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine
-from winejournal.extensions import db
+from winejournal.extensions import db, csrf
 
 categories = Blueprint('categories', __name__, template_folder='templates',
                        url_prefix='/categories')
@@ -211,3 +211,22 @@ def get_is_owner(category_id):
         return True
     else:
         return False
+
+
+# API Routes
+
+@categories.route('/api/v1/categories/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_list_categories():
+    categories = db.session.query(Category).all()
+    return jsonify(
+        AllCategories=[category.serialize for category in categories])
+
+
+@categories.route('/api/v1/<int:category_id>/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_category_detail(category_id):
+    category = db.session.query(Category).get(category_id)
+    return jsonify(User=[category.serialize])

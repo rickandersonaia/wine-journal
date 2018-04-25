@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, \
-    flash, request
+    flash, request, jsonify
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
@@ -14,7 +14,7 @@ from winejournal.blueprints.s3.views import upload_image
 from winejournal.data_models.regions import Region, region_owner_required
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine
-from winejournal.extensions import db
+from winejournal.extensions import db, csrf
 
 regions = Blueprint('regions', __name__, template_folder='templates',
                     url_prefix='/regions')
@@ -224,3 +224,21 @@ def get_is_owner(region_id):
         return True
     else:
         return False
+
+# API Routes
+
+@regions.route('/api/v1/regions/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_list_regions():
+    regions = db.session.query(Region).all()
+    return jsonify(
+        AllRegions=[region.serialize for region in regions])
+
+
+@regions.route('/api/v1/<int:region_id>/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_region_detail(region_id):
+    comment = db.session.query(Region).get(region_id)
+    return jsonify(Region=[comment.serialize])

@@ -79,3 +79,28 @@ From the root directory run `winejournal flake8` to run the code quality tests.
 ## Running end-to-end tests
 
 Nothing yet
+
+## API Endpoints
+All returns are json objects
+
+`/users/api/v1/login/` - takes a json object with username and password - returns the user object
+`/users/api/v1/<int:user_id>/` - returns a user object
+`/users/api/v1/logout/` - logs out & deletes the session
+
+`/categories/api/v1/categories/` - returns an object of all category objects
+`/categories/api/v1/<int:category_id>/` - returns a category object
+
+`/comments/api/v1/comments/` - returns an object of all comment objects
+`/comments/api/v1/<int:comment_id>/` - returns a comment object
+
+`/regions/api/v1/regions/` - returns an object of all region objects
+`/regions/api/v1/<int:region_id>/` - returns a region object
+
+`/tasting-notes/api/v1/tasting-notes/` - returns an object of all tasting note objects
+`/tasting-notes/api/v1/<int:tnote_id>/` - returns a tasting note object
+
+`/wines/api/v1/wines/` - returns an object of all wine objects
+`/wines/api/v1/<int:wine_id>/` - returns a wine object
+
+
+

@@ -1,7 +1,7 @@
 from datetime import timedelta
 import os
 
-DEBUG = False
+DEBUG = True
 ASSETS_DEBUG = False
 
 SECRET_KEY = os.environ['SECRET_KEY']

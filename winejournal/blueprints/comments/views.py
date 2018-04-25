@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, \
-    flash, request
+    flash, request, jsonify
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
@@ -12,7 +12,7 @@ from winejournal.data_models.comments import Comment, \
     comment_owner_required
 from winejournal.data_models.tastingnotes import TastingNote
 from winejournal.data_models.users import admin_required
-from winejournal.extensions import db
+from winejournal.extensions import db, csrf
 
 comment = Blueprint('comment', __name__, template_folder='templates',
                     url_prefix='/comment')
@@ -149,3 +149,22 @@ def get_is_owner(comment_id):
         return True
     else:
         return False
+
+
+# API Routes
+
+@comment.route('/api/v1/comments/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_list_comments():
+    comments = db.session.query(Comment).all()
+    return jsonify(
+        AllComments=[comment.serialize for comment in comments])
+
+
+@comment.route('/api/v1/<int:comment_id>/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_comment_detail(comment_id):
+    comment = db.session.query(Comment).get(comment_id)
+    return jsonify(Comment=[comment.serialize])

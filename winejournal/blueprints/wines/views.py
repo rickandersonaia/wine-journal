@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, \
-    flash, request
+    flash, request, jsonify
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
@@ -17,7 +17,7 @@ from winejournal.data_models.categories import Category
 from winejournal.data_models.regions import Region
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine, wine_owner_required
-from winejournal.extensions import db
+from winejournal.extensions import db, csrf
 
 wines = Blueprint('wines', __name__, template_folder='templates',
                   url_prefix='/wine')
@@ -266,3 +266,23 @@ def get_is_owner(wine_id):
         return True
     else:
         return False
+
+
+# API Routes
+
+@wines.route('/api/v1/wines/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_list_wines():
+    wines = db.session.query(Wine).all()
+    return jsonify(
+        AllTastingNotes=[wines.serialize for wine in
+                         wines])
+
+
+@wines.route('/api/v1/<int:wine_id>/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_wine_detail(wine_id):
+    wine = db.session.query(Wine).get(wine_id)
+    return jsonify(Region=[wine.serialize])

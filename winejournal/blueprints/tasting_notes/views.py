@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, \
-    flash, request
+    flash, request, jsonify
 from flask_login import current_user, login_required
 from flask_uploads import UploadSet, IMAGES
 
@@ -12,7 +12,7 @@ from winejournal.data_models.tastingnotes import TastingNote, \
     tnote_owner_required
 from winejournal.data_models.users import admin_required
 from winejournal.data_models.wines import Wine
-from winejournal.extensions import db
+from winejournal.extensions import db, csrf
 
 tastingNote = Blueprint('tasting_notes', __name__, template_folder='templates',
                         url_prefix='/tasting-notes')
@@ -156,3 +156,23 @@ def get_is_owner(tnote_id):
         return True
     else:
         return False
+
+
+# API Routes
+
+@tastingNote.route('/api/v1/tasting-notes/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_list_tasting_notes():
+    tasting_notes = db.session.query(TastingNote).all()
+    return jsonify(
+        AllTastingNotes=[tasting_note.serialize for tasting_note in
+                         tasting_notes])
+
+
+@tastingNote.route('/api/v1/<int:tnote_id>/', methods=['GET'])
+@login_required
+@csrf.exempt
+def api_tasting_note_detail(tnote_id):
+    tasting_note = db.session.query(TastingNote).get(tnote_id)
+    return jsonify(Region=[tasting_note.serialize])

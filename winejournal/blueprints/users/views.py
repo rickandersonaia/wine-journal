@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, redirect, url_for, \
-    flash, request
-from flask_login import current_user, login_required
+    flash, request, abort, jsonify
+from flask_login import current_user, login_required, login_user, logout_user
 
 from winejournal.blueprints.users.forms import \
     NewUserForm, EditUserForm, DeleteUserForm
-from winejournal.data_models.users import User, owner_required, admin_required
+from winejournal.data_models.users import User, owner_required, \
+    admin_required, api_owner_required
+from winejournal.extensions import csrf
 from winejournal.extensions import db
 
 users = Blueprint('users', __name__, template_folder='templates',
@@ -26,10 +28,11 @@ def list_users():
 def new_user():
     new_user_form = NewUserForm()
     if new_user_form.validate_on_submit():
+        hashed_password = User.encrypt_password(new_user_form.password.data)
         user = User(
             username=new_user_form.username.data,
             email=new_user_form.email.data,
-            password=new_user_form.password.data,
+            password=hashed_password,
             first_name=new_user_form.first_name.data,
             last_name=new_user_form.last_name.data,
             display_name=new_user_form.display_name.data,
@@ -77,9 +80,11 @@ def user_edit(user_id):
 
     if request.method == 'POST':
         if edit_user_form.validate_on_submit():
+            hashed_password = User.encrypt_password(
+                edit_user_form.password.data)
             user.username = edit_user_form.username.data
             user.email = edit_user_form.email.data
-            user.password = edit_user_form.password.data
+            user.password = hashed_password
             user.first_name = edit_user_form.first_name.data
             user.last_name = edit_user_form.last_name.data
             display_name = edit_user_form.display_name.data
@@ -137,3 +142,39 @@ def get_is_owner(user_id):
         return True
     else:
         return False
+
+
+# API Routes
+
+@users.route('/api/v1/login/', methods=['POST'])
+@csrf.exempt
+def user_api_login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username is None or password is None:
+        abort(400)  # missing arguments
+
+    user = User.find_by_identity(username)
+
+    if not user:
+        abort(400)  # credentials don't match
+
+    login_user(user)
+    return jsonify(User=[user.serialize])
+
+
+@users.route('/api/v1/<int:user_id>/', methods=['GET'])
+@login_required
+@api_owner_required
+@csrf.exempt
+def user_api_detail(user_id):
+    user = db.session.query(User).get(user_id)
+    return jsonify(User=[user.serialize])
+
+
+@users.route('/api/v1/logout/', methods=['POST'])
+@login_required
+@csrf.exempt
+def user_api_logout():
+    logout_user()
