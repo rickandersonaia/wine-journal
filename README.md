@@ -102,5 +102,19 @@ All returns are json objects
 `/wines/api/v1/wines/` - returns an object of all wine objects
 `/wines/api/v1/<int:wine_id>/` - returns a wine object
 
+## Future Development
+
+1. Add sms notifications of updates
+2. Add WikiPedia API for region & category desriptions
+3. Add non-social login & registration
+4. Add email both for notifications & password recovery
+5  Add WYSIWYG type editor for descriptions & notes (TinyMCE?)
+6. Add search by rating
+7. Add sort by price
+8. Add links in wines to categories and regions
+9. Add Snooth API information for wines & wineries
+10. Move all text that should be customizeable into a settings configuration (make it portable)
+11. Add scrst designations to images, resize images for smaller screens
+12. Add _author's page_ to display posts by user - make name clickable
 
 
